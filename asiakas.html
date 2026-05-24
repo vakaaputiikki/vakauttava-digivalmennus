@@ -316,7 +316,100 @@
   .week-complete-btn:hover { background: var(--moss-light); color: var(--moss); border-color: var(--moss); }
   .week-complete-btn.done { background: var(--moss-light); color: var(--moss); border-color: var(--moss); }
 
-  /* ── VIREYSKOMPASSI ── */
+  /* ── LUETTAVA MATERIAALI ── */
+  .reading-box {
+    background: var(--water-light);
+    border: 1px solid rgba(123,155,168,0.3);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .reading-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--water);
+    margin-bottom: 0.4rem;
+  }
+  .reading-text {
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 300;
+    line-height: 1.6;
+    margin-bottom: 0.4rem;
+  }
+  .reading-link {
+    font-size: 13px;
+    color: var(--water);
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .reading-link:hover { text-decoration: underline; }
+
+  /* ── KYSY VALMENTAJALTA ── */
+  .coach-section {
+    margin-top: 1.4rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--border);
+  }
+  .coach-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.35rem;
+  }
+  .coach-quota {
+    font-size: 12px;
+    color: var(--text-light);
+    font-weight: 300;
+    margin-bottom: 0.75rem;
+  }
+  .coach-quota span {
+    font-weight: 500;
+    color: var(--bark);
+  }
+  .coach-textarea {
+    width: 100%;
+    padding: 10px 13px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    background: var(--warm-white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    outline: none;
+    resize: vertical;
+    min-height: 90px;
+    line-height: 1.5;
+    transition: border-color 0.2s;
+    margin-bottom: 0.6rem;
+  }
+  .coach-textarea:focus { border-color: var(--bark); }
+  .coach-textarea:disabled { background: var(--sand); color: var(--text-light); cursor: not-allowed; }
+  .coach-send-btn {
+    padding: 9px 22px;
+    background: var(--accent);
+    color: var(--warm-white);
+    border: none;
+    border-radius: 50px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .coach-send-btn:hover { background: var(--earth); }
+  .coach-send-btn:disabled { background: var(--stone); cursor: not-allowed; }
+  .coach-limit-msg {
+    font-size: 13px;
+    color: var(--text-light);
+    font-weight: 300;
+    font-style: italic;
+    padding: 0.5rem 0;
+  }
   .kompassi-wrap {
     max-width: 680px;
     margin: 0 auto;
@@ -719,6 +812,11 @@ function showView(name, btn) {
 const weeksData = [
   { num: 1, title: 'Tutustuminen — missä olet nyt?', meta: 'Vireystilat, hermosto, perusteet', status: 'available',
     desc: 'Ensimmäinen viikko on orientaatiota: mikä vireystila on, miksi keho reagoi niin kuin reagoi, ja missä tilassa sinä yleensä liikut.',
+    reading: {
+      text: 'LUETTAVA_TEKSTI_VIIKKO1', /* ← Vaihda tähän lyhyt kuvaus luettavasta */
+      url: '',   /* ← Vaihda tähän linkki (tai jätä tyhjäksi jos ei linkkiä) */
+      linkLabel: 'Avaa materiaali' /* ← Linkin teksti */
+    },
     materials: [
       { icon: '🎧', type: 'audio', label: 'Johdanto ANS-säätelyyn (äänite)',
         url: 'LINKKI_VIIKKO1_AANITE' /* ← Vaihda tähän WordPress-linkki */ },
@@ -728,6 +826,11 @@ const weeksData = [
   },
   { num: 2, title: 'Keho tietää ensin', meta: 'Kehosignaalit ja tunnistaminen', status: 'locked',
     desc: 'Opitaan kuuntelemaan kehon viestejä ennen kuin mieli tulkitsee — lihaskireys, hengitys, vatsa, lämpö.',
+    reading: {
+      text: 'LUETTAVA_TEKSTI_VIIKKO2',
+      url: '',
+      linkLabel: 'Avaa materiaali'
+    },
     materials: [
       { icon: '🎧', type: 'audio', label: 'Kehoskannaus-harjoite (ääniohjattu)',
         url: 'LINKKI_VIIKKO2_AANITE' /* ← Vaihda tähän WordPress-linkki */ },
@@ -737,6 +840,11 @@ const weeksData = [
   },
   { num: 3, title: 'Ylivirittyneisyys', meta: 'Tunnistaminen ja laskeutuminen', status: 'locked',
     desc: 'Mitä tapahtuu kehossa, kun olet liikaa vireillä? Harjoitteet, jotka kutsuvat hermostoa alas.',
+    reading: {
+      text: 'LUETTAVA_TEKSTI_VIIKKO3',
+      url: '',
+      linkLabel: 'Avaa materiaali'
+    },
     materials: [
       { icon: '🎧', type: 'audio', label: '4-7-8 hengitys ja variaatiot',
         url: 'LINKKI_VIIKKO3_AANITE' /* ← Vaihda tähän WordPress-linkki */ },
@@ -746,6 +854,11 @@ const weeksData = [
   },
   { num: 4, title: 'Alavirittyneisyys', meta: 'Tunnistaminen ja aktivointi', status: 'locked',
     desc: 'Väsymys, tyhjyys, etäisyys — alavirittyneisyys on yhtä tärkeä tila kuin yliviritys.',
+    reading: {
+      text: 'LUETTAVA_TEKSTI_VIIKKO4',
+      url: '',
+      linkLabel: 'Avaa materiaali'
+    },
     materials: [
       { icon: '🎬', type: 'video', label: 'Liike aktivaattorina (lyhyt video)',
         url: 'LINKKI_VIIKKO4_VIDEO' /* ← Vaihda tähän WordPress-linkki */ },
@@ -755,6 +868,11 @@ const weeksData = [
   },
   { num: 5, title: 'Säätelyikkuna', meta: 'Oman toleranssin tunnistaminen', status: 'locked',
     desc: 'Toleranssi-ikkuna on se alue, jossa pystyt olemaan — ei liikaa, ei liian vähän.',
+    reading: {
+      text: 'LUETTAVA_TEKSTI_VIIKKO5',
+      url: '',
+      linkLabel: 'Avaa materiaali'
+    },
     materials: [
       { icon: '🎧', type: 'audio', label: 'Ikkuna-käsitteen syventäminen (äänite)',
         url: 'LINKKI_VIIKKO5_AANITE' /* ← Vaihda tähän WordPress-linkki */ },
@@ -764,6 +882,11 @@ const weeksData = [
   },
   { num: 6, title: 'Resurssointi', meta: 'Mikä kannattelee sinua?', status: 'locked',
     desc: 'Resurssit ovat asioita, paikkoja, ihmisiä ja kehontiloja, jotka tukevat säätelyä.',
+    reading: {
+      text: 'LUETTAVA_TEKSTI_VIIKKO6',
+      url: '',
+      linkLabel: 'Avaa materiaali'
+    },
     materials: [
       { icon: '🎧', type: 'audio', label: 'Resurssipaikka-mielikuvaharjoitus',
         url: 'LINKKI_VIIKKO6_AANITE' /* ← Vaihda tähän WordPress-linkki */ },
@@ -773,6 +896,11 @@ const weeksData = [
   },
   { num: 7, title: 'Arjen rytmitys', meta: 'Säätely rakenteeksi', status: 'locked',
     desc: 'Säätely pitää rakentaa arkeen. Tällä viikolla suunnittelet oman päivärakenteen.',
+    reading: {
+      text: 'LUETTAVA_TEKSTI_VIIKKO7',
+      url: '',
+      linkLabel: 'Avaa materiaali'
+    },
     materials: [
       { icon: '📋', type: 'task', label: 'Päivärakenne-pohja (ladattava)',
         url: 'LINKKI_VIIKKO7_POHJA' /* ← Vaihda tähän WordPress-linkki */ },
@@ -782,6 +910,11 @@ const weeksData = [
   },
   { num: 8, title: 'Oma polku eteenpäin', meta: 'Koonta, jatkuminen, toimijuus', status: 'locked',
     desc: 'Viimeinen viikko on kokoamista: mitä opit, mikä toimii sinulle, mihin suuntaat seuraavaksi.',
+    reading: {
+      text: 'LUETTAVA_TEKSTI_VIIKKO8',
+      url: '',
+      linkLabel: 'Avaa materiaali'
+    },
     materials: [
       { icon: '🎧', type: 'audio', label: 'Yhteenvetoäänite',
         url: 'LINKKI_VIIKKO8_AANITE' /* ← Vaihda tähän WordPress-linkki */ },
@@ -830,6 +963,32 @@ function buildWeeks() {
     const isDone = completedWeeks.has(w.num);
     const statusLabel = isDone ? 'Tehty ✓' : (w.status === 'available' ? 'Auki' : 'Tulossa');
     const statusClass = isDone ? 'done' : w.status;
+
+    // Luettava materiaali
+    const hasReading = w.reading && !w.reading.text.startsWith('LUETTAVA_');
+    const readingHtml = hasReading ? `
+      <div class="reading-box">
+        <div class="reading-label">📖 Luettava tällä viikolla</div>
+        <p class="reading-text">${w.reading.text}</p>
+        ${w.reading.url ? `<a class="reading-link" href="${w.reading.url}" target="_blank" rel="noopener">${w.reading.linkLabel} →</a>` : ''}
+      </div>` : '';
+
+    // Kysy valmentajalta
+    const msgKey = 'coach_msgs_v' + w.num;
+    const sent = JSON.parse(localStorage.getItem(msgKey) || '[]');
+    const remaining = Math.max(0, 3 - sent.length);
+    const coachHtml = `
+      <div class="coach-section">
+        <div class="coach-label">✉️ Kysy valmentajalta</div>
+        <div class="coach-quota">Viestejä jäljellä tällä viikolla: <span>${remaining} / 3</span></div>
+        ${remaining > 0 ? `
+          <textarea class="coach-textarea" id="coach-ta-${w.num}" placeholder="Kirjoita kysymyksesi tai ajatuksesi tähän viikosta ${w.num}…"></textarea>
+          <button class="coach-send-btn" onclick="lahetaCoachViesti(event, ${w.num})">Lähetä viesti</button>
+        ` : `
+          <p class="coach-limit-msg">Olet käyttänyt tämän viikon viestikiintiön (3/3). Voit lähettää lisää ensi viikolla.</p>
+        `}
+      </div>`;
+
     card.innerHTML = `
       <div class="week-header" onclick="toggleWeek(${w.num}, '${w.status}', ${isDone})">
         <div class="week-num">${w.num}</div>
@@ -842,6 +1001,7 @@ function buildWeeks() {
       <div class="week-body">
         <div class="week-body-inner">
           <p class="week-desc">${w.desc}</p>
+          ${readingHtml}
           ${w.materials.map(m => {
             const isPlaceholder = !m.url || m.url.startsWith('LINKKI_');
             if (isPlaceholder) {
@@ -856,7 +1016,8 @@ function buildWeeks() {
               <span class="material-arrow">→</span>
             </a>`;
           }).join('')}
-          <button class="week-complete-btn ${isDone ? 'done' : ''}" onclick="markDone(event, ${w.num})">
+          ${coachHtml}
+          <button class="week-complete-btn ${isDone ? 'done' : ''}" onclick="markDone(event, ${w.num})" style="margin-top:1.4rem">
             ${isDone ? '✓ Merkitty tehdyksi' : 'Merkitse tehdyksi'}
           </button>
         </div>
@@ -886,7 +1047,31 @@ function markDone(e, num) {
   if (next) setTimeout(() => next.scrollIntoView({ behavior: 'smooth', block: 'center' }), 300);
 }
 
-// ── Viestintä ──
+// ── Kysy valmentajalta ──
+function lahetaCoachViesti(e, weekNum) {
+  e.stopPropagation();
+  const ta = document.getElementById('coach-ta-' + weekNum);
+  const viesti = ta ? ta.value.trim() : '';
+  if (!viesti) { ta.focus(); return; }
+
+  const msgKey = 'coach_msgs_v' + weekNum;
+  const sent = JSON.parse(localStorage.getItem(msgKey) || '[]');
+  if (sent.length >= 3) return;
+
+  const week = weeksData.find(w => w.num === weekNum);
+  const subject = encodeURIComponent('Digivalmennus – Viikko ' + weekNum + ': ' + (week ? week.title : ''));
+  const body = encodeURIComponent('Viikko ' + weekNum + ' – ' + (week ? week.title : '') + '\n\n' + viesti);
+  window.location.href = 'mailto:vakaaputiikki@gmail.com?subject=' + subject + '&body=' + body;
+
+  // Tallennetaan lähetetty viesti kiintiön laskemiseksi
+  sent.push({ ts: Date.now(), preview: viesti.slice(0, 60) });
+  localStorage.setItem(msgKey, JSON.stringify(sent));
+
+  buildWeeks();
+  document.getElementById('week-' + weekNum).classList.add('open');
+}
+
+
 function lahetaViesti() {
   const name = document.getElementById('v-name').value.trim();
   const viesti = document.getElementById('v-viesti').value.trim();
