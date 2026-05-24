@@ -756,7 +756,6 @@
     <a href="#" class="nav-logo">Vakauttamisvalmentaja</a>
     <div class="nav-tabs">
       <button class="nav-tab active" onclick="showView('valmennus', this)">Valmennus</button>
-      <button class="nav-tab" onclick="showView('kompassi', this)">Vireyskompassi</button>
     </div>
   </div>
 </nav>
@@ -997,80 +996,7 @@
 </div><!-- /view-valmennus -->
 
 
-<!-- ══════════════ VIREYSKOMPASSI VIEW ══════════════ -->
-<div id="view-kompassi" class="view">
-  <div class="kompassi-view">
 
-    <div class="kompassi-header">
-      <h2>Vireyskompassi</h2>
-      <p>Tunnista tilasi — löydä juuri nyt sopiva harjoite</p>
-    </div>
-
-    <div>
-      <p class="symptoms-title">Missä tilassa olet tällä hetkellä?</p>
-      <div class="zone-selector">
-        <button class="zone-btn hyper" onclick="selectZone('hyper', this)">
-          <div class="zone-icon">⚡</div>
-          <div class="zone-label">YLIVIRITTYNEISYYS</div>
-          <div class="zone-desc">Ahdistus, kiire, levoton</div>
-        </button>
-        <button class="zone-btn ok" onclick="selectZone('ok', this)">
-          <div class="zone-icon">🌿</div>
-          <div class="zone-label">TURVAVYÖHYKE</div>
-          <div class="zone-desc">Tasainen, läsnä, toimiva</div>
-        </button>
-        <button class="zone-btn hypo" onclick="selectZone('hypo', this)">
-          <div class="zone-icon">🌊</div>
-          <div class="zone-label">ALAVIRITTYNEISYYS</div>
-          <div class="zone-desc">Väsymys, tyhjyys, etäisyys</div>
-        </button>
-      </div>
-    </div>
-
-    <div class="symptoms-section" id="symptoms-section" style="display:none;">
-      <p class="symptoms-title">Mitkä kuvaavat juuri nyt?</p>
-      <div class="symptoms-grid" id="symptoms-grid"></div>
-    </div>
-
-    <div class="tools-section" id="tools-section" style="display:none;">
-      <p class="tools-section-title" id="tools-title">Harjoitteet tälle tilalle</p>
-      <div id="tools-list"></div>
-    </div>
-
-    <div id="zone-ok-msg" style="display:none;">
-      <div class="kompassi-note">
-        <strong>Olet turvavyöhykkeellä — hyvä!</strong><br><br>
-        Tämä on tila, jossa voit oppia, olla yhteydessä ja toimia. Voit silti kokeilla jotain harjoitetta pitääksesi tilaa yllä.
-      </div>
-      <div class="tools-section" style="display:block; margin-top:1.5rem;">
-        <p class="tools-section-title">Ylläpitoharjoitteet</p>
-        <div id="tools-ok"></div>
-      </div>
-    </div>
-
-    <div class="log-section">
-      <p class="log-title">Päivän kirjaukset</p>
-      <div class="log-form">
-        <select id="log-zone">
-          <option value="">Tila…</option>
-          <option value="hyper">Ylivirittynyt</option>
-          <option value="ok">Turvavyöhyke</option>
-          <option value="hypo">Alivirittynyt</option>
-        </select>
-        <input type="text" id="log-note" placeholder="Huomio (vapaaehtoinen)">
-        <button class="log-btn" onclick="addLog()">+ Kirjaa</button>
-      </div>
-      <div class="log-entries" id="log-entries">
-        <p class="log-empty">Ei kirjauksia vielä tänään.</p>
-      </div>
-    </div>
-
-    <div class="kompassi-note" style="margin-top:2rem;">
-      Vireyskompassi on osa <strong>Vakauttavaa digivalmennusta</strong>. Jos haluat syventää taitojasi, <a href="#" onclick="showView('valmennus', document.querySelector('.nav-tab'))">tutustu valmennukseen</a>.
-    </div>
-
-  </div>
-</div>
 
 <footer>
   <p>© 2024 Vakauttamisvalmentaja · <a href="https://www.vakauttamisvalmentaja.fi">vakauttamisvalmentaja.fi</a> · <a href="https://www.vakaaputiikki.com">vakaaputiikki.com</a></p>
