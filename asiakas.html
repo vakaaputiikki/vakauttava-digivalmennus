@@ -628,7 +628,6 @@ function doLogin() {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('app').style.display = 'block';
     buildWeeks();
-    buildOkTools();
   } else {
     document.getElementById('login-error').classList.add('visible');
     document.getElementById('pw-input').value = '';
@@ -756,95 +755,6 @@ function markDone(e, num) {
   if (nextWeek) nextWeek.status = 'available';
   buildWeeks();
   document.getElementById('week-' + num).classList.add('open');
-}
-
-// ── Kompassi ──
-const zones = {
-  hyper: {
-    symptoms: ['Sydän lyö nopeasti','Ajatukset kiitävät','Leuka tai hartiat jumissa','Hengitys pinnallinen','Ärsyyntyneisyys','Nukkuminen vaikeaa','Vatsa kiristää','Ylianalysointi'],
-    tools: [
-      { name: 'Fysiologinen huokaus', type: 'Hengitysharjoite · 2 min', desc: 'Tehokkain yksittäinen harjoite hermoston rauhoittamiseen.', steps: ['Hengitä nenästä sisään täyteen keuhkot','Lisää vielä nopea pieni sisäänhengitys','Hengitä pitkästi ulos suun kautta','Toista 3–5 kertaa'] },
-      { name: 'Maadoitus — 5-4-3-2-1', type: 'Kehollinen harjoite · 3–5 min', desc: 'Aistimaisema tuo sinut hetkeen.', steps: ['Nimeä 5 asiaa mitä näet','Nimeä 4 asiaa mitä kuulet','Tunnustele 3 pintaa jota kosket','Tunnista 2 tuoksua tai makua','Huomaa 1 asia jonka tunnet kehossasi'] },
-      { name: 'Kylmä vesi kasvoille', type: 'Fysiologinen · 1 min', desc: 'Aktivoi sukellusrefleksin, joka hidastaa sykettä nopeasti.', steps: ['Täytä kulho kylmällä vedellä','Pidä kasvot vedessä 15–30 sekuntia','Voit toistaa'] },
-    ]
-  },
-  hypo: {
-    symptoms: ['Väsymys, raskaus','Tunnottomuus','Vaikeus toimia','Etäisyyden tunne','Motivaation puute','Olo kuin sumussa','Tyhjyys','Hitaus'],
-    tools: [
-      { name: 'Orientointiharjoite', type: 'Kehollinen · 2–3 min', desc: 'Aktivoi turvajärjestelmää katsomalla ympärillesi hitaasti.', steps: ['Istu tai seiso mukavasti','Liikuta katsetta hitaasti vasemmalta oikealle','Anna silmien pysähtyä johonkin mielenkiintoiseen','Huomaa mitä siinä on — väri, muoto, rakenne','Toista useampaan esineeseen'] },
-      { name: 'Liike aktivaattorina', type: 'Kehollinen · 3–5 min', desc: 'Pieni liike herättää hermostoa ilman ylivireyttä.', steps: ['Nouse ylös ja seiso','Puristele käsiä nyrkkiin ja auki 10 kertaa','Ravistele hellästi käsiä, sitten jalkoja','Pyörittele hartioita hitaasti','Huomaa muutos'] },
-      { name: 'Kehoskannaus', type: 'Ohjattu · 5–10 min', desc: 'Kutsuu sinut takaisin kehoon kun olet etäinen.', steps: ['Etsi rauhallinen paikka','Aloita huomiosta jalkapohjissa','Liiku hitaasti ylöspäin','Anna jokaiselle kohdalle hetki','Pelkkä huomaaminen riittää'] },
-    ]
-  }
-};
-
-const okTools = [
-  { name: 'Pitkä uloshengitys', type: 'Ylläpitoharjoite · 2 min', desc: 'Ylläpidä turvavyöhykettä tietoisella hengityksellä.', steps: ['Hengitä sisään 4 laskien','Hengitä ulos 6–8 laskien','Toista 5–10 kertaa'] },
-  { name: 'Nopea kehoskannaus', type: 'Ylläpitoharjoite · 3 min', desc: 'Tarkista nopeasti kehon tila.', steps: ['Sulje silmät hetkeksi','Käy läpi kehon osat päälaesta jalkapohjiin','Merkitse missä on jännitystä','Hengittele jännittyneisiin kohtiin'] },
-];
-
-const logEntries = [];
-
-function selectZone(zone, btn) {
-  document.querySelectorAll('.zone-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('k-symptoms').style.display = 'none';
-  document.getElementById('k-tools').style.display = 'none';
-  document.getElementById('k-ok-msg').style.display = 'none';
-
-  if (zone === 'ok') {
-    document.getElementById('k-ok-msg').style.display = 'block';
-    return;
-  }
-  const data = zones[zone];
-  const grid = document.getElementById('k-symptoms-grid');
-  grid.innerHTML = '';
-  data.symptoms.forEach(s => {
-    const chip = document.createElement('button');
-    chip.className = 'symptom-chip';
-    chip.textContent = s;
-    chip.onclick = () => chip.classList.toggle('selected');
-    grid.appendChild(chip);
-  });
-  document.getElementById('k-symptoms').style.display = 'block';
-  document.getElementById('k-tools-title').textContent = zone === 'hyper' ? 'Harjoitteet — rauhoittumiseen' : 'Harjoitteet — aktivointiin';
-  const list = document.getElementById('k-tools-list');
-  list.innerHTML = '';
-  data.tools.forEach(t => list.appendChild(makeToolCard(t)));
-  document.getElementById('k-tools').style.display = 'block';
-}
-
-function buildOkTools() {
-  const list = document.getElementById('k-ok-tools');
-  list.innerHTML = '';
-  okTools.forEach(t => list.appendChild(makeToolCard(t)));
-}
-
-function makeToolCard(t) {
-  const card = document.createElement('div');
-  card.className = 'tool-card';
-  card.innerHTML = `<div><div class="tool-name">${t.name}</div><div class="tool-type">${t.type}</div></div><div class="tool-arrow">▶</div><div class="tool-body"><p>${t.desc}</p><ol class="tool-steps">${t.steps.map(s=>`<li>${s}</li>`).join('')}</ol></div>`;
-  card.onclick = () => card.classList.toggle('expanded');
-  return card;
-}
-
-function addLog() {
-  const zone = document.getElementById('log-zone').value;
-  const note = document.getElementById('log-note').value.trim();
-  if (!zone) { alert('Valitse tila.'); return; }
-  const now = new Date();
-  const time = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
-  const labels = { hyper: 'Ylivirittynyt', ok: 'Turvavyöhyke', hypo: 'Alivirittynyt' };
-  logEntries.unshift({ time, zone, note, label: labels[zone] });
-  document.getElementById('log-zone').value = '';
-  document.getElementById('log-note').value = '';
-  renderLog();
-}
-
-function renderLog() {
-  const c = document.getElementById('log-entries');
-  if (!logEntries.length) { c.innerHTML = '<p class="log-empty">Ei kirjauksia vielä tänään.</p>'; return; }
-  c.innerHTML = logEntries.map(e => `<div class="log-entry"><span class="log-time">${e.time}</span><span class="log-zone-badge ${e.zone}">${e.label}</span><span class="log-note">${e.note||'—'}</span></div>`).join('');
 }
 
 // ── Viestintä ──
