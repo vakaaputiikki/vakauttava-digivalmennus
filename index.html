@@ -756,7 +756,6 @@
     <a href="#" class="nav-logo">Vakauttamisvalmentaja</a>
     <div class="nav-tabs">
       <button class="nav-tab active" onclick="showView('valmennus', this)">Valmennus</button>
-      <button class="nav-tab" onclick="showView('kompassi', this)">Vireyskompassi</button>
     </div>
   </div>
 </nav>
@@ -997,80 +996,7 @@
 </div><!-- /view-valmennus -->
 
 
-<!-- ══════════════ VIREYSKOMPASSI VIEW ══════════════ -->
-<div id="view-kompassi" class="view">
-  <div class="kompassi-view">
 
-    <div class="kompassi-header">
-      <h2>Vireyskompassi</h2>
-      <p>Tunnista tilasi — löydä juuri nyt sopiva harjoite</p>
-    </div>
-
-    <div>
-      <p class="symptoms-title">Missä tilassa olet tällä hetkellä?</p>
-      <div class="zone-selector">
-        <button class="zone-btn hyper" onclick="selectZone('hyper', this)">
-          <div class="zone-icon">⚡</div>
-          <div class="zone-label">YLIVIRITTYNEISYYS</div>
-          <div class="zone-desc">Ahdistus, kiire, levoton</div>
-        </button>
-        <button class="zone-btn ok" onclick="selectZone('ok', this)">
-          <div class="zone-icon">🌿</div>
-          <div class="zone-label">TURVAVYÖHYKE</div>
-          <div class="zone-desc">Tasainen, läsnä, toimiva</div>
-        </button>
-        <button class="zone-btn hypo" onclick="selectZone('hypo', this)">
-          <div class="zone-icon">🌊</div>
-          <div class="zone-label">ALAVIRITTYNEISYYS</div>
-          <div class="zone-desc">Väsymys, tyhjyys, etäisyys</div>
-        </button>
-      </div>
-    </div>
-
-    <div class="symptoms-section" id="symptoms-section" style="display:none;">
-      <p class="symptoms-title">Mitkä kuvaavat juuri nyt?</p>
-      <div class="symptoms-grid" id="symptoms-grid"></div>
-    </div>
-
-    <div class="tools-section" id="tools-section" style="display:none;">
-      <p class="tools-section-title" id="tools-title">Harjoitteet tälle tilalle</p>
-      <div id="tools-list"></div>
-    </div>
-
-    <div id="zone-ok-msg" style="display:none;">
-      <div class="kompassi-note">
-        <strong>Olet turvavyöhykkeellä — hyvä!</strong><br><br>
-        Tämä on tila, jossa voit oppia, olla yhteydessä ja toimia. Voit silti kokeilla jotain harjoitetta pitääksesi tilaa yllä.
-      </div>
-      <div class="tools-section" style="display:block; margin-top:1.5rem;">
-        <p class="tools-section-title">Ylläpitoharjoitteet</p>
-        <div id="tools-ok"></div>
-      </div>
-    </div>
-
-    <div class="log-section">
-      <p class="log-title">Päivän kirjaukset</p>
-      <div class="log-form">
-        <select id="log-zone">
-          <option value="">Tila…</option>
-          <option value="hyper">Ylivirittynyt</option>
-          <option value="ok">Turvavyöhyke</option>
-          <option value="hypo">Alivirittynyt</option>
-        </select>
-        <input type="text" id="log-note" placeholder="Huomio (vapaaehtoinen)">
-        <button class="log-btn" onclick="addLog()">+ Kirjaa</button>
-      </div>
-      <div class="log-entries" id="log-entries">
-        <p class="log-empty">Ei kirjauksia vielä tänään.</p>
-      </div>
-    </div>
-
-    <div class="kompassi-note" style="margin-top:2rem;">
-      Vireyskompassi on osa <strong>Vakauttavaa digivalmennusta</strong>. Jos haluat syventää taitojasi, <a href="#" onclick="showView('valmennus', document.querySelector('.nav-tab'))">tutustu valmennukseen</a>.
-    </div>
-
-  </div>
-</div>
 
 <footer>
   <p>© 2024 Vakauttamisvalmentaja · <a href="https://www.vakauttamisvalmentaja.fi">vakauttamisvalmentaja.fi</a> · <a href="https://www.vakaaputiikki.com">vakaaputiikki.com</a></p>
@@ -1082,14 +1008,7 @@ function showView(name, btn) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
   document.getElementById('view-' + name).classList.add('active');
-  if (btn) {
-    // find the correct tab
-    document.querySelectorAll('.nav-tab').forEach(t => {
-      if (t.textContent.trim() === (name === 'valmennus' ? 'Valmennus' : 'Vireyskompassi')) {
-        t.classList.add('active');
-      }
-    });
-  }
+  if (btn) btn.classList.add('active');
 }
 
 // ── Week accordion ──
@@ -1117,173 +1036,7 @@ function submitForm() {
   window.location.href = 'mailto:sinun@sahkoposti.fi?subject=' + subject + '&body=' + body;
 }
 
-// ── Kompassi data ──
-const zones = {
-  hyper: {
-    symptoms: ['Sydän lyö nopeasti','Ajatukset kiitävät','Leuka tai hartiat jumissa','Hengitys pinnallinen','Ärsyyntyneisyys','Nukkuminen vaikeaa','Vatsa kiristää','Ylianalysointi'],
-    tools: [
-      {
-        name: 'Fysiologinen huokaus',
-        type: 'Hengitysharjoite · 2 min',
-        desc: 'Tehokkain yksittäinen harjoite hermoston rauhoittamiseen. Kaksi sisäänhengitystä nenästä, pitkä uloshengitys suusta.',
-        steps: ['Hengitä nenästä sisään täyteen keuhkot','Lisää vielä nopea pieni sisäänhengitys','Hengitä pitkästi ulos suun kautta — anna mennä kaikkea','Toista 3–5 kertaa']
-      },
-      {
-        name: 'Maadoitus — 5-4-3-2-1',
-        type: 'Kehollinen harjoite · 3–5 min',
-        desc: 'Aistimaisema tuo sinut hetkeen. Kun keho on ylikierroksilla, tämä auttaa paikantamaan itsesi nykyhetkeen.',
-        steps: ['Nimeä 5 asiaa mitä näet','Nimeä 4 asiaa mitä kuulet','Tunnustele 3 pintaa, jota kosket','Tunnista 2 tuoksua tai makua','Huomaa 1 asia, jonka tunnet kehossasi']
-      },
-      {
-        name: 'Kylmä vesi kasvoille',
-        type: 'Fysiologinen · 1 min',
-        desc: 'Kylmä vesi kasvoilla aktivoi sukellusrefleksin, joka hidastaa sykettä nopeasti. Erityisen tehokas voimakkaan ahdistuksen hetkellä.',
-        steps: ['Täytä kulho kylmällä vedellä tai kastad kasvot hanasta','Pidä kasvot vedessä 15–30 sekuntia','Voit toistaa']
-      }
-    ]
-  },
-  hypo: {
-    symptoms: ['Väsymys, raskaus','Tunnottomuus','Vaikeus toimia','Etäisyyden tunne','Motivaation puute','Olo kuin sumussa','Tyhjyys','Hitaus'],
-    tools: [
-      {
-        name: 'Orientointiharjoite',
-        type: 'Kehollinen · 2–3 min',
-        desc: 'Katsele hitaasti ympärillesi kuin löytäisit huoneen ensimmäistä kertaa. Tämä aktivoi turvajärjestelmää.',
-        steps: ['Istu tai seiso mukavasti','Liikuta katsetta hitaasti vasemmalta oikealle','Anna silmien pysähtyä johonkin mielenkiintoiseen — mikä tahansa','Huomaa mitä siinä on — väri, muoto, rakenne','Toista useampaan esineeseen rauhallisesti']
-      },
-      {
-        name: 'Liike aktivaattorina',
-        type: 'Kehollinen · 3–5 min',
-        desc: 'Pieni liike herättää hermostoa ilman, että mennään ylivireystilaan. Tavoitteena on saada keho lämpimämmäksi ja läsnäolevammaksi.',
-        steps: ['Nouse ylös ja seiso','Puristele käsiä nyrkkiin ja auki 10 kertaa','Ravistele hellästi käsiä, sitten jalkoja','Pyörittele hartioita hitaasti molempiin suuntiin','Huomaa muutos']
-      },
-      {
-        name: 'Ääniohjattu kehoskannaus',
-        type: 'Ohjattu · 5–10 min',
-        desc: 'Kehoskannaus vie huomion sisälle. Alavirittyneessä tilassa keho voi olla hyvin etäinen — tämä kutsuu sinut takaisin.',
-        steps: ['Laita kuulokkeet ja etsi rauhallinen paikka','Aloita huomiosta jalkapohjissa','Liiku hitaasti ylöspäin — jalat, vatsa, rinta, hartiat, kaula, pää','Anna jokaiselle kohdalle muutama sekunti','Ei tarvitse muuttaa mitään — pelkkä huomaaminen riittää']
-      }
-    ]
-  }
-};
 
-const okTools = [
-  {
-    name: 'Pitkä uloshengitys',
-    type: 'Ylläpitoharjoite · 2 min',
-    desc: 'Ylläpidä turvavyöhykettä tietoisella hengityksellä. Pidä uloshengitys selvästi sisäänhengitystä pidempänä.',
-    steps: ['Hengitä sisään 4 laskien','Hengitä ulos 6–8 laskien','Toista 5–10 kertaa']
-  },
-  {
-    name: 'Kehoskannaus — nopea',
-    type: 'Ylläpitoharjoite · 3 min',
-    desc: 'Tarkista nopeasti kehon tila — missä on jännitystä, missä kevyttä, onko jokin epätasapaino?',
-    steps: ['Sulje silmät hetkeksi','Käy läpi kehon osat päälaesta jalkapohjiin','Merkitse mielessä missä on jännitystä','Voit hengitellä jännittyneisiin kohtiin']
-  }
-];
-
-// ── Zone selection ──
-let currentZone = null;
-const logEntries = [];
-
-function selectZone(zone, btn) {
-  currentZone = zone;
-  document.querySelectorAll('.zone-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-
-  document.getElementById('symptoms-section').style.display = 'none';
-  document.getElementById('tools-section').style.display = 'none';
-  document.getElementById('zone-ok-msg').style.display = 'none';
-
-  if (zone === 'ok') {
-    document.getElementById('zone-ok-msg').style.display = 'block';
-    renderOkTools();
-    return;
-  }
-
-  const data = zones[zone];
-  const grid = document.getElementById('symptoms-grid');
-  grid.innerHTML = '';
-  data.symptoms.forEach(s => {
-    const chip = document.createElement('button');
-    chip.className = 'symptom-chip';
-    chip.textContent = s;
-    chip.onclick = () => chip.classList.toggle('selected');
-    grid.appendChild(chip);
-  });
-  document.getElementById('symptoms-section').style.display = 'block';
-
-  const title = document.getElementById('tools-title');
-  title.textContent = zone === 'hyper' ? 'Harjoitteet — rauhoittumiseen' : 'Harjoitteet — aktivointiin';
-  renderTools(zone);
-  document.getElementById('tools-section').style.display = 'block';
-}
-
-function renderTools(zone) {
-  const list = document.getElementById('tools-list');
-  list.innerHTML = '';
-  zones[zone].tools.forEach(t => {
-    list.appendChild(makeToolCard(t));
-  });
-}
-
-function renderOkTools() {
-  const list = document.getElementById('tools-ok');
-  list.innerHTML = '';
-  okTools.forEach(t => {
-    list.appendChild(makeToolCard(t));
-  });
-}
-
-function makeToolCard(t) {
-  const card = document.createElement('div');
-  card.className = 'tool-card';
-  card.innerHTML = `
-    <div>
-      <div class="tool-name">${t.name}</div>
-      <div class="tool-type">${t.type}</div>
-    </div>
-    <div class="tool-arrow">▶</div>
-    <div class="tool-body">
-      <p>${t.desc}</p>
-      <ol class="tool-steps">${t.steps.map(s => `<li>${s}</li>`).join('')}</ol>
-    </div>
-  `;
-  card.onclick = () => card.classList.toggle('expanded');
-  return card;
-}
-
-// ── Log ──
-function addLog() {
-  const zone = document.getElementById('log-zone').value;
-  const note = document.getElementById('log-note').value.trim();
-  if (!zone) { alert('Valitse tila.'); return; }
-
-  const now = new Date();
-  const time = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
-  const labels = { hyper: 'Ylivirittynyt', ok: 'Turvavyöhyke', hypo: 'Alivirittynyt' };
-
-  logEntries.unshift({ time, zone, note, label: labels[zone] });
-
-  document.getElementById('log-zone').value = '';
-  document.getElementById('log-note').value = '';
-  renderLog();
-}
-
-function renderLog() {
-  const container = document.getElementById('log-entries');
-  if (!logEntries.length) {
-    container.innerHTML = '<p class="log-empty">Ei kirjauksia vielä tänään.</p>';
-    return;
-  }
-  container.innerHTML = logEntries.map(e => `
-    <div class="log-entry">
-      <span class="log-time">${e.time}</span>
-      <span class="log-zone-badge ${e.zone}">${e.label}</span>
-      <span class="log-note">${e.note || '—'}</span>
-    </div>
-  `).join('');
-}
 </script>
 </body>
 </html>
