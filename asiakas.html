@@ -41,86 +41,8 @@
     font-size: 16px;
   }
 
-  /* ── LOGIN ── */
-  #login-screen {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(160deg, var(--sand) 0%, var(--warm-white) 70%);
-    padding: 2rem;
-  }
-  .login-card {
-    background: var(--warm-white);
-    border: 1px solid var(--border-strong);
-    border-radius: var(--radius);
-    padding: 3rem 2.5rem;
-    max-width: 380px;
-    width: 100%;
-    text-align: center;
-  }
-  .login-logo {
-    font-family: 'Fraunces', serif;
-    font-size: 13px;
-    font-weight: 400;
-    letter-spacing: 0.08em;
-    color: var(--text-light);
-    text-transform: uppercase;
-    margin-bottom: 2rem;
-  }
-  .login-title {
-    font-family: 'Fraunces', serif;
-    font-size: 1.6rem;
-    font-weight: 300;
-    color: var(--deep);
-    margin-bottom: 0.5rem;
-  }
-  .login-sub {
-    font-size: 14px;
-    color: var(--text-muted);
-    font-weight: 300;
-    margin-bottom: 2rem;
-  }
-  .login-input {
-    width: 100%;
-    padding: 12px 16px;
-    border: 1px solid var(--border-strong);
-    border-radius: var(--radius-sm);
-    background: var(--warm-white);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    color: var(--text);
-    outline: none;
-    text-align: center;
-    letter-spacing: 0.1em;
-    margin-bottom: 1rem;
-    transition: border-color 0.2s;
-  }
-  .login-input:focus { border-color: var(--bark); }
-  .login-btn {
-    width: 100%;
-    padding: 13px;
-    background: var(--earth);
-    color: var(--warm-white);
-    border: none;
-    border-radius: 50px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  .login-btn:hover { background: var(--deep); }
-  .login-error {
-    font-size: 13px;
-    color: #b94a4a;
-    margin-top: 0.8rem;
-    display: none;
-  }
-  .login-error.visible { display: block; }
-
   /* ── APP ── */
-  #app { display: none; }
+  #app { display: block; }
 
   nav {
     position: sticky;
@@ -663,18 +585,6 @@
 </head>
 <body>
 
-<!-- ── LOGIN ── -->
-<div id="login-screen">
-  <div class="login-card">
-    <p class="login-logo">Vakauttamisvalmentaja</p>
-    <h1 class="login-title">Tervetuloa valmennukseen</h1>
-    <p class="login-sub">Syötä saamasi salasana päästäksesi sisään.</p>
-    <input type="password" class="login-input" id="pw-input" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
-    <button class="login-btn" onclick="doLogin()">Kirjaudu sisään</button>
-    <p class="login-error" id="login-error">Väärä salasana. Tarkista sähköpostistasi.</p>
-  </div>
-</div>
-
 <!-- ── APP ── -->
 <div id="app">
 
@@ -784,21 +694,10 @@
 </div><!-- /app -->
 
 <script>
-// ── Salasana — VAIHDA TÄHÄN OMA SALASANASI ──
-const SALASANA = 'digi2026';
-
-function doLogin() {
-  const val = document.getElementById('pw-input').value;
-  if (val === SALASANA) {
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    syncStatusFromStorage();
-    buildWeeks();
-  } else {
-    document.getElementById('login-error').classList.add('visible');
-    document.getElementById('pw-input').value = '';
-  }
-}
+document.addEventListener('DOMContentLoaded', function() {
+  syncStatusFromStorage();
+  buildWeeks();
+});
 
 // ── Navigation ──
 function showView(name, btn) {
