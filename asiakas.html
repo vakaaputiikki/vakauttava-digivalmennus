@@ -274,6 +274,21 @@
     font-size: 14px;
     color: var(--text-muted);
     font-weight: 300;
+    text-decoration: none;
+  }
+  a.material-link {
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  a.material-link:hover {
+    background: var(--sand);
+    border-color: var(--stone);
+    color: var(--earth);
+  }
+  .material-arrow {
+    margin-left: auto;
+    font-size: 13px;
+    color: var(--text-light);
   }
   .material-icon {
     width: 32px; height: 32px;
@@ -493,10 +508,63 @@
   }
   footer p { font-size: 13px; color: rgba(250,248,244,0.4); font-weight: 300; }
 
+  /* ── EDISTYMISPALKKI ── */
+  .progress-bar-wrap {
+    background: var(--sand-dark);
+    border-radius: 50px;
+    height: 6px;
+    margin: 1.5rem auto 0;
+    max-width: 320px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--moss), var(--sage));
+    border-radius: 50px;
+    transition: width 0.5s ease;
+  }
+  .progress-label {
+    font-size: 12px;
+    color: var(--text-light);
+    font-weight: 300;
+    margin-top: 0.5rem;
+    text-align: center;
+  }
+
+  /* ── MOBIILI ── */
   @media (max-width: 600px) {
     .zone-selector { grid-template-columns: 1fr; }
     .log-form { grid-template-columns: 1fr; }
-    .nav-tab { padding: 6px 10px; font-size: 12px; }
+
+    /* Navigaatio mobiilissa */
+    nav { padding: 0 1rem; }
+    .nav-inner { flex-direction: column; height: auto; padding: 0.75rem 0; gap: 0.6rem; }
+    .nav-logo { font-size: 14px; }
+    .nav-tabs { width: 100%; justify-content: center; }
+    .nav-tab { padding: 7px 12px; font-size: 12px; flex: 1; text-align: center; }
+
+    /* Viikkokortti mobiilissa */
+    .week-header { grid-template-columns: 44px 1fr auto; gap: 0.75rem; padding: 1rem; }
+    .week-title { font-size: 14px; }
+    .week-status { font-size: 10px; padding: 3px 8px; }
+    .week-body { padding: 0 1rem 1.25rem; }
+
+    /* Page header */
+    .page-header { padding: 2rem 1.25rem 1.75rem; }
+
+    /* Materiaalit */
+    .material-item { padding: 10px 12px; }
+
+    /* Lomake */
+    .viestinta-wrap { padding: 2rem 1.25rem 4rem; }
+    .kompassi-wrap { padding: 2rem 1.25rem 4rem; }
+    .section { padding: 2rem 1.25rem; }
+
+    /* Nappi leveäksi */
+    .week-complete-btn { width: 100%; text-align: center; }
+
+    /* Login */
+    .login-card { padding: 2.5rem 1.75rem; }
   }
 </style>
 </head>
@@ -534,6 +602,10 @@
     <p class="page-eyebrow">Oma polku</p>
     <h1 class="page-title">8 viikon valmennus</h1>
     <p class="page-sub">Avaa viikko, kuuntele materiaali ja tee tehtävä.</p>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+    <p class="progress-label" id="progress-label">0 / 8 viikkoa tehty</p>
   </div>
   <div class="section">
     <div id="weeks-container"></div>
@@ -627,6 +699,7 @@ function doLogin() {
   if (val === SALASANA) {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('app').style.display = 'block';
+    syncStatusFromStorage();
     buildWeeks();
   } else {
     document.getElementById('login-error').classList.add('visible');
@@ -647,62 +720,105 @@ const weeksData = [
   { num: 1, title: 'Tutustuminen — missä olet nyt?', meta: 'Vireystilat, hermosto, perusteet', status: 'available',
     desc: 'Ensimmäinen viikko on orientaatiota: mikä vireystila on, miksi keho reagoi niin kuin reagoi, ja missä tilassa sinä yleensä liikut.',
     materials: [
-      { icon: '🎧', type: 'audio', label: 'Johdanto ANS-säätelyyn (äänite)' },
-      { icon: '📋', type: 'task', label: 'Tehtävä: vireystilapäiväkirja 7 päivää' },
+      { icon: '🎧', type: 'audio', label: 'Johdanto ANS-säätelyyn (äänite)',
+        url: 'LINKKI_VIIKKO1_AANITE' /* ← Vaihda tähän WordPress-linkki */ },
+      { icon: '📋', type: 'task', label: 'Tehtävä: vireystilapäiväkirja 7 päivää',
+        url: 'LINKKI_VIIKKO1_TEHTAVA' /* ← Vaihda tähän WordPress-linkki */ },
     ]
   },
-  { num: 2, title: 'Keho tietää ensin', meta: 'Kehosignaalit ja tunnistaminen', status: 'available',
+  { num: 2, title: 'Keho tietää ensin', meta: 'Kehosignaalit ja tunnistaminen', status: 'locked',
     desc: 'Opitaan kuuntelemaan kehon viestejä ennen kuin mieli tulkitsee — lihaskireys, hengitys, vatsa, lämpö.',
     materials: [
-      { icon: '🎧', type: 'audio', label: 'Kehoskannaus-harjoite (ääniohjattu)' },
-      { icon: '📋', type: 'task', label: 'Tehtävä: merkitse kehosignaalit tilanteissa' },
+      { icon: '🎧', type: 'audio', label: 'Kehoskannaus-harjoite (ääniohjattu)',
+        url: 'LINKKI_VIIKKO2_AANITE' /* ← Vaihda tähän WordPress-linkki */ },
+      { icon: '📋', type: 'task', label: 'Tehtävä: merkitse kehosignaalit tilanteissa',
+        url: 'LINKKI_VIIKKO2_TEHTAVA' /* ← Vaihda tähän WordPress-linkki */ },
     ]
   },
   { num: 3, title: 'Ylivirittyneisyys', meta: 'Tunnistaminen ja laskeutuminen', status: 'locked',
     desc: 'Mitä tapahtuu kehossa, kun olet liikaa vireillä? Harjoitteet, jotka kutsuvat hermostoa alas.',
     materials: [
-      { icon: '🎧', type: 'audio', label: '4-7-8 hengitys ja variaatiot' },
-      { icon: '📋', type: 'task', label: 'Tehtävä: kokeile kolmea harjoitetta arjessa' },
+      { icon: '🎧', type: 'audio', label: '4-7-8 hengitys ja variaatiot',
+        url: 'LINKKI_VIIKKO3_AANITE' /* ← Vaihda tähän WordPress-linkki */ },
+      { icon: '📋', type: 'task', label: 'Tehtävä: kokeile kolmea harjoitetta arjessa',
+        url: 'LINKKI_VIIKKO3_TEHTAVA' /* ← Vaihda tähän WordPress-linkki */ },
     ]
   },
   { num: 4, title: 'Alavirittyneisyys', meta: 'Tunnistaminen ja aktivointi', status: 'locked',
     desc: 'Väsymys, tyhjyys, etäisyys — alavirittyneisyys on yhtä tärkeä tila kuin yliviritys.',
     materials: [
-      { icon: '🎬', type: 'video', label: 'Liike aktivaattorina (lyhyt video)' },
-      { icon: '📋', type: 'task', label: 'Tehtävä: aktivointiprotokolla aamuun' },
+      { icon: '🎬', type: 'video', label: 'Liike aktivaattorina (lyhyt video)',
+        url: 'LINKKI_VIIKKO4_VIDEO' /* ← Vaihda tähän WordPress-linkki */ },
+      { icon: '📋', type: 'task', label: 'Tehtävä: aktivointiprotokolla aamuun',
+        url: 'LINKKI_VIIKKO4_TEHTAVA' /* ← Vaihda tähän WordPress-linkki */ },
     ]
   },
   { num: 5, title: 'Säätelyikkuna', meta: 'Oman toleranssin tunnistaminen', status: 'locked',
     desc: 'Toleranssi-ikkuna on se alue, jossa pystyt olemaan — ei liikaa, ei liian vähän.',
     materials: [
-      { icon: '🎧', type: 'audio', label: 'Ikkuna-käsitteen syventäminen (äänite)' },
-      { icon: '📋', type: 'task', label: 'Tehtävä: piirtäminen / kirjaaminen' },
+      { icon: '🎧', type: 'audio', label: 'Ikkuna-käsitteen syventäminen (äänite)',
+        url: 'LINKKI_VIIKKO5_AANITE' /* ← Vaihda tähän WordPress-linkki */ },
+      { icon: '📋', type: 'task', label: 'Tehtävä: piirtäminen / kirjaaminen',
+        url: 'LINKKI_VIIKKO5_TEHTAVA' /* ← Vaihda tähän WordPress-linkki */ },
     ]
   },
   { num: 6, title: 'Resurssointi', meta: 'Mikä kannattelee sinua?', status: 'locked',
     desc: 'Resurssit ovat asioita, paikkoja, ihmisiä ja kehontiloja, jotka tukevat säätelyä.',
     materials: [
-      { icon: '🎧', type: 'audio', label: 'Resurssipaikka-mielikuvaharjoitus' },
-      { icon: '📋', type: 'task', label: 'Tehtävä: resurssipankki käyttöön' },
+      { icon: '🎧', type: 'audio', label: 'Resurssipaikka-mielikuvaharjoitus',
+        url: 'LINKKI_VIIKKO6_AANITE' /* ← Vaihda tähän WordPress-linkki */ },
+      { icon: '📋', type: 'task', label: 'Tehtävä: resurssipankki käyttöön',
+        url: 'LINKKI_VIIKKO6_TEHTAVA' /* ← Vaihda tähän WordPress-linkki */ },
     ]
   },
   { num: 7, title: 'Arjen rytmitys', meta: 'Säätely rakenteeksi', status: 'locked',
     desc: 'Säätely pitää rakentaa arkeen. Tällä viikolla suunnittelet oman päivärakenteen.',
     materials: [
-      { icon: '📋', type: 'task', label: 'Päivärakenne-pohja (ladattava)' },
-      { icon: '📋', type: 'task', label: 'Tehtävä: kokeilu 5 päivää' },
+      { icon: '📋', type: 'task', label: 'Päivärakenne-pohja (ladattava)',
+        url: 'LINKKI_VIIKKO7_POHJA' /* ← Vaihda tähän WordPress-linkki */ },
+      { icon: '📋', type: 'task', label: 'Tehtävä: kokeilu 5 päivää',
+        url: 'LINKKI_VIIKKO7_TEHTAVA' /* ← Vaihda tähän WordPress-linkki */ },
     ]
   },
   { num: 8, title: 'Oma polku eteenpäin', meta: 'Koonta, jatkuminen, toimijuus', status: 'locked',
     desc: 'Viimeinen viikko on kokoamista: mitä opit, mikä toimii sinulle, mihin suuntaat seuraavaksi.',
     materials: [
-      { icon: '🎧', type: 'audio', label: 'Yhteenvetoäänite' },
-      { icon: '📋', type: 'task', label: 'Tehtävä: oma säätelysuunnitelma' },
+      { icon: '🎧', type: 'audio', label: 'Yhteenvetoäänite',
+        url: 'LINKKI_VIIKKO8_AANITE' /* ← Vaihda tähän WordPress-linkki */ },
+      { icon: '📋', type: 'task', label: 'Tehtävä: oma säätelysuunnitelma',
+        url: 'LINKKI_VIIKKO8_TEHTAVA' /* ← Vaihda tähän WordPress-linkki */ },
     ]
   },
 ];
 
-const completedWeeks = new Set();
+const STORAGE_KEY = 'vakauttava_viikot_v1';
+
+// Ladataan tallennettu edistyminen
+const completedWeeks = new Set(
+  JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
+);
+
+// Päivitetään weeksData tallennetun edistymisen perusteella
+function syncStatusFromStorage() {
+  completedWeeks.forEach(num => {
+    const next = weeksData.find(w => w.num === num + 1);
+    if (next && next.status === 'locked') next.status = 'available';
+  });
+}
+
+function saveProgress() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify([...completedWeeks]));
+}
+
+function updateProgressBar() {
+  const done = completedWeeks.size;
+  const total = weeksData.length;
+  const pct = Math.round((done / total) * 100);
+  const fill = document.getElementById('progress-fill');
+  const label = document.getElementById('progress-label');
+  if (fill) fill.style.width = pct + '%';
+  if (label) label.textContent = done + ' / ' + total + ' viikkoa tehty';
+}
 
 function buildWeeks() {
   const container = document.getElementById('weeks-container');
@@ -715,7 +831,7 @@ function buildWeeks() {
     const statusLabel = isDone ? 'Tehty ✓' : (w.status === 'available' ? 'Auki' : 'Tulossa');
     const statusClass = isDone ? 'done' : w.status;
     card.innerHTML = `
-      <div class="week-header" onclick="toggleWeek(${w.num}, '${w.status}')">
+      <div class="week-header" onclick="toggleWeek(${w.num}, '${w.status}', ${isDone})">
         <div class="week-num">${w.num}</div>
         <div class="week-info">
           <div class="week-title">${w.title}</div>
@@ -726,12 +842,20 @@ function buildWeeks() {
       <div class="week-body">
         <div class="week-body-inner">
           <p class="week-desc">${w.desc}</p>
-          ${w.materials.map(m => `
-            <div class="material-item">
+          ${w.materials.map(m => {
+            const isPlaceholder = !m.url || m.url.startsWith('LINKKI_');
+            if (isPlaceholder) {
+              return `<div class="material-item">
+                <div class="material-icon ${m.type}">${m.icon}</div>
+                <span>${m.label}</span>
+              </div>`;
+            }
+            return `<a class="material-item material-link" href="${m.url}" target="_blank" rel="noopener">
               <div class="material-icon ${m.type}">${m.icon}</div>
               <span>${m.label}</span>
-            </div>
-          `).join('')}
+              <span class="material-arrow">→</span>
+            </a>`;
+          }).join('')}
           <button class="week-complete-btn ${isDone ? 'done' : ''}" onclick="markDone(event, ${w.num})">
             ${isDone ? '✓ Merkitty tehdyksi' : 'Merkitse tehdyksi'}
           </button>
@@ -740,11 +864,12 @@ function buildWeeks() {
     `;
     container.appendChild(card);
   });
+  updateProgressBar();
 }
 
-function toggleWeek(num, status) {
+function toggleWeek(num, status, isDone) {
+  if (status === 'locked' && !isDone && !completedWeeks.has(num)) return;
   const card = document.getElementById('week-' + num);
-  if (status === 'locked' && !completedWeeks.has(num)) return;
   card.classList.toggle('open');
 }
 
@@ -753,8 +878,12 @@ function markDone(e, num) {
   completedWeeks.add(num);
   const nextWeek = weeksData.find(w => w.num === num + 1);
   if (nextWeek) nextWeek.status = 'available';
+  saveProgress();
   buildWeeks();
   document.getElementById('week-' + num).classList.add('open');
+  // Vieritä seuraavaan viikkoon
+  const next = document.getElementById('week-' + (num + 1));
+  if (next) setTimeout(() => next.scrollIntoView({ behavior: 'smooth', block: 'center' }), 300);
 }
 
 // ── Viestintä ──
