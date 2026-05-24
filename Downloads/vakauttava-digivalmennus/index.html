@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+ 
   :root {
     --sand: #F5F0E8;
     --sand-dark: #EAE3D2;
@@ -31,9 +31,9 @@
     --radius: 14px;
     --radius-sm: 8px;
   }
-
+ 
   html { scroll-behavior: smooth; }
-
+ 
   body {
     font-family: 'DM Sans', sans-serif;
     background: var(--warm-white);
@@ -41,7 +41,7 @@
     line-height: 1.65;
     font-size: 16px;
   }
-
+ 
   /* NAV */
   nav {
     position: sticky;
@@ -91,11 +91,11 @@
     border-color: var(--earth);
     font-weight: 500;
   }
-
+ 
   /* VIEWS */
   .view { display: none; }
   .view.active { display: block; }
-
+ 
   /* HERO */
   .hero {
     background: linear-gradient(160deg, var(--sand) 0%, var(--warm-white) 60%);
@@ -190,7 +190,7 @@
     margin-left: 12px;
   }
   .btn-secondary:hover { background: var(--sand); }
-
+ 
   /* SECTIONS */
   .section {
     max-width: 860px;
@@ -198,7 +198,7 @@
     padding: 4rem 2rem;
   }
   .section + .section { padding-top: 0; }
-
+ 
   .section-label {
     font-size: 11px;
     font-weight: 500;
@@ -222,7 +222,7 @@
     max-width: 620px;
     margin-bottom: 2rem;
   }
-
+ 
   /* PROMISE BOX */
   .promise-box {
     background: var(--moss-light);
@@ -239,7 +239,7 @@
     color: var(--moss);
     line-height: 1.6;
   }
-
+ 
   /* WEEKS GRID */
   .weeks-grid {
     display: grid;
@@ -318,7 +318,7 @@
     left: 0;
     color: var(--stone);
   }
-
+ 
   /* WHAT YOU GET */
   .features-grid {
     display: grid;
@@ -352,7 +352,7 @@
     font-weight: 300;
     line-height: 1.55;
   }
-
+ 
   /* PRICE SECTION */
   .price-section {
     background: var(--sand);
@@ -412,7 +412,7 @@
     color: var(--text-muted);
     font-weight: 300;
   }
-
+ 
   /* CONTACT FORM */
   .contact-section {
     max-width: 580px;
@@ -450,7 +450,7 @@
     border-color: var(--bark);
   }
   textarea { resize: vertical; min-height: 110px; line-height: 1.5; }
-
+ 
   .form-sent {
     display: none;
     text-align: center;
@@ -468,7 +468,7 @@
     margin-bottom: 0.8rem;
   }
   .form-sent p { font-size: 14px; color: var(--text-muted); font-weight: 300; }
-
+ 
   /* ─── VIREYSKOMPASSI ─── */
   .kompassi-view {
     max-width: 680px;
@@ -493,7 +493,7 @@
     color: var(--text-muted);
     font-weight: 300;
   }
-
+ 
   .zone-selector {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -515,7 +515,7 @@
   .zone-icon { font-size: 24px; margin-bottom: 6px; }
   .zone-label { font-size: 13px; font-weight: 500; letter-spacing: 0.02em; }
   .zone-desc { font-size: 11px; margin-top: 3px; font-weight: 300; }
-
+ 
   .zone-btn.hyper {
     border-color: rgba(193,127,74,0.3);
     background: var(--accent-light);
@@ -523,7 +523,7 @@
   .zone-btn.hyper.active { border-color: var(--accent); box-shadow: 0 4px 16px rgba(193,127,74,0.2); }
   .zone-btn.hyper .zone-label { color: var(--accent); }
   .zone-btn.hyper .zone-desc { color: rgba(193,127,74,0.7); }
-
+ 
   .zone-btn.ok {
     border-color: rgba(107,123,94,0.3);
     background: var(--moss-light);
@@ -531,7 +531,7 @@
   .zone-btn.ok.active { border-color: var(--moss); box-shadow: 0 4px 16px rgba(107,123,94,0.2); }
   .zone-btn.ok .zone-label { color: var(--moss); }
   .zone-btn.ok .zone-desc { color: rgba(107,123,94,0.7); }
-
+ 
   .zone-btn.hypo {
     border-color: rgba(123,155,168,0.3);
     background: var(--water-light);
@@ -539,7 +539,7 @@
   .zone-btn.hypo.active { border-color: var(--water); box-shadow: 0 4px 16px rgba(123,155,168,0.2); }
   .zone-btn.hypo .zone-label { color: var(--water); }
   .zone-btn.hypo .zone-desc { color: rgba(123,155,168,0.7); }
-
+ 
   .symptoms-section {
     margin-bottom: 2rem;
   }
@@ -575,7 +575,7 @@
     color: var(--earth);
     font-weight: 500;
   }
-
+ 
   .tools-section {
     margin-top: 2rem;
   }
@@ -650,7 +650,7 @@
     color: var(--bark);
     top: 5px;
   }
-
+ 
   .kompassi-note {
     text-align: center;
     padding: 2.5rem;
@@ -663,7 +663,7 @@
     line-height: 1.6;
   }
   .kompassi-note strong { font-weight: 500; color: var(--earth); }
-
+ 
   /* LOG SECTION */
   .log-section {
     margin-top: 2.5rem;
@@ -730,7 +730,7 @@
   .log-zone-badge.hypo { background: var(--water-light); color: var(--water); }
   .log-note { color: var(--text-muted); font-weight: 300; }
   .log-empty { font-size: 14px; color: var(--text-light); font-weight: 300; padding: 1rem 0; }
-
+ 
   /* FOOTER */
   footer {
     background: var(--deep);
@@ -740,7 +740,7 @@
   footer p { font-size: 13px; color: rgba(250,248,244,0.5); font-weight: 300; }
   footer a { color: rgba(250,248,244,0.7); text-decoration: none; }
   footer a:hover { color: var(--warm-white); }
-
+ 
   @media (max-width: 600px) {
     .zone-selector { grid-template-columns: 1fr; }
     .log-form { grid-template-columns: 1fr; }
@@ -750,7 +750,7 @@
 </style>
 </head>
 <body>
-
+ 
 <nav>
   <div class="nav-inner">
     <a href="#" class="nav-logo">Vakauttamisvalmentaja</a>
@@ -759,10 +759,10 @@
     </div>
   </div>
 </nav>
-
+ 
 <!-- ══════════════ VALMENNUS VIEW ══════════════ -->
 <div id="view-valmennus" class="view active">
-
+ 
   <section class="hero">
     <p class="hero-eyebrow">Vakauttava digivalmennus</p>
     <h1>Opi tunnistamaan vireystilasi — ja <em>säädellä niitä</em></h1>
@@ -776,16 +776,16 @@
     <a href="#ilmoittaudu" class="btn-primary">Ilmoittaudu mukaan</a>
     <a href="#viikot" class="btn-secondary">Katso rakenne</a>
   </section>
-
+ 
   <div class="section">
     <p class="section-label">Lupaus</p>
     <h2 class="section-title">Mitä tapahtuu 8 viikossa?</h2>
     <p class="section-body">Et vain lue aiheesta — harjoittelet kehollisesti, viikko kerrallaan. Valmennuksen lopussa sinulla on konkreettisia taitoja, jotka voit viedä arkeen heti.</p>
-
+ 
     <div class="promise-box">
       <p>"Kun tunnistat, missä tilassa kehosi on — ylivirittyneisyys, turva tai alavirittyneisyys — voit alkaa vaikuttaa siihen. Se on toimijuuden ydin."</p>
     </div>
-
+ 
     <div class="features-grid">
       <div class="feature-card">
         <div class="feature-icon">🎧</div>
@@ -809,12 +809,12 @@
       </div>
     </div>
   </div>
-
+ 
   <div id="viikot" class="section" style="padding-top: 0;">
     <p class="section-label">Rakenne</p>
     <h2 class="section-title">8 viikkoa — vaihe vaiheelta</h2>
     <p class="section-body">Napsauta viikkoa avataksesi sisällön.</p>
-
+ 
     <div class="weeks-grid">
       <div class="week-item" onclick="toggleWeek(this)">
         <div class="week-num">1</div>
@@ -934,7 +934,7 @@
       </div>
     </div>
   </div>
-
+ 
   <div class="price-section" id="hinta">
     <p class="section-label">Hinta</p>
     <h2 class="section-title" style="max-width:none;">Selkeä investointi</h2>
@@ -954,12 +954,12 @@
       </div>
     </div>
   </div>
-
+ 
   <div class="contact-section" id="ilmoittaudu">
     <p class="section-label">Ilmoittautuminen</p>
     <h2 class="section-title">Lähde mukaan</h2>
     <p class="section-body">Täytä lomake, niin otan sinuun yhteyttä sähköpostitse ja sovitaan aloitus.</p>
-
+ 
     <div id="contact-form">
       <div class="form-group">
         <label>Nimi</label>
@@ -986,22 +986,22 @@
       </div>
       <button class="btn-primary" style="width:100%;" onclick="submitForm()">Lähetä ilmoittautuminen</button>
     </div>
-
+ 
     <div class="form-sent" id="form-sent">
       <h3>Kiitos ilmoittautumisesta 🌿</h3>
       <p>Otan sinuun yhteyttä sähköpostitse 1–2 arkipäivän kuluessa. Toivottavasti nähdään pian!</p>
     </div>
   </div>
-
+ 
 </div><!-- /view-valmennus -->
-
-
-
-
+ 
+ 
+ 
+ 
 <footer>
   <p>© 2024 Vakauttamisvalmentaja · <a href="https://www.vakauttamisvalmentaja.fi">vakauttamisvalmentaja.fi</a> · <a href="https://www.vakaaputiikki.com">vakaaputiikki.com</a></p>
 </footer>
-
+ 
 <script>
 // ── Navigation ──
 function showView(name, btn) {
@@ -1010,14 +1010,14 @@ function showView(name, btn) {
   document.getElementById('view-' + name).classList.add('active');
   if (btn) btn.classList.add('active');
 }
-
+ 
 // ── Week accordion ──
 function toggleWeek(el) {
   const wasOpen = el.classList.contains('expanded');
   document.querySelectorAll('.week-item').forEach(w => w.classList.remove('expanded'));
   if (!wasOpen) el.classList.add('expanded');
 }
-
+ 
 // ── Contact form ──
 function submitForm() {
   const name = document.getElementById('f-name').value.trim();
@@ -1025,7 +1025,7 @@ function submitForm() {
   if (!name || !email) { alert('Täytä nimi ja sähköposti.'); return; }
   document.getElementById('contact-form').style.display = 'none';
   document.getElementById('form-sent').classList.add('visible');
-
+ 
   const subject = encodeURIComponent('Ilmoittautuminen: Vakauttava digivalmennus');
   const situation = document.getElementById('f-situation').value;
   const msg = document.getElementById('f-message').value;
@@ -1035,174 +1035,8 @@ function submitForm() {
   );
   window.location.href = 'mailto:sinun@sahkoposti.fi?subject=' + subject + '&body=' + body;
 }
-
-// ── Kompassi data ──
-const zones = {
-  hyper: {
-    symptoms: ['Sydän lyö nopeasti','Ajatukset kiitävät','Leuka tai hartiat jumissa','Hengitys pinnallinen','Ärsyyntyneisyys','Nukkuminen vaikeaa','Vatsa kiristää','Ylianalysointi'],
-    tools: [
-      {
-        name: 'Fysiologinen huokaus',
-        type: 'Hengitysharjoite · 2 min',
-        desc: 'Tehokkain yksittäinen harjoite hermoston rauhoittamiseen. Kaksi sisäänhengitystä nenästä, pitkä uloshengitys suusta.',
-        steps: ['Hengitä nenästä sisään täyteen keuhkot','Lisää vielä nopea pieni sisäänhengitys','Hengitä pitkästi ulos suun kautta — anna mennä kaikkea','Toista 3–5 kertaa']
-      },
-      {
-        name: 'Maadoitus — 5-4-3-2-1',
-        type: 'Kehollinen harjoite · 3–5 min',
-        desc: 'Aistimaisema tuo sinut hetkeen. Kun keho on ylikierroksilla, tämä auttaa paikantamaan itsesi nykyhetkeen.',
-        steps: ['Nimeä 5 asiaa mitä näet','Nimeä 4 asiaa mitä kuulet','Tunnustele 3 pintaa, jota kosket','Tunnista 2 tuoksua tai makua','Huomaa 1 asia, jonka tunnet kehossasi']
-      },
-      {
-        name: 'Kylmä vesi kasvoille',
-        type: 'Fysiologinen · 1 min',
-        desc: 'Kylmä vesi kasvoilla aktivoi sukellusrefleksin, joka hidastaa sykettä nopeasti. Erityisen tehokas voimakkaan ahdistuksen hetkellä.',
-        steps: ['Täytä kulho kylmällä vedellä tai kastad kasvot hanasta','Pidä kasvot vedessä 15–30 sekuntia','Voit toistaa']
-      }
-    ]
-  },
-  hypo: {
-    symptoms: ['Väsymys, raskaus','Tunnottomuus','Vaikeus toimia','Etäisyyden tunne','Motivaation puute','Olo kuin sumussa','Tyhjyys','Hitaus'],
-    tools: [
-      {
-        name: 'Orientointiharjoite',
-        type: 'Kehollinen · 2–3 min',
-        desc: 'Katsele hitaasti ympärillesi kuin löytäisit huoneen ensimmäistä kertaa. Tämä aktivoi turvajärjestelmää.',
-        steps: ['Istu tai seiso mukavasti','Liikuta katsetta hitaasti vasemmalta oikealle','Anna silmien pysähtyä johonkin mielenkiintoiseen — mikä tahansa','Huomaa mitä siinä on — väri, muoto, rakenne','Toista useampaan esineeseen rauhallisesti']
-      },
-      {
-        name: 'Liike aktivaattorina',
-        type: 'Kehollinen · 3–5 min',
-        desc: 'Pieni liike herättää hermostoa ilman, että mennään ylivireystilaan. Tavoitteena on saada keho lämpimämmäksi ja läsnäolevammaksi.',
-        steps: ['Nouse ylös ja seiso','Puristele käsiä nyrkkiin ja auki 10 kertaa','Ravistele hellästi käsiä, sitten jalkoja','Pyörittele hartioita hitaasti molempiin suuntiin','Huomaa muutos']
-      },
-      {
-        name: 'Ääniohjattu kehoskannaus',
-        type: 'Ohjattu · 5–10 min',
-        desc: 'Kehoskannaus vie huomion sisälle. Alavirittyneessä tilassa keho voi olla hyvin etäinen — tämä kutsuu sinut takaisin.',
-        steps: ['Laita kuulokkeet ja etsi rauhallinen paikka','Aloita huomiosta jalkapohjissa','Liiku hitaasti ylöspäin — jalat, vatsa, rinta, hartiat, kaula, pää','Anna jokaiselle kohdalle muutama sekunti','Ei tarvitse muuttaa mitään — pelkkä huomaaminen riittää']
-      }
-    ]
-  }
-};
-
-const okTools = [
-  {
-    name: 'Pitkä uloshengitys',
-    type: 'Ylläpitoharjoite · 2 min',
-    desc: 'Ylläpidä turvavyöhykettä tietoisella hengityksellä. Pidä uloshengitys selvästi sisäänhengitystä pidempänä.',
-    steps: ['Hengitä sisään 4 laskien','Hengitä ulos 6–8 laskien','Toista 5–10 kertaa']
-  },
-  {
-    name: 'Kehoskannaus — nopea',
-    type: 'Ylläpitoharjoite · 3 min',
-    desc: 'Tarkista nopeasti kehon tila — missä on jännitystä, missä kevyttä, onko jokin epätasapaino?',
-    steps: ['Sulje silmät hetkeksi','Käy läpi kehon osat päälaesta jalkapohjiin','Merkitse mielessä missä on jännitystä','Voit hengitellä jännittyneisiin kohtiin']
-  }
-];
-
-// ── Zone selection ──
-let currentZone = null;
-const logEntries = [];
-
-function selectZone(zone, btn) {
-  currentZone = zone;
-  document.querySelectorAll('.zone-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-
-  document.getElementById('symptoms-section').style.display = 'none';
-  document.getElementById('tools-section').style.display = 'none';
-  document.getElementById('zone-ok-msg').style.display = 'none';
-
-  if (zone === 'ok') {
-    document.getElementById('zone-ok-msg').style.display = 'block';
-    renderOkTools();
-    return;
-  }
-
-  const data = zones[zone];
-  const grid = document.getElementById('symptoms-grid');
-  grid.innerHTML = '';
-  data.symptoms.forEach(s => {
-    const chip = document.createElement('button');
-    chip.className = 'symptom-chip';
-    chip.textContent = s;
-    chip.onclick = () => chip.classList.toggle('selected');
-    grid.appendChild(chip);
-  });
-  document.getElementById('symptoms-section').style.display = 'block';
-
-  const title = document.getElementById('tools-title');
-  title.textContent = zone === 'hyper' ? 'Harjoitteet — rauhoittumiseen' : 'Harjoitteet — aktivointiin';
-  renderTools(zone);
-  document.getElementById('tools-section').style.display = 'block';
-}
-
-function renderTools(zone) {
-  const list = document.getElementById('tools-list');
-  list.innerHTML = '';
-  zones[zone].tools.forEach(t => {
-    list.appendChild(makeToolCard(t));
-  });
-}
-
-function renderOkTools() {
-  const list = document.getElementById('tools-ok');
-  list.innerHTML = '';
-  okTools.forEach(t => {
-    list.appendChild(makeToolCard(t));
-  });
-}
-
-function makeToolCard(t) {
-  const card = document.createElement('div');
-  card.className = 'tool-card';
-  card.innerHTML = `
-    <div>
-      <div class="tool-name">${t.name}</div>
-      <div class="tool-type">${t.type}</div>
-    </div>
-    <div class="tool-arrow">▶</div>
-    <div class="tool-body">
-      <p>${t.desc}</p>
-      <ol class="tool-steps">${t.steps.map(s => `<li>${s}</li>`).join('')}</ol>
-    </div>
-  `;
-  card.onclick = () => card.classList.toggle('expanded');
-  return card;
-}
-
-// ── Log ──
-function addLog() {
-  const zone = document.getElementById('log-zone').value;
-  const note = document.getElementById('log-note').value.trim();
-  if (!zone) { alert('Valitse tila.'); return; }
-
-  const now = new Date();
-  const time = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
-  const labels = { hyper: 'Ylivirittynyt', ok: 'Turvavyöhyke', hypo: 'Alivirittynyt' };
-
-  logEntries.unshift({ time, zone, note, label: labels[zone] });
-
-  document.getElementById('log-zone').value = '';
-  document.getElementById('log-note').value = '';
-  renderLog();
-}
-
-function renderLog() {
-  const container = document.getElementById('log-entries');
-  if (!logEntries.length) {
-    container.innerHTML = '<p class="log-empty">Ei kirjauksia vielä tänään.</p>';
-    return;
-  }
-  container.innerHTML = logEntries.map(e => `
-    <div class="log-entry">
-      <span class="log-time">${e.time}</span>
-      <span class="log-zone-badge ${e.zone}">${e.label}</span>
-      <span class="log-note">${e.note || '—'}</span>
-    </div>
-  `).join('');
-}
+ 
+ 
 </script>
 </body>
 </html>
