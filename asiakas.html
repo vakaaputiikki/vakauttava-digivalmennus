@@ -592,12 +592,99 @@
   <div class="nav-inner">
     <span class="nav-logo">Vakauttava digivalmennus</span>
     <div class="nav-tabs">
+      <button class="nav-tab" onclick="showView('ohjeet', this)">Ennen aloitusta</button>
       <button class="nav-tab active" onclick="showView('viikot', this)">Viikot</button>
       <button class="nav-tab" onclick="showView('kompassi', this)">Vireyskompassi</button>
       <button class="nav-tab" onclick="showView('viestinta', this)">Yhteydenotto</button>
     </div>
   </div>
 </nav>
+
+<!-- OHJEET -->
+<div id="view-ohjeet" class="view">
+  <div class="page-header">
+    <p class="page-eyebrow">Aloitus</p>
+    <h1 class="page-title">Ennen kuin aloitat digivalmennuksen</h1>
+    <p class="page-sub">Lue tämä huolella ennen kuin siirryt ensimmäiseen viikkoon.</p>
+  </div>
+  <div class="section" style="max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.5rem;">
+
+    <!-- Miten edetä -->
+    <div style="background: var(--warm-white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem 1.75rem;">
+      <p style="font-size: 13px; font-weight: 500; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.6rem;">Eteneminen</p>
+      <h2 style="font-family:'Fraunces',serif; font-weight: 400; font-size: 1.2rem; color: var(--deep); margin-bottom: 0.9rem;">Yksi viikko kerrallaan – ei nopeammin</h2>
+      <p style="font-size: 14px; color: var(--text-muted); line-height: 1.7; font-weight: 300;">Valmennus on rakennettu kahdeksalle viikolle tarkoituksella. Vakauttava työ ei ole tietopaketti jota voi ahmia – se on prosessi, jossa keho ja mieli integroivat opittua pikkuhiljaa. Etene yksi viikko kerrallaan, vaikka materiaali teknisesti aukeaakin kokonaan. Jos elämä keskeyttää, se on täysin sallittua – jatka siitä mihin jäit, ilman syyllisyyttä.</p>
+    </div>
+
+    <!-- Tehtävät -->
+    <div style="background: var(--warm-white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem 1.75rem;">
+      <p style="font-size: 13px; font-weight: 500; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.6rem;">Tehtävät</p>
+      <h2 style="font-family:'Fraunces',serif; font-weight: 400; font-size: 1.2rem; color: var(--deep); margin-bottom: 0.9rem;">Tehtävät ovat valmennuksen ydin</h2>
+      <p style="font-size: 14px; color: var(--text-muted); line-height: 1.7; font-weight: 300;">Pelkkä materiaalin kuunteleminen tai lukeminen ei riitä. Tehtävät ovat se paikka, jossa muutos tapahtuu – ne vievät opit kehoon ja arkeen. Tee tehtävät edes jollakin tasolla, vaikka lyhyesti. Pienikin tekeminen on enemmän kuin ohittaminen.</p>
+    </div>
+
+    <!-- Vireyskompassi -->
+    <div style="background: var(--water-light); border: 1px solid rgba(123,155,168,0.3); border-radius: var(--radius); padding: 1.5rem 1.75rem;">
+      <p style="font-size: 13px; font-weight: 500; color: var(--water); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.6rem;">Työkalu</p>
+      <h2 style="font-family:'Fraunces',serif; font-weight: 400; font-size: 1.2rem; color: var(--deep); margin-bottom: 0.9rem;">Vireyskompassi – käytä aktiivisesti koko valmennuksen ajan</h2>
+      <p style="font-size: 14px; color: var(--text-muted); line-height: 1.7; font-weight: 300; margin-bottom: 0.9rem;">Vireyskompassi on erillinen työkalu, joka kulkee rinnallasi koko kahdeksan viikon ajan. Suosittelen avaamaan sen säännöllisesti – ei vain silloin kun jokin tuntuu vaikealta.</p>
+      <p style="font-size: 14px; color: var(--text-muted); line-height: 1.7; font-weight: 300; margin-bottom: 0.9rem;">Kompassista löydät:</p>
+      <ul style="font-size: 14px; color: var(--text-muted); line-height: 1.9; font-weight: 300; padding-left: 1.2rem; margin-bottom: 1rem;">
+        <li><strong style="color: var(--earth); font-weight: 500;">Oma polku</strong> – kirjaa vireystilaasi säännöllisesti ja näe konkreettisesti miten se muuttuu valmennuksen edetessä</li>
+        <li><strong style="color: var(--earth); font-weight: 500;">Harjoitukset</strong> – laaja valikoima kehollisia ja mielenhallintaan liittyviä harjoituksia tilanteen mukaan</li>
+      </ul>
+      <p style="font-size: 13px; color: var(--text-light); font-weight: 300; font-style: italic;">Vireyskompassi löytyy omalta välilehdeltään navigaatiosta.</p>
+    </div>
+
+    <!-- Viestit -->
+    <div style="background: var(--warm-white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem 1.75rem;">
+      <p style="font-size: 13px; font-weight: 500; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.6rem;">Tuki</p>
+      <h2 style="font-family:'Fraunces',serif; font-weight: 400; font-size: 1.2rem; color: var(--deep); margin-bottom: 0.9rem;">3 viestiä viikossa – yhteensä 24 viestiä</h2>
+      <p style="font-size: 14px; color: var(--text-muted); line-height: 1.7; font-weight: 300; margin-bottom: 0.9rem;">Jokaisella viikolla on käytössäsi kolme yhteydenottoa – eli koko valmennuksen aikana yhteensä 24 viestiä. Viestit menevät sähköpostiini, joten huomioi nämä ennen lähettämistä:</p>
+      <ul style="font-size: 14px; color: var(--text-muted); line-height: 1.9; font-weight: 300; padding-left: 1.2rem; margin-bottom: 0.9rem;">
+        <li>Kerro vain etunimesi ja sukunimesi – ei muita henkilötietoja</li>
+        <li>Viestit sopivat kysymyksiin, ei yksityisten asioiden jakamiseen</li>
+        <li>Kysy rohkeasti harjoitteisiin, tehtäviin tai etenemiseen liittyvistä asioista</li>
+        <li>Pyrin vastaamaan saman päivän aikana, jos viesti on lähetetty klo 8–19</li>
+      </ul>
+      <p style="font-size: 13px; color: var(--text-light); font-weight: 300; font-style: italic;">Viestit löydät Yhteydenotto-välilehdeltä.</p>
+    </div>
+
+    <!-- 1:1 Teams -->
+    <div style="background: var(--moss-light); border: 1px solid rgba(107,123,94,0.25); border-radius: var(--radius); padding: 1.5rem 1.75rem;">
+      <p style="font-size: 13px; font-weight: 500; color: var(--moss); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.6rem;">Lisätuki</p>
+      <h2 style="font-family:'Fraunces',serif; font-weight: 400; font-size: 1.2rem; color: var(--deep); margin-bottom: 0.9rem;">Henkilökohtainen tapaaminen Teamsin kautta</h2>
+      <p style="font-size: 14px; color: var(--text-muted); line-height: 1.7; font-weight: 300;">Jos haluat syventää työskentelyä tai tarvitset henkilökohtaisempaa tukea, voit varata 1:1-tapaamisen Teamsin kautta. Tapaaminen kestää 60 minuuttia ja hinta on <strong style="color: var(--earth);">120 €</strong>. Tapaaminen ei kuulu valmennuksen hintaan – mainitse kiinnostuksestasi Yhteydenotto-välilehdellä.</p>
+    </div>
+
+    <!-- Mitä tämä EI ole -->
+    <div style="background: var(--warm-white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem 1.75rem;">
+      <p style="font-size: 13px; font-weight: 500; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.6rem;">Tärkeää tietää</p>
+      <h2 style="font-family:'Fraunces',serif; font-weight: 400; font-size: 1.2rem; color: var(--deep); margin-bottom: 0.9rem;">Mitä tämä valmennus ei ole</h2>
+      <p style="font-size: 14px; color: var(--text-muted); line-height: 1.7; font-weight: 300; margin-bottom: 0.75rem;">Vakauttava digivalmennus on itsenäinen tukimuoto, joka sopii arjen säätelytaitojen kehittämiseen. Se ei korvaa terapiaa eikä ole kriisipalvelu. Jos sinulla on akuutti kriisi tai tarve intensiivisemmälle tuelle, ohjaudu oman hoitotahosi tai ammattilaisen puoleen.</p>
+      <p style="font-size: 14px; color: var(--text-muted); line-height: 1.7; font-weight: 300;">Jos jokin harjoite tuntuu liian raskaalta, keskeytä rauhassa. Vakauttava työ ei vaadi läpikäymistä väkisin – lupa pysähtyä on aina olemassa.</p>
+    </div>
+
+    <!-- Tekniikka -->
+    <div style="background: var(--warm-white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem 1.75rem;">
+      <p style="font-size: 13px; font-weight: 500; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.6rem;">Tekniikka</p>
+      <h2 style="font-family:'Fraunces',serif; font-weight: 400; font-size: 1.2rem; color: var(--deep); margin-bottom: 0.9rem;">Käytännön ohjeet</h2>
+      <ul style="font-size: 14px; color: var(--text-muted); line-height: 1.9; font-weight: 300; padding-left: 1.2rem;">
+        <li>Alusta toimii parhaiten puhelimella tai tietokoneella – selain riittää</li>
+        <li>Ääni kannattaa olla päällä harjoitteissa</li>
+        <li>Alusta on käytössäsi <strong style="color: var(--earth);">70 päivää</strong> ostosta – sen jälkeen pääsy sulkeutuu</li>
+        <li>Tee muistiinpanoja itsellesi – materiaalit eivät jää käyttöön 70 päivän jälkeen</li>
+      </ul>
+    </div>
+
+    <!-- CTA -->
+    <div style="text-align: center; padding: 1rem 0 2rem;">
+      <p style="font-size: 14px; color: var(--text-muted); font-weight: 300; margin-bottom: 1.25rem;">Kun olet lukenut ohjeet, voit siirtyä aloittamaan.</p>
+      <button onclick="showView('viikot', document.querySelectorAll('.nav-tab')[1])" style="display: inline-block; padding: 14px 40px; background: var(--earth); color: var(--warm-white); border: none; border-radius: 50px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer;">Siirry viikkomateriaaleihin →</button>
+    </div>
+
+  </div>
+</div>
 
 <!-- VIIKOT -->
 <div id="view-viikot" class="view active">
