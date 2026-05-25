@@ -518,8 +518,41 @@
   }
   .info-box strong { font-weight: 500; color: var(--earth); }
 
-  footer {
-    background: var(--deep); padding: 2rem; text-align: center;
+  .radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .radio-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 300;
+    cursor: pointer;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--warm-white);
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .radio-label:hover { background: var(--sand); border-color: var(--stone); }
+  .radio-label input[type="radio"] {
+    width: 16px; height: 16px;
+    accent-color: var(--earth);
+    flex-shrink: 0;
+    margin: 0;
+    padding: 0;
+    border: none;
+    appearance: auto;
+  }
+  .radio-label:has(input:checked) {
+    background: var(--sand);
+    border-color: var(--bark);
+    color: var(--earth);
+    font-weight: 400;
   }
   footer p { font-size: 13px; color: rgba(250,248,244,0.4); font-weight: 300; }
 
@@ -596,6 +629,7 @@
       <button class="nav-tab active" onclick="showView('viikot', this)">Viikot</button>
       <button class="nav-tab" onclick="showView('kompassi', this)">Vireyskompassi</button>
       <button class="nav-tab" onclick="showView('viestinta', this)">Yhteydenotto</button>
+      <button class="nav-tab" onclick="showView('palaute', this)">Palaute</button>
     </div>
   </div>
 </nav>
@@ -787,6 +821,150 @@
     <div class="form-sent" id="viesti-sent">
       <h3>Viesti lähetetty 🌿</h3>
       <p>Kiitos yhteydenotosta. Vastaan sinulle 1–2 arkipäivän kuluessa.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- PALAUTE -->
+<div id="view-palaute" class="view">
+  <div class="page-header">
+    <p class="page-eyebrow">Palaute</p>
+    <h1 class="page-title">Palautekysely</h1>
+    <p class="page-sub">Vastaamiseen menee noin 5 minuuttia. Kiitos ajastasi.</p>
+  </div>
+  <div class="viestinta-wrap">
+
+    <div class="info-box">
+      Palautteesi on anonyymi eikä sisällä henkilötietoja. Se auttaa kehittämään valmennusta seuraavia varten.
+    </div>
+
+    <div id="palaute-form">
+
+      <!-- OSA 1 -->
+      <p style="font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem;">Osa 1 — Rastita sopivin vaihtoehto</p>
+
+      <!-- Eteneminen -->
+      <div class="form-group">
+        <label>Etenin valmennuksessa</label>
+        <div class="radio-group">
+          <label class="radio-label"><input type="radio" name="eteneminen" value="Viikko kerrallaan suunnitelman mukaan"> Viikko kerrallaan suunnitelman mukaan</label>
+          <label class="radio-label"><input type="radio" name="eteneminen" value="Osin omaan tahtiin, mutta tein kaiken"> Osin omaan tahtiin, mutta tein kaiken</label>
+          <label class="radio-label"><input type="radio" name="eteneminen" value="Jätin joitain viikkoja väliin"> Jätin joitain viikkoja väliin</label>
+          <label class="radio-label"><input type="radio" name="eteneminen" value="En saanut tehtyä kaikkea"> En saanut tehtyä kaikkea</label>
+        </div>
+      </div>
+
+      <!-- Kirjallinen materiaali -->
+      <div class="form-group">
+        <label>Kirjallinen materiaali oli</label>
+        <div class="radio-group">
+          <label class="radio-label"><input type="radio" name="materiaali" value="Selkeää ja sopivan mittaista"> Selkeää ja sopivan mittaista</label>
+          <label class="radio-label"><input type="radio" name="materiaali" value="Selkeää mutta liian pitkää"> Selkeää mutta liian pitkää</label>
+          <label class="radio-label"><input type="radio" name="materiaali" value="Vaikeaselkoista"> Vaikeaselkoista</label>
+          <label class="radio-label"><input type="radio" name="materiaali" value="Liian lyhyttä tai pintapuolista"> Liian lyhyttä tai pintapuolista</label>
+        </div>
+      </div>
+
+      <!-- Äänitteen pituus -->
+      <div class="form-group">
+        <label>Äänitteen pituus (~10 min) oli</label>
+        <div class="radio-group">
+          <label class="radio-label"><input type="radio" name="aanite" value="Sopiva"> Sopiva</label>
+          <label class="radio-label"><input type="radio" name="aanite" value="Liian pitkä"> Liian pitkä</label>
+          <label class="radio-label"><input type="radio" name="aanite" value="Liian lyhyt"> Liian lyhyt</label>
+        </div>
+      </div>
+
+      <!-- Vireyskompassi -->
+      <div class="form-group">
+        <label>Vireyskompassi oli</label>
+        <div class="radio-group">
+          <label class="radio-label"><input type="radio" name="kompassi" value="Tärkeä osa valmennusta, käytin aktiivisesti"> Tärkeä osa valmennusta, käytin aktiivisesti</label>
+          <label class="radio-label"><input type="radio" name="kompassi" value="Käytin jonkin verran"> Käytin jonkin verran</label>
+          <label class="radio-label"><input type="radio" name="kompassi" value="Käytin vähän"> Käytin vähän</label>
+          <label class="radio-label"><input type="radio" name="kompassi" value="En käyttänyt juuri lainkaan"> En käyttänyt juuri lainkaan</label>
+        </div>
+      </div>
+
+      <!-- Konkreettinen oppiminen -->
+      <div class="form-group">
+        <label>Koen oppineeni jotain konkreettista omasta hermostostani</label>
+        <div class="radio-group">
+          <label class="radio-label"><input type="radio" name="oppiminen" value="Kyllä, selkeästi"> Kyllä, selkeästi</label>
+          <label class="radio-label"><input type="radio" name="oppiminen" value="Jonkin verran"> Jonkin verran</label>
+          <label class="radio-label"><input type="radio" name="oppiminen" value="En osaa sanoa"> En osaa sanoa</label>
+          <label class="radio-label"><input type="radio" name="oppiminen" value="En juurikaan"> En juurikaan</label>
+        </div>
+      </div>
+
+      <!-- Jatkaminen -->
+      <div class="form-group">
+        <label>Aion jatkaa oppimaani arjessa valmennuksen jälkeen</label>
+        <div class="radio-group">
+          <label class="radio-label"><input type="radio" name="jatkaminen" value="Kyllä, minulla on selkeä suunnitelma"> Kyllä, minulla on selkeä suunnitelma</label>
+          <label class="radio-label"><input type="radio" name="jatkaminen" value="Todennäköisesti"> Todennäköisesti</label>
+          <label class="radio-label"><input type="radio" name="jatkaminen" value="En ole varma"> En ole varma</label>
+          <label class="radio-label"><input type="radio" name="jatkaminen" value="En usko"> En usko</label>
+        </div>
+      </div>
+
+      <!-- Suosittelu -->
+      <div class="form-group">
+        <label>Suosittelisitko valmennusta muille</label>
+        <div class="radio-group">
+          <label class="radio-label"><input type="radio" name="suosittelu" value="Kyllä ehdottomasti"> Kyllä ehdottomasti</label>
+          <label class="radio-label"><input type="radio" name="suosittelu" value="Todennäköisesti"> Todennäköisesti</label>
+          <label class="radio-label"><input type="radio" name="suosittelu" value="En osaa sanoa"> En osaa sanoa</label>
+          <label class="radio-label"><input type="radio" name="suosittelu" value="En suosittelisi"> En suosittelisi</label>
+        </div>
+      </div>
+
+      <!-- Hinta-laatu -->
+      <div class="form-group">
+        <label>Hinta-laatu-suhde tuntui</label>
+        <div class="radio-group">
+          <label class="radio-label"><input type="radio" name="hinta" value="Erittäin edulliselta sisältöön nähden"> Erittäin edulliselta sisältöön nähden</label>
+          <label class="radio-label"><input type="radio" name="hinta" value="Sopivalta"> Sopivalta</label>
+          <label class="radio-label"><input type="radio" name="hinta" value="Hieman kalliilta"> Hieman kalliilta</label>
+          <label class="radio-label"><input type="radio" name="hinta" value="Kalliilta"> Kalliilta</label>
+        </div>
+      </div>
+
+      <!-- OSA 2 -->
+      <p style="font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin: 2rem 0 1.5rem;">Osa 2 — Avoin palaute</p>
+
+      <div class="form-group">
+        <label>Mikä valmennuksessa oli parasta?</label>
+        <textarea name="parasta" placeholder="Kirjoita vapaasti…"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Mikä oli vaikeinta tai jäi kesken?</label>
+        <textarea name="vaikeinta" placeholder="Kirjoita vapaasti…"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Mikä viikko tai sisältö jäi eniten mieleen — ja miksi?</label>
+        <textarea name="mieleenpainuvin" placeholder="Kirjoita vapaasti…"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Mitä muuttaisit tai lisäisit?</label>
+        <textarea name="kehitys" placeholder="Kirjoita vapaasti…"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Vapaa sana</label>
+        <textarea name="vapaa" placeholder="Mitä muuta haluat sanoa…"></textarea>
+      </div>
+
+      <button class="btn-primary" onclick="lahetaPalaute(event)">Lähetä palaute</button>
+    </div>
+
+    <div class="form-sent" id="palaute-sent">
+      <h3>Palaute lähetetty 🌿</h3>
+      <p>Kiitos ajastasi. Palautteesi auttaa kehittämään valmennusta.</p>
     </div>
 
   </div>
@@ -1063,6 +1241,47 @@ function lahetaCoachViesti(e, weekNum) {
   document.getElementById('week-' + weekNum).classList.add('open');
 }
 
+
+async function lahetaPalaute(e) {
+  e.preventDefault();
+  const btn = document.querySelector('#palaute-form .btn-primary');
+  btn.textContent = 'Lähetetään…';
+  btn.disabled = true;
+
+  // Kerätään radio-vastaukset
+  const radios = ['eteneminen','materiaali','aanite','kompassi','oppiminen','jatkaminen','suosittelu','hinta'];
+  const data = {};
+  radios.forEach(name => {
+    const el = document.querySelector(`input[name="${name}"]:checked`);
+    data[name] = el ? el.value : 'Ei vastattu';
+  });
+
+  // Kerätään avoimet kentät
+  ['parasta','vaikeinta','mieleenpainuvin','kehitys','vapaa'].forEach(name => {
+    const el = document.querySelector(`textarea[name="${name}"]`);
+    data[name] = el ? el.value.trim() : '';
+  });
+
+  // Lähetetään Formspreehin
+  // VAIHDA tähän oma Formspree-osoitteesi: https://formspree.io/f/SINUN_ID
+  try {
+    const res = await fetch('https://formspree.io/f/VAIHDA_TÄHÄN', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (res.ok) {
+      document.getElementById('palaute-form').style.display = 'none';
+      document.getElementById('palaute-sent').classList.add('visible');
+    } else {
+      btn.textContent = 'Lähetys epäonnistui — yritä uudelleen';
+      btn.disabled = false;
+    }
+  } catch(err) {
+    btn.textContent = 'Lähetys epäonnistui — yritä uudelleen';
+    btn.disabled = false;
+  }
+}
 
 function lahetaViesti() {
   const name = document.getElementById('v-name').value.trim();
