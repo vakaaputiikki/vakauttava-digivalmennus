@@ -1004,7 +1004,7 @@ const weeksData = [
     },
     materials: [
       { icon: '🎬', type: 'video', label: 'Tervetuloa valmennukseen (video)',
-        url: 'LINKKI_VIIKKO1_VIDEO' /* ← Vaihda tähän WordPress-linkki */ },
+        url: 'https://www.youtube.com/embed/pdZGfdQkdZ4' },
       { icon: '🎧', type: 'audio', label: 'Viikon aihe: johdanto ANS-säätelyyn (äänite)',
         url: 'https://www.vakauttamisvalmentaja.fi/wp-content/uploads/2026/05/Digi1-1.mp3' /* ← Vaihda tähän WordPress-linkki */ },
     ]
@@ -1092,7 +1092,7 @@ const weeksData = [
       { icon: '🎧', type: 'audio', label: 'Viikon aihe: oma polku eteenpäin (äänite)',
         url: 'LINKKI_VIIKKO8_AANITE' /* ← Vaihda tähän WordPress-linkki */ },
       { icon: '🎬', type: 'video', label: 'Loppusanat valmentajalta (video)',
-        url: 'https://www.vakauttamisvalmentaja.fi/wp-content/uploads/2026/05/Digi8.mp3' /* ← Vaihda tähän WordPress-linkki */ },
+        url: 'https://www.youtube.com/embed/9FTtomVpdKc' },
     ]
   },
 ];
@@ -1181,6 +1181,21 @@ function buildWeeks() {
               return `<div class="material-item">
                 <div class="material-icon ${m.type}">${m.icon}</div>
                 <span>${m.label}</span>
+              </div>`;
+            }
+            if (m.url.includes('youtube.com/embed')) {
+              const videoId = m.url.split('/embed/')[1].split('?')[0];
+              const ytUrl = 'https://www.youtube.com/watch?v=' + videoId;
+              return `<div style="margin:1rem 0">
+                <div style="font-size:13px;font-weight:500;color:var(--earth);margin-bottom:8px">${m.icon} ${m.label}</div>
+                <a href="${ytUrl}" target="_blank" rel="noopener" style="display:block;position:relative;border-radius:10px;overflow:hidden;background:#000;text-decoration:none">
+                  <img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" alt="${m.label}" style="width:100%;display:block;opacity:0.85">
+                  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+                    <div style="width:56px;height:56px;background:rgba(0,0,0,0.75);border-radius:50%;display:flex;align-items:center;justify-content:center">
+                      <div style="width:0;height:0;border-top:11px solid transparent;border-bottom:11px solid transparent;border-left:18px solid #fff;margin-left:4px"></div>
+                    </div>
+                  </div>
+                </a>
               </div>`;
             }
             return `<a class="material-item material-link" href="${m.url}" target="_blank" rel="noopener">
