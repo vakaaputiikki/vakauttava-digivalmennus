@@ -1219,7 +1219,7 @@ function naytaSinulleTanaan() {
     const banneri = document.getElementById('sinulle-tanaan-banneri');
     const teksti = document.getElementById('sinulle-tanaan-teksti');
     if (!banneri || !teksti) return;
-    teksti.innerHTML = s.teksti + ` <a href="#week-${s.viikko}" onclick="scrollToWeek(${s.viikko})" style="color:var(--moss);font-weight:500;text-decoration:underline">Siirry viikkoon ${s.viikko} →</a>`;
+    teksti.innerHTML = s.teksti + ` <a href="#" onclick="scrollToWeek(${s.viikko});return false;" style="color:var(--moss);font-weight:500;text-decoration:underline">Siirry viikkoon ${s.viikko} →</a>`;
     banneri.style.display = 'block';
   } catch(e) {}
 }
