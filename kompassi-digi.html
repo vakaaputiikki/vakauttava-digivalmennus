@@ -6,7 +6,15 @@
 <title>Vireyskompassi</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
 
+</style>
+</head>
+
+
+<script>
+
+</script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:#fff;color:#1a1a1a;-webkit-font-smoothing:antialiased}
@@ -105,6 +113,12 @@ textarea:focus{border-color:#bbb;background:#fff}
 .aanite-tab-ali.active{background:#EEEDFE;color:#3C3489;border-color:#AFA9EC}
 .aanite-zone-title{font-size:12px;font-weight:500;color:#aaa;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:1rem}
 .aanite-card{border:1px solid #eee;border-radius:10px;padding:1rem;margin-bottom:0.75rem;background:#fafafa}
+.video-thumb-wrap{position:relative;margin-top:0.75rem;border-radius:8px;overflow:hidden;cursor:pointer;display:block;text-decoration:none;}
+.video-thumb-wrap img{width:100%;display:block;transition:opacity 0.2s;}
+.video-thumb-wrap:hover img{opacity:0.85;}
+.video-play-overlay{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;background:rgba(0,0,0,0.7);border-radius:50%;display:flex;align-items:center;justify-content:center;pointer-events:none;}
+.video-play-overlay svg{width:22px;height:22px;fill:white;margin-left:3px;}
+.video-duration{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,0.75);color:#fff;font-size:11px;padding:2px 6px;border-radius:3px;font-family:sans-serif;}
 .aanite-name{font-size:13px;font-weight:500;color:#1a1a1a;margin-bottom:2px}
 .aanite-desc{font-size:11px;color:#aaa;margin-bottom:0.75rem;line-height:1.4}
 .aanite-player{display:flex;align-items:center;gap:10px}
@@ -727,10 +741,15 @@ textarea:focus{border-color:#bbb;background:#fff}
 
     <div id="video-panel-yli">
       <p class="aanite-zone-title">Rauhoittavat videoharjoitukset ylivirittyneeseen tilaan</p>
-      <div class="aanite-card" style="border-style:dashed;opacity:0.6">
-        <div class="aanite-name" style="color:#bbb">Video 1 — Tulossa</div>
-        <div class="aanite-desc" style="color:#ccc">Harjoitusvideo on tulossa tähän pian</div>
-        <div style="font-size:11px;color:#ccc;padding:6px 0">🔒 Ei vielä saatavilla</div>
+      <div class="aanite-card">
+        <div class="aanite-name">Video 1 — Kehollinen harjoite</div>
+        <div class="aanite-desc">Rauhoittava kehollinen harjoite ylivirittyneeseen tilaan</div>
+        <a class="video-thumb-wrap" href="https://www.youtube.com/watch?v=9sqJM-JD9h8" target="_blank" rel="noopener">
+          <img src="https://img.youtube.com/vi/9sqJM-JD9h8/hqdefault.jpg" alt="Kehollinen harjoite" loading="lazy">
+          <div class="video-play-overlay">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+        </a>
       </div>
       <div class="aanite-card" style="border-style:dashed;opacity:0.6">
         <div class="aanite-name" style="color:#bbb">Video 2 — Tulossa</div>
@@ -756,10 +775,15 @@ textarea:focus{border-color:#bbb;background:#fff}
 
     <div id="video-panel-koh" style="display:none">
       <p class="aanite-zone-title">Rauhoittavat videoharjoitukset kohonneeseen vireystilaan</p>
-      <div class="aanite-card" style="border-style:dashed;opacity:0.6">
-        <div class="aanite-name" style="color:#bbb">Video 1 — Tulossa</div>
-        <div class="aanite-desc" style="color:#ccc">Harjoitusvideo on tulossa tähän pian</div>
-        <div style="font-size:11px;color:#ccc;padding:6px 0">🔒 Ei vielä saatavilla</div>
+      <div class="aanite-card">
+        <div class="aanite-name">Video 1 — Kehollinen harjoite</div>
+        <div class="aanite-desc">Vakauttava kehollinen harjoite kohonneeseen vireystilaan</div>
+        <a class="video-thumb-wrap" href="https://www.youtube.com/watch?v=dqAASRKAQ-I" target="_blank" rel="noopener">
+          <img src="https://img.youtube.com/vi/dqAASRKAQ-I/hqdefault.jpg" alt="Kehollinen harjoite" loading="lazy">
+          <div class="video-play-overlay">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+        </a>
       </div>
       <div class="aanite-card" style="border-style:dashed;opacity:0.6">
         <div class="aanite-name" style="color:#bbb">Video 2 — Tulossa</div>
@@ -785,10 +809,15 @@ textarea:focus{border-color:#bbb;background:#fff}
 
     <div id="video-panel-ok" style="display:none">
       <p class="aanite-zone-title">Videoharjoitukset optimaaliselle vyöhykkeelle</p>
-      <div class="aanite-card" style="border-style:dashed;opacity:0.6">
-        <div class="aanite-name" style="color:#bbb">Video 1 — Tulossa</div>
-        <div class="aanite-desc" style="color:#ccc">Harjoitusvideo on tulossa tähän pian</div>
-        <div style="font-size:11px;color:#ccc;padding:6px 0">🔒 Ei vielä saatavilla</div>
+      <div class="aanite-card">
+        <div class="aanite-name">Video 1 — Kehollinen harjoite</div>
+        <div class="aanite-desc">Vakauttava kehollinen harjoite optimaaliseen vireystilaan</div>
+        <a class="video-thumb-wrap" href="https://www.youtube.com/watch?v=xcRh_EJ5k8s" target="_blank" rel="noopener">
+          <img src="https://img.youtube.com/vi/xcRh_EJ5k8s/hqdefault.jpg" alt="Kehollinen harjoite" loading="lazy">
+          <div class="video-play-overlay">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+        </a>
       </div>
       <div class="aanite-card" style="border-style:dashed;opacity:0.6">
         <div class="aanite-name" style="color:#bbb">Video 2 — Tulossa</div>
@@ -952,6 +981,17 @@ textarea:focus{border-color:#bbb;background:#fff}
 <!-- OHJE -->
 <div id="screen-ohje" class="screen">
 
+  <!-- TÄRKEÄ MUISTUTUS -->
+  <div class="card" style="border-color:#EF9F27;border-width:1.5px;background:#FFFDF7">
+    <div style="display:flex;align-items:flex-start;gap:10px">
+      <div style="font-size:20px;flex-shrink:0">⚠️</div>
+      <div>
+        <div style="font-size:13px;font-weight:500;color:#633806;margin-bottom:4px">Tietosi häviävät laitteen vaihtuessa</div>
+        <div style="font-size:12px;color:#854F0B;line-height:1.7">Kaikki merkintäsi, harjoituksesi ja yhteystietosi tallentuvat <strong>vain tähän selaimeen tällä laitteella</strong>. Ne häviävät jos vaihdat puhelimen tai tietokoneen, tyhjennät selaimen historian tai välimuistin, tai avaat kompassin eri selaimella.<br><br>Vie muistiinpanot säännöllisesti talteen alla olevalla napilla.</div>
+      </div>
+    </div>
+  </div>
+
   <div class="card">
     <div class="slabel" style="margin-bottom:0.75rem">Miten käytät kompassia</div>
     <div style="display:flex;flex-direction:column;gap:0.75rem">
@@ -1054,9 +1094,10 @@ textarea:focus{border-color:#bbb;background:#fff}
     <button id="muistutus-nappi" class="btn primary" onclick="aktivoiMuistutus()" style="width:100%">Ota muistutukset käyttöön</button>
   </div>
 
+  <!-- VIE / TUO -->
   <div class="card">
     <div class="slabel" style="margin-bottom:0.5rem">Muistiinpanojen varmuuskopiointi</div>
-    <div style="font-size:12px;color:#777;line-height:1.6;margin-bottom:1rem">Tietosi tallentuvat vain tähän selaimeen. Vie muistiinpanot säännöllisesti talteen – esim. puhelimen vaihdon tai selaimen tyhjentymisen varalta.</div>
+    <div style="font-size:12px;color:#777;line-height:1.6;margin-bottom:1rem">Lataa tietosi talteen tiedostona. Voit palauttaa ne myöhemmin samaan tai uuteen laitteeseen.</div>
     <div style="display:flex;gap:8px;flex-wrap:wrap">
       <button class="btn primary" onclick="vieMustiinpanot()" style="flex:1;min-width:140px">📥 Vie muistiinpanot</button>
       <button class="btn" onclick="document.getElementById('tuo-input').click()" style="flex:1;min-width:140px">📤 Tuo muistiinpanot</button>
@@ -1835,7 +1876,7 @@ function zoneTaustaVari(zid) {
   return { yli:'#FDE8EE', kohonnut:'#FDF3E3', ok:'#E8F5E9', las:'#E3EEF9', ali:'#EEEDFE' }[zid] || '#f5f5f5';
 }
 
-let polkuViikkoOffset = 0; // 0 = tämä viikko, -1 = edellinen, jne.
+let polkuViikkoOffset = 0;
 
 function vaihdaPolkuViikko(suunta) {
   polkuViikkoOffset += suunta;
@@ -1848,18 +1889,15 @@ function renderPolku() {
   let aaniteHistoria = [];
   try { aaniteHistoria = JSON.parse(localStorage.getItem('vk_aanitteet') || '[]'); } catch(e) {}
 
-  // Tilastot
   const aktiivipaivatSet = new Set(merkinnat.map(m => new Date(m.aika).toDateString()));
   document.getElementById('polku-stat-merkinnat').textContent = merkinnat.length;
   document.getElementById('polku-stat-harjoitukset').textContent = harjoitukset.length;
   document.getElementById('polku-stat-paivat').textContent = aktiivipaivatSet.size;
 
-  // VIIKKOHEIJASTUS
   laskeReflektio(merkinnat, harjoitukset, aaniteHistoria);
-  // KEHITYSKAAVIO
   piirraKehityskaavio(merkinnat);
 
-  polkuViikkoOffset = 0; // Aina tämä viikko ensin
+  polkuViikkoOffset = 0;
   renderPolkuAikajana();
 }
 
@@ -1869,16 +1907,14 @@ function renderPolkuAikajana() {
   let aaniteHistoria = [];
   try { aaniteHistoria = JSON.parse(localStorage.getItem('vk_aanitteet') || '[]'); } catch(e) {}
 
-  // Laske viikon alku ja loppu offsetin mukaan
   const nyt = new Date();
   const viikonAlku = new Date(nyt);
-  viikonAlku.setDate(nyt.getDate() - nyt.getDay() + 1 + polkuViikkoOffset * 7); // ma
+  viikonAlku.setDate(nyt.getDate() - nyt.getDay() + 1 + polkuViikkoOffset * 7);
   viikonAlku.setHours(0,0,0,0);
   const viikonLoppu = new Date(viikonAlku);
   viikonLoppu.setDate(viikonAlku.getDate() + 6);
   viikonLoppu.setHours(23,59,59,999);
 
-  // Päivitä label ja napit
   const label = document.getElementById('polku-viikko-label');
   const edellinenBtn = document.getElementById('polku-edellinen-btn');
   const seuraavaBtn = document.getElementById('polku-seuraava-btn');
@@ -1890,7 +1926,6 @@ function renderPolkuAikajana() {
   if (seuraavaBtn) seuraavaBtn.style.opacity = polkuViikkoOffset >= 0 ? '0.3' : '1';
   if (seuraavaBtn) seuraavaBtn.style.pointerEvents = polkuViikkoOffset >= 0 ? 'none' : 'auto';
 
-  // Kerää kaikki teot ja suodata viikon mukaan
   const kaikki = [];
   merkinnat.forEach(m => kaikki.push({ tyyppi:'kirjaus', aika:m.aika, data:m }));
   harjoitukset.forEach(h => kaikki.push({ tyyppi:'harjoite', aika:h.aika, data:h }));
@@ -1919,7 +1954,6 @@ function renderPolkuAikajana() {
   }
   if (tyhjaViikko) tyhjaViikko.style.display = 'none';
 
-  // Palkinto joka 10. harjoite (lasketaan kaikista vanhimmasta)
   const harjJarj = kaikki.filter(t => t.tyyppi === 'harjoite').sort((a,b) => new Date(a.aika)-new Date(b.aika));
   const palkintoAjat = new Set(harjJarj.filter((_,i) => (i+1) % 10 === 0).map(t => t.aika));
 
@@ -2629,19 +2663,20 @@ function tuoMustiinpanot(event) {
       });
       if (tuotu === 0) {
         viesti.style.color = '#E24B4A';
-        viesti.textContent = '⚠️ Tiedostossa ei löytynyt tunnistettavia tietoja.';
+        viesti.textContent = '\u26a0\ufe0f Tiedostossa ei löytynyt tunnistettavia tietoja.';
       } else {
         viesti.style.color = '#3B6D11';
-        viesti.textContent = '✓ Muistiinpanot palautettu (' + tuotu + ' kokonaisuutta). Lataa sivu uudelleen nähdäksesi tiedot.';
+        viesti.textContent = '\u2713 Muistiinpanot palautettu (' + tuotu + ' kokonaisuutta). Lataa sivu uudelleen nähdäksesi tiedot.';
       }
     } catch(err) {
       viesti.style.color = '#E24B4A';
-      viesti.textContent = '⚠️ Tiedoston lukeminen epäonnistui. Varmista että valitsit oikean .json-tiedoston.';
+      viesti.textContent = '\u26a0\ufe0f Tiedoston lukeminen epäonnistui. Varmista että valitsit oikean .json-tiedoston.';
     }
     event.target.value = '';
   };
   reader.readAsText(tiedosto);
 }
+
 </script>
 <div style="text-align:center;padding:2rem 0 1.5rem;font-size:11px;color:#ccc">© Vakauttamisvalmentaja – Katja Saarinen</div>
 </body>
