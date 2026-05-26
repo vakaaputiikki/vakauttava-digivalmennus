@@ -643,6 +643,16 @@
   </div>
   <div class="section" style="max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.5rem;">
 
+    <!-- 70 PÄIVÄÄ - näkyy heti ensimmäisenä -->
+    <div style="background: var(--accent-light); border: 2px solid var(--accent); border-radius: var(--radius); padding: 1.25rem 1.5rem; display: flex; align-items: flex-start; gap: 1rem;">
+      <div style="font-size: 28px; flex-shrink: 0; line-height: 1;">⏳</div>
+      <div>
+        <p style="font-size: 13px; font-weight: 500; color: var(--accent); letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.4rem;">Käyttöaika</p>
+        <p style="font-size: 15px; font-weight: 500; color: var(--deep); margin-bottom: 0.5rem;">Alusta on käytössäsi <strong>70 päivää</strong> ostosta</p>
+        <p style="font-size: 13px; color: var(--text-muted); font-weight: 300; line-height: 1.65;">Sen jälkeen pääsy sulkeutuu automaattisesti. Tee muistiinpanot ja tallenna tehtäväsi omalle laitteellesi — materiaalit eivät jää käyttöön 70 päivän jälkeen.</p>
+      </div>
+    </div>
+
     <!-- TÄRKEÄ TEKNINEN HUOMIO - näkyy heti ensimmäisenä -->
     <div style="background: #FEF3E2; border: 2px solid var(--accent); border-radius: var(--radius); padding: 1.5rem 1.75rem;">
       <p style="font-size: 13px; font-weight: 500; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.6rem;">⚠️ Lue tämä ensin — tärkeää</p>
@@ -770,10 +780,6 @@
     <p class="progress-label" id="progress-label">0 / 8 viikkoa tehty</p>
   </div>
   <div class="section">
-    <div id="sinulle-tanaan-banneri" style="display:none;margin-bottom:1.25rem;padding:12px 16px;border-radius:var(--radius);border-left:3px solid var(--moss);background:var(--moss-light)">
-      <div style="font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.1em;color:var(--moss);margin-bottom:4px">🧭 Sinulle tänään</div>
-      <div id="sinulle-tanaan-teksti" style="font-size:14px;color:var(--earth);font-weight:300;line-height:1.55"></div>
-    </div>
     <div id="weeks-container"></div>
   </div>
 </div>
@@ -5385,28 +5391,6 @@ function buildWeeks() {
     container.appendChild(card);
   });
   updateProgressBar();
-  naytaSinulleTanaan();
-}
-
-function naytaSinulleTanaan() {
-  try {
-    const zone = localStorage.getItem('vakauttava_vireystila');
-    if (!zone) return;
-    const suositukset = {
-      yli:     { viikko: 3, teksti: 'Kompassi tunnisti ylivirittyneisyyden — Viikko 3 käsittelee juuri tätä. Laskeutumisharjoitteet odottavat.' },
-      kohonnut:{ viikko: 3, teksti: 'Kompassi tunnisti kohonneen vireystilan — Viikko 3 tukee laskeutumista.' },
-      ok:      { viikko: 5, teksti: 'Olet säätelyikkunassa — hyvä hetki syventyä viikkoon 5, joka käsittelee juuri tätä tilaa.' },
-      las:     { viikko: 4, teksti: 'Kompassi tunnisti laskeneen vireystilan — Viikko 4 käsittelee aktivointia ja alavirittyneisyyttä.' },
-      ali:     { viikko: 4, teksti: 'Kompassi tunnisti alivireystilan — Viikko 4 on juuri oikea kohta tällä hetkellä.' }
-    };
-    const s = suositukset[zone];
-    if (!s) return;
-    const banneri = document.getElementById('sinulle-tanaan-banneri');
-    const teksti = document.getElementById('sinulle-tanaan-teksti');
-    if (!banneri || !teksti) return;
-    teksti.innerHTML = s.teksti + ` <a href="#" onclick="scrollToWeek(${s.viikko});return false;" style="color:var(--moss);font-weight:500;text-decoration:underline">Siirry viikkoon ${s.viikko} →</a>`;
-    banneri.style.display = 'block';
-  } catch(e) {}
 }
 
 function scrollToWeek(num) {
