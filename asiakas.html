@@ -166,7 +166,7 @@
     border-radius: 50px;
   }
   .week-status.available { background: var(--moss-light); color: var(--moss); }
-  .week-status.locked { background: var(--sand-dark); color: var(--text-light); }
+  .week-status.locked { background: var(--sand-dark); color: var(--text-light); opacity: 0.7; }
   .week-status.done { background: var(--accent-light); color: var(--accent); }
 
   .week-body {
@@ -625,8 +625,8 @@
   <div class="nav-inner">
     <span class="nav-logo">Vakauttava digivalmennus</span>
     <div class="nav-tabs">
-      <button class="nav-tab" onclick="showView('ohjeet', this)">Ennen aloitusta</button>
-      <button class="nav-tab active" onclick="showView('viikot', this)">Viikot</button>
+      <button class="nav-tab active" onclick="showView('ohjeet', this)">Ennen aloitusta</button>
+      <button class="nav-tab" onclick="showView('viikot', this)">Viikot</button>
       <button class="nav-tab" onclick="showView('kompassi', this)">Vireyskompassi</button>
       <button class="nav-tab" onclick="showView('viestinta', this)">Yhteydenotto</button>
       <button class="nav-tab" onclick="showView('palaute', this)">Palaute</button>
@@ -635,7 +635,7 @@
 </nav>
 
 <!-- OHJEET -->
-<div id="view-ohjeet" class="view">
+<div id="view-ohjeet" class="view active">
   <div class="page-header">
     <p class="page-eyebrow">Aloitus</p>
     <h1 class="page-title">Ennen kuin aloitat digivalmennuksen</h1>
@@ -741,17 +741,12 @@
       </div>
     </div>
 
-    <!-- CTA -->
-    <div style="text-align: center; padding: 1rem 0 2rem;">
-      <p style="font-size: 14px; color: var(--text-muted); font-weight: 300; margin-bottom: 1.25rem;">Kun olet lukenut ohjeet, voit siirtyä aloittamaan.</p>
-      <button onclick="showView('viikot', document.querySelectorAll('.nav-tab')[1])" style="display: inline-block; padding: 14px 40px; background: var(--earth); color: var(--warm-white); border: none; border-radius: 50px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer;">Siirry viikkomateriaaleihin →</button>
-    </div>
 
   </div>
 </div>
 
 <!-- VIIKOT -->
-<div id="view-viikot" class="view active">
+<div id="view-viikot" class="view">
   <div class="page-header">
     <p class="page-eyebrow">Oma polku</p>
     <h1 class="page-title">8 viikon valmennus</h1>
@@ -780,7 +775,88 @@
     <p class="progress-label" id="progress-label">0 / 8 viikkoa tehty</p>
   </div>
   <div class="section">
+    <div id="alkukartoitus-viikot-wrap">
+    <!-- ALKUKARTOITUS -->
+    <div id="alkukartoitus-wrap" style="background: var(--warm-white); border: 2px solid var(--moss); border-radius: var(--radius); padding: 1.75rem 1.75rem 1.5rem;">
+      <p style="font-size: 13px; font-weight: 500; color: var(--moss); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.6rem;">🌱 Alkukartoitus</p>
+      <h2 style="font-family:'Fraunces',serif; font-weight: 400; font-size: 1.2rem; color: var(--deep); margin-bottom: 0.5rem;">Ennen kuin aloitat — kerro lähtötilanteesi</h2>
+      <p style="font-size: 13px; color: var(--text-muted); font-weight: 300; line-height: 1.6; margin-bottom: 1.25rem;">Vastauksesi tallentuvat vain omalle laitteellesi. Näet ne uudelleen valmennuksen lopussa, jolloin voit vertailla missä olit ja missä olet nyt.</p>
+
+      <div id="alkukartoitus-lomake">
+        <div style="margin-bottom: 1.1rem;">
+          <label style="font-size: 13px; font-weight: 500; color: var(--deep); display: block; margin-bottom: 0.4rem;">1. Mikä sai sinut hakeutumaan tähän valmennukseen juuri nyt?</label>
+          <textarea id="ak-q1" rows="3" style="width:100%; padding:10px 12px; border:1px solid var(--border-strong); border-radius:var(--radius-sm); font-family:'DM Sans',sans-serif; font-size:13px; color:var(--text); background:var(--warm-white); outline:none; resize:vertical; line-height:1.6;" placeholder="Kirjoita vapaasti…"></textarea>
+        </div>
+        <div style="margin-bottom: 1.1rem;">
+          <label style="font-size: 13px; font-weight: 500; color: var(--deep); display: block; margin-bottom: 0.4rem;">2. Miten kuvailisit vireystilaasi tällä hetkellä arjessa?</label>
+          <textarea id="ak-q2" rows="3" style="width:100%; padding:10px 12px; border:1px solid var(--border-strong); border-radius:var(--radius-sm); font-family:'DM Sans',sans-serif; font-size:13px; color:var(--text); background:var(--warm-white); outline:none; resize:vertical; line-height:1.6;" placeholder="Esim. usein ylivirittynyt, väsynyt, vaihteleva…"></textarea>
+        </div>
+        <div style="margin-bottom: 1.5rem;">
+          <label style="font-size: 13px; font-weight: 500; color: var(--deep); display: block; margin-bottom: 0.4rem;">3. Mitä toivot saavasi tästä valmennuksesta?</label>
+          <textarea id="ak-q3" rows="3" style="width:100%; padding:10px 12px; border:1px solid var(--border-strong); border-radius:var(--radius-sm); font-family:'DM Sans',sans-serif; font-size:13px; color:var(--text); background:var(--warm-white); outline:none; resize:vertical; line-height:1.6;" placeholder="Kirjoita vapaasti…"></textarea>
+        </div>
+        <div id="ak-virhe" style="font-size:12px; color:#E24B4A; margin-bottom:0.75rem; min-height:18px;"></div>
+        <button onclick="tallennaAlkukartoitus()" style="width:100%; padding:13px; background:var(--earth); color:var(--warm-white); border:none; border-radius:50px; font-family:'DM Sans',sans-serif; font-size:15px; font-weight:500; cursor:pointer;">Tallenna ja aloita valmennus →</button>
+      </div>
+
+      <div id="alkukartoitus-tehty" style="display:none; text-align:center; padding:1rem 0 0.5rem;">
+        <div style="font-size:32px; margin-bottom:0.5rem;">✓</div>
+        <p style="font-size:14px; color:var(--moss); font-weight:500; margin-bottom:0.5rem;">Alkukartoitus tallennettu</p>
+        <p style="font-size:13px; color:var(--text-muted); font-weight:300; margin-bottom:1.25rem;">Viikko 1 on nyt auki. Siirry viikkomateriaaleihin kun olet valmis.</p>
+        <button onclick="showView('viikot', document.querySelectorAll('.nav-tab')[1])" style="display:inline-block; padding:12px 36px; background:var(--earth); color:var(--warm-white); border:none; border-radius:50px; font-family:'DM Sans',sans-serif; font-size:15px; font-weight:500; cursor:pointer;">Siirry viikkoon 1 →</button>
+      </div>
+    </div>
+    </div>
     <div id="weeks-container"></div>
+    <div id="loppukartoitus-viikot-wrap" style="display:none; margin-top:2rem;">
+      <div style="border-top:2px solid var(--moss); padding-top:2rem; margin-top:1rem;">
+        <p style="font-size:13px; font-weight:500; color:var(--moss); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.5rem; text-align:center;">🌿 Olet päässyt maaliin</p>
+        <h2 style="font-family:'Fraunces',serif; font-weight:400; font-size:1.4rem; color:var(--deep); text-align:center; margin-bottom:2rem;">8 viikkoa tehty — aika katsoa taaksepäin</h2>
+      </div>
+
+
+    <!-- Vertailu alku vs loppu -->
+    <div id="lk-vertailu" style="display:none; background:var(--moss-light); border:1px solid rgba(107,123,94,0.3); border-radius:var(--radius); padding:1.5rem 1.75rem;">
+      <p style="font-size:13px; font-weight:500; color:var(--moss); letter-spacing:0.07em; text-transform:uppercase; margin-bottom:1rem;">📖 Näin vastasit alussa</p>
+      <div id="lk-alku-vastaukset" style="display:flex; flex-direction:column; gap:1rem;"></div>
+    </div>
+
+    <div id="loppukartoitus-lomake-wrap">
+      <div style="background:var(--warm-white); border:2px solid var(--moss); border-radius:var(--radius); padding:1.75rem;">
+        <p style="font-size:13px; font-weight:500; color:var(--moss); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.6rem;">🌿 Loppukartoitus</p>
+        <h2 style="font-family:'Fraunces',serif; font-weight:400; font-size:1.2rem; color:var(--deep); margin-bottom:0.5rem;">Missä olet nyt?</h2>
+        <p style="font-size:13px; color:var(--text-muted); font-weight:300; line-height:1.6; margin-bottom:1.25rem;">Vastauksesi tallentuvat laitteellesi. Näet ne heti alun vastaustesi rinnalla.</p>
+
+        <div id="loppukartoitus-lomake">
+          <div style="margin-bottom:1.1rem;">
+            <label style="font-size:13px; font-weight:500; color:var(--deep); display:block; margin-bottom:0.4rem;">1. Mikä muuttui sinussa tai arjessasi näiden 8 viikon aikana?</label>
+            <textarea id="lk-q1" rows="3" style="width:100%; padding:10px 12px; border:1px solid var(--border-strong); border-radius:var(--radius-sm); font-family:'DM Sans',sans-serif; font-size:13px; color:var(--text); background:var(--warm-white); outline:none; resize:vertical; line-height:1.6;" placeholder="Kirjoita vapaasti…"></textarea>
+          </div>
+          <div style="margin-bottom:1.1rem;">
+            <label style="font-size:13px; font-weight:500; color:var(--deep); display:block; margin-bottom:0.4rem;">2. Miten kuvailisit vireystilaasi nyt verrattuna valmennuksen alkuun?</label>
+            <textarea id="lk-q2" rows="3" style="width:100%; padding:10px 12px; border:1px solid var(--border-strong); border-radius:var(--radius-sm); font-family:'DM Sans',sans-serif; font-size:13px; color:var(--text); background:var(--warm-white); outline:none; resize:vertical; line-height:1.6;" placeholder="Vertaile alkuun…"></textarea>
+          </div>
+          <div style="margin-bottom:1.1rem;">
+            <label style="font-size:13px; font-weight:500; color:var(--deep); display:block; margin-bottom:0.4rem;">3. Mikä oli sinulle merkityksellisin hetki tai oivallus?</label>
+            <textarea id="lk-q3" rows="3" style="width:100%; padding:10px 12px; border:1px solid var(--border-strong); border-radius:var(--radius-sm); font-family:'DM Sans',sans-serif; font-size:13px; color:var(--text); background:var(--warm-white); outline:none; resize:vertical; line-height:1.6;" placeholder="Kirjoita vapaasti…"></textarea>
+          </div>
+          <div style="margin-bottom:1.5rem;">
+            <label style="font-size:13px; font-weight:500; color:var(--deep); display:block; margin-bottom:0.4rem;">4. Mitä viet mukanasi tästä valmennuksesta?</label>
+            <textarea id="lk-q4" rows="3" style="width:100%; padding:10px 12px; border:1px solid var(--border-strong); border-radius:var(--radius-sm); font-family:'DM Sans',sans-serif; font-size:13px; color:var(--text); background:var(--warm-white); outline:none; resize:vertical; line-height:1.6;" placeholder="Kirjoita vapaasti…"></textarea>
+          </div>
+          <button onclick="tallennaLoppukartoitus()" style="width:100%; padding:13px; background:var(--earth); color:var(--warm-white); border:none; border-radius:50px; font-family:'DM Sans',sans-serif; font-size:15px; font-weight:500; cursor:pointer;">Tallenna loppukartoitus →</button>
+        </div>
+
+        <div id="loppukartoitus-tehty" style="display:none; text-align:center; padding:1rem 0 0.5rem;">
+          <div style="font-size:40px; margin-bottom:0.75rem;">🌿</div>
+          <p style="font-size:16px; color:var(--moss); font-weight:500; margin-bottom:0.5rem;">Loppukartoitus tallennettu</p>
+          <p style="font-size:13px; color:var(--text-muted); font-weight:300; line-height:1.6;">Hienoa työtä. Olet kulkenut koko polun.<br>Voit lukea vastauksesi uudelleen ylhäältä koska tahansa.</p>
+        </div>
+      </div>
+    </div>
+
+  
+    </div>
   </div>
 </div>
 
@@ -5154,10 +5230,143 @@ function tuoMustiinpanot(event) {
 </div><!-- /app -->
 
 <script>
+
+
+// ── ALKUKARTOITUS ──
+const AK_KEY = 'vakauttava_alkukartoitus';
+
+function alustaSivunTila() {
+  const ak = localStorage.getItem(AK_KEY);
+  const akTehty = !!ak;
+
+  if (akTehty) {
+    // Alkukartoitus tehty — näytä vahvistus lomakkeen sijaan
+    const el = document.getElementById('alkukartoitus-tehty');
+    const lomake = document.getElementById('alkukartoitus-lomake');
+    if (el) el.style.display = 'block';
+    if (lomake) lomake.style.display = 'none';
+    // Viikko 1 auki
+    const v1 = weeksData.find(w => w.num === 1);
+    if (v1) v1.status = 'available';
+    // Avaa viikot-näkymä oletukseksi
+    showView('viikot', document.querySelectorAll('.nav-tab')[1]);
+  }
+  // Jos alkukartoitus EI tehty, pysytään ohjeet-näkymässä (default)
+
+  // Loppukartoitus-välilehti näkyviin jos viikko 8 tehty
+  if (completedWeeks.has(8)) {
+    const lkWrap = document.getElementById('loppukartoitus-viikot-wrap');
+    if (lkWrap) lkWrap.style.display = 'block';
+    naytaAlkuVastaukset();
+    const lk = localStorage.getItem('vakauttava_loppukartoitus');
+    if (lk) {
+      const lomake = document.getElementById('loppukartoitus-lomake');
+      const tehty = document.getElementById('loppukartoitus-tehty');
+      if (lomake) lomake.style.display = 'none';
+      if (tehty) tehty.style.display = 'block';
+    }
+  }
+}
+
+function tallennaAlkukartoitus() {
+  const q1 = document.getElementById('ak-q1').value.trim();
+  const q2 = document.getElementById('ak-q2').value.trim();
+  const q3 = document.getElementById('ak-q3').value.trim();
+  const virhe = document.getElementById('ak-virhe');
+
+  if (!q1 || !q2 || !q3) {
+    virhe.textContent = 'Täytä kaikki kentät ennen jatkamista.';
+    return;
+  }
+  virhe.textContent = '';
+
+  const data = {
+    pvm: new Date().toLocaleDateString('fi-FI'),
+    q1, q2, q3
+  };
+  localStorage.setItem(AK_KEY, JSON.stringify(data));
+
+  // Avaa viikko 1
+  const v1 = weeksData.find(w => w.num === 1);
+  if (v1) v1.status = 'available';
+  saveProgress();
+  buildWeeks();
+
+  // Näytä vahvistus
+  document.getElementById('alkukartoitus-lomake').style.display = 'none';
+  document.getElementById('alkukartoitus-tehty').style.display = 'block';
+}
+
+function naytaAlkuVastaukset() {
+  const ak = localStorage.getItem(AK_KEY);
+  if (!ak) return;
+  const data = JSON.parse(ak);
+  const wrap = document.getElementById('lk-vertailu');
+  const lista = document.getElementById('lk-alku-vastaukset');
+  if (!wrap || !lista) return;
+
+  const kysymykset = [
+    'Mikä sai sinut hakeutumaan tähän valmennukseen juuri nyt?',
+    'Miten kuvailisit vireystilaasi tällä hetkellä arjessa?',
+    'Mitä toivoit saavasi tästä valmennuksesta?'
+  ];
+  const vastaukset = [data.q1, data.q2, data.q3];
+
+  lista.innerHTML = kysymykset.map((k, i) => `
+    <div style="padding:0.9rem 1rem; background:white; border-radius:var(--radius-sm); border:1px solid rgba(107,123,94,0.2);">
+      <p style="font-size:11px; font-weight:500; color:var(--moss); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:0.35rem;">${k}</p>
+      <p style="font-size:13px; color:var(--text-muted); font-weight:300; line-height:1.6;">${vastaukset[i] || '—'}</p>
+    </div>
+  `).join('');
+  wrap.style.display = 'block';
+
+  // Lisää päivämäärä
+  if (data.pvm) {
+    const label = wrap.querySelector('p');
+    if (label) label.textContent = `📖 Näin vastasit alussa (${data.pvm})`;
+  }
+}
+
+function tallennaLoppukartoitus() {
+  const q1 = document.getElementById('lk-q1').value.trim();
+  const q2 = document.getElementById('lk-q2').value.trim();
+  const q3 = document.getElementById('lk-q3').value.trim();
+  const q4 = document.getElementById('lk-q4').value.trim();
+
+  if (!q1 || !q2 || !q3 || !q4) {
+    alert('Täytä kaikki kentät ennen tallentamista.');
+    return;
+  }
+
+  const data = { pvm: new Date().toLocaleDateString('fi-FI'), q1, q2, q3, q4 };
+  localStorage.setItem('vakauttava_loppukartoitus', JSON.stringify(data));
+
+  document.getElementById('loppukartoitus-lomake').style.display = 'none';
+  document.getElementById('loppukartoitus-tehty').style.display = 'block';
+}
+
+// ── Päivitä markDone avaamaan loppukartoitus-välilehti viikon 8 jälkeen ──
+const _origMarkDone = markDone;
+window.markDone = function(e, num) {
+  _origMarkDone(e, num);
+  if (num === 8) {
+    naytaAlkuVastaukset();
+    // Pieniviive jotta buildWeeks ehtii
+    setTimeout(() => {
+      const lkWrap = document.getElementById('loppukartoitus-viikot-wrap');
+      if (lkWrap) { lkWrap.style.display = 'block'; lkWrap.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      naytaAlkuVastaukset();
+    }, 600);
+  }
+};
+
+// ── Käynnistys ──
 document.addEventListener('DOMContentLoaded', function() {
   syncStatusFromStorage();
+  alustaSivunTila();
   buildWeeks();
 });
+
 
 // ── Navigation ──
 function showView(name, btn) {
@@ -5169,7 +5378,7 @@ function showView(name, btn) {
 
 // ── Viikkodata ──
 const weeksData = [
-  { num: 1, title: 'Tutustuminen — missä olet nyt?', meta: 'Vireystilat, hermosto, perusteet', status: 'available',
+  { num: 1, title: 'Tutustuminen — missä olet nyt?', meta: 'Vireystilat, hermosto, perusteet', status: 'locked',
     desc: 'Ensimmäinen viikko on orientaatiota: mikä vireystila on, miksi keho reagoi niin kuin reagoi, ja missä tilassa sinä yleensä liikut.',
     reading: {
       text: 'Luettava materiaali',
@@ -5183,7 +5392,7 @@ const weeksData = [
         url: 'https://www.vakauttamisvalmentaja.fi/wp-content/uploads/2026/05/Digi1-1.mp3' /* ← Vaihda tähän WordPress-linkki */ },
     ]
   },
-  { num: 2, title: 'Keho tietää ensin', meta: 'Kehosignaalit ja tunnistaminen', status: 'available',
+  { num: 2, title: 'Keho tietää ensin', meta: 'Kehosignaalit ja tunnistaminen', status: 'locked',
     desc: 'Opitaan kuuntelemaan kehon viestejä ennen kuin mieli tulkitsee — lihaskireys, hengitys, vatsa, lämpö.',
     reading: {
       text: 'Luettava materiaali',
@@ -5195,7 +5404,7 @@ const weeksData = [
         url: 'https://www.vakauttamisvalmentaja.fi/wp-content/uploads/2026/05/Digi2.mp3' /* ← Vaihda tähän WordPress-linkki */ },
     ]
   },
-  { num: 3, title: 'Ylivirittyneisyys', meta: 'Tunnistaminen ja laskeutuminen', status: 'available',
+  { num: 3, title: 'Ylivirittyneisyys', meta: 'Tunnistaminen ja laskeutuminen', status: 'locked',
     desc: 'Mitä tapahtuu kehossa, kun olet liikaa vireillä? Harjoitteet, jotka kutsuvat hermostoa alas.',
     reading: {
       text: 'Luettava materiaali',
@@ -5207,7 +5416,7 @@ const weeksData = [
         url: 'https://www.vakauttamisvalmentaja.fi/wp-content/uploads/2026/05/Digi3.mp3' /* ← Vaihda tähän WordPress-linkki */ },
     ]
   },
-  { num: 4, title: 'Alavirittyneisyys', meta: 'Tunnistaminen ja aktivointi', status: 'available',
+  { num: 4, title: 'Alavirittyneisyys', meta: 'Tunnistaminen ja aktivointi', status: 'locked',
     desc: 'Väsymys, tyhjyys, etäisyys — alavirittyneisyys on yhtä tärkeä tila kuin yliviritys.',
     reading: {
       text: 'Luettava materiaali',
@@ -5219,7 +5428,7 @@ const weeksData = [
         url: 'https://www.vakauttamisvalmentaja.fi/wp-content/uploads/2026/05/Digi4.mp3' /* ← Vaihda tähän WordPress-linkki */ },
     ]
   },
-  { num: 5, title: 'Säätelyikkuna', meta: 'Oman toleranssin tunnistaminen', status: 'available',
+  { num: 5, title: 'Säätelyikkuna', meta: 'Oman toleranssin tunnistaminen', status: 'locked',
     desc: 'Toleranssi-ikkuna on se alue, jossa pystyt olemaan — ei liikaa, ei liian vähän.',
     reading: {
       text: 'Luettava materiaali',
@@ -5231,7 +5440,7 @@ const weeksData = [
         url: 'https://www.vakauttamisvalmentaja.fi/wp-content/uploads/2026/05/Digi5.mp3' /* ← Vaihda tähän WordPress-linkki */ },
     ]
   },
-  { num: 6, title: 'Resurssointi', meta: 'Mikä kannattelee sinua?', status: 'available',
+  { num: 6, title: 'Resurssointi', meta: 'Mikä kannattelee sinua?', status: 'locked',
     desc: 'Resurssit ovat asioita, paikkoja, ihmisiä ja kehontiloja, jotka tukevat säätelyä.',
     reading: {
       text: 'Luettava materiaali',
@@ -5243,7 +5452,7 @@ const weeksData = [
         url: 'https://www.vakauttamisvalmentaja.fi/wp-content/uploads/2026/05/digi6.mp3' /* ← Vaihda tähän WordPress-linkki */ },
     ]
   },
-  { num: 7, title: 'Arjen rytmitys', meta: 'Säätely rakenteeksi', status: 'available',
+  { num: 7, title: 'Arjen rytmitys', meta: 'Säätely rakenteeksi', status: 'locked',
     desc: 'Säätely pitää rakentaa arkeen. Tällä viikolla suunnittelet oman päivärakenteen.',
     reading: {
       text: 'Luettava materiaali',
@@ -5255,7 +5464,7 @@ const weeksData = [
         url: 'https://www.vakauttamisvalmentaja.fi/wp-content/uploads/2026/05/Digi7.mp3' /* ← Vaihda tähän WordPress-linkki */ },
     ]
   },
-  { num: 8, title: 'Oma polku eteenpäin', meta: 'Koonta, jatkuminen, toimijuus', status: 'available',
+  { num: 8, title: 'Oma polku eteenpäin', meta: 'Koonta, jatkuminen, toimijuus', status: 'locked',
     desc: 'Viimeinen viikko on kokoamista: mitä opit, mikä toimii sinulle, mihin suuntaat seuraavaksi.',
     reading: {
       text: 'Luettava materiaali',
@@ -5311,7 +5520,7 @@ function buildWeeks() {
     card.className = 'week-card';
     card.id = 'week-' + w.num;
     const isDone = completedWeeks.has(w.num);
-    const statusLabel = isDone ? 'Tehty ✓' : (w.status === 'available' ? 'Auki' : 'Tulossa');
+    const statusLabel = isDone ? 'Tehty ✓' : (w.status === 'available' ? 'Auki' : '🔒 Lukittu');
     const statusClass = isDone ? 'done' : w.status;
 
     // Luettava materiaali
