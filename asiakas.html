@@ -1265,7 +1265,7 @@ function markDone(e, num) {
 }
 
 // ── Kysy valmentajalta ──
-function lahetaCoachViesti(e, weekNum) {
+async function lahetaCoachViesti(e, weekNum) {
   e.stopPropagation();
   const ta = document.getElementById('coach-ta-' + weekNum);
   const viesti = ta ? ta.value.trim() : '';
@@ -1276,16 +1276,32 @@ function lahetaCoachViesti(e, weekNum) {
   if (sent.length >= 3) return;
 
   const week = weeksData.find(w => w.num === weekNum);
-  const subject = encodeURIComponent('Digivalmennus – Viikko ' + weekNum + ': ' + (week ? week.title : ''));
-  const body = encodeURIComponent('Viikko ' + weekNum + ' – ' + (week ? week.title : '') + '\n\n' + viesti);
-  window.location.href = 'mailto:vakaaputiikki@gmail.com?subject=' + subject + '&body=' + body;
+  const btn = document.querySelector('#week-' + weekNum + ' .coach-send-btn');
+  if (btn) { btn.textContent = 'Lähetetään…'; btn.disabled = true; }
 
-  // Tallennetaan lähetetty viesti kiintiön laskemiseksi
-  sent.push({ ts: Date.now(), preview: viesti.slice(0, 60) });
-  localStorage.setItem(msgKey, JSON.stringify(sent));
+  try {
+    const res = await fetch('https://formspree.io/f/xredydwv', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        viikko: weekNum,
+        viikon_aihe: week ? week.title : '',
+        viesti: viesti
+      })
+    });
 
-  buildWeeks();
-  document.getElementById('week-' + weekNum).classList.add('open');
+    if (res.ok) {
+      // Tallennetaan lähetetty viesti kiintiön laskemiseksi
+      sent.push({ ts: Date.now(), preview: viesti.slice(0, 60) });
+      localStorage.setItem(msgKey, JSON.stringify(sent));
+      buildWeeks();
+      document.getElementById('week-' + weekNum).classList.add('open');
+    } else {
+      if (btn) { btn.textContent = 'Lähetys epäonnistui — yritä uudelleen'; btn.disabled = false; }
+    }
+  } catch(err) {
+    if (btn) { btn.textContent = 'Lähetys epäonnistui — yritä uudelleen'; btn.disabled = false; }
+  }
 }
 
 
@@ -1330,17 +1346,37 @@ async function lahetaPalaute(e) {
   }
 }
 
-function lahetaViesti() {
+async function lahetaViesti() {
   const name = document.getElementById('v-name').value.trim();
   const viesti = document.getElementById('v-viesti').value.trim();
   if (!name || !viesti) { alert('Täytä nimi ja viesti.'); return; }
   const aihe = document.getElementById('v-aihe').value;
   const viikko = document.getElementById('v-viikko').value;
-  const subject = encodeURIComponent('Vakauttava digivalmennus — ' + (aihe || 'Yhteydenotto'));
-  const body = encodeURIComponent('Nimi: ' + name + '\nViikko: ' + (viikko||'Ei erityistä') + '\nAihe: ' + aihe + '\n\n' + viesti);
-  window.location.href = 'mailto:vakaaputiikki@gmail.com?subject=' + subject + '&body=' + body;
-  document.getElementById('viesti-form').style.display = 'none';
-  document.getElementById('viesti-sent').classList.add('visible');
+
+  const btn = document.querySelector('#viesti-form .btn-primary');
+  if (btn) { btn.textContent = 'Lähetetään…'; btn.disabled = true; }
+
+  try {
+    const res = await fetch('https://formspree.io/f/xdajwjqo', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        nimi: name,
+        aihe: aihe,
+        viikko: viikko || 'Ei erityistä',
+        viesti: viesti
+      })
+    });
+
+    if (res.ok) {
+      document.getElementById('viesti-form').style.display = 'none';
+      document.getElementById('viesti-sent').classList.add('visible');
+    } else {
+      if (btn) { btn.textContent = 'Lähetys epäonnistui — yritä uudelleen'; btn.disabled = false; }
+    }
+  } catch(err) {
+    if (btn) { btn.textContent = 'Lähetys epäonnistui — yritä uudelleen'; btn.disabled = false; }
+  }
 }
 </script>
 </body>
