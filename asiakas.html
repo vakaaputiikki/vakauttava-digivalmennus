@@ -750,6 +750,10 @@
     <p class="progress-label" id="progress-label">0 / 8 viikkoa tehty</p>
   </div>
   <div class="section">
+    <div id="sinulle-tanaan-banneri" style="display:none;margin-bottom:1.25rem;padding:12px 16px;border-radius:var(--radius);border-left:3px solid var(--moss);background:var(--moss-light)">
+      <div style="font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.1em;color:var(--moss);margin-bottom:4px">🧭 Sinulle tänään</div>
+      <div id="sinulle-tanaan-teksti" style="font-size:14px;color:var(--earth);font-weight:300;line-height:1.55"></div>
+    </div>
     <div id="weeks-container"></div>
   </div>
 </div>
@@ -1196,6 +1200,35 @@ function buildWeeks() {
     container.appendChild(card);
   });
   updateProgressBar();
+  naytaSinulleTanaan();
+}
+
+function naytaSinulleTanaan() {
+  try {
+    const zone = localStorage.getItem('vakauttava_vireystila');
+    if (!zone) return;
+    const suositukset = {
+      yli:     { viikko: 3, teksti: 'Kompassi tunnisti ylivirittyneisyyden — Viikko 3 käsittelee juuri tätä. Laskeutumisharjoitteet odottavat.' },
+      kohonnut:{ viikko: 3, teksti: 'Kompassi tunnisti kohonneen vireystilan — Viikko 3 tukee laskeutumista.' },
+      ok:      { viikko: 5, teksti: 'Olet säätelyikkunassa — hyvä hetki syventyä viikkoon 5, joka käsittelee juuri tätä tilaa.' },
+      las:     { viikko: 4, teksti: 'Kompassi tunnisti laskeneen vireystilan — Viikko 4 käsittelee aktivointia ja alavirittyneisyyttä.' },
+      ali:     { viikko: 4, teksti: 'Kompassi tunnisti alivireystilan — Viikko 4 on juuri oikea kohta tällä hetkellä.' }
+    };
+    const s = suositukset[zone];
+    if (!s) return;
+    const banneri = document.getElementById('sinulle-tanaan-banneri');
+    const teksti = document.getElementById('sinulle-tanaan-teksti');
+    if (!banneri || !teksti) return;
+    teksti.innerHTML = s.teksti + ` <a href="#week-${s.viikko}" onclick="scrollToWeek(${s.viikko})" style="color:var(--moss);font-weight:500;text-decoration:underline">Siirry viikkoon ${s.viikko} →</a>`;
+    banneri.style.display = 'block';
+  } catch(e) {}
+}
+
+function scrollToWeek(num) {
+  setTimeout(() => {
+    const el = document.getElementById('week-' + num);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 100);
 }
 
 function toggleWeek(num, status, isDone) {
