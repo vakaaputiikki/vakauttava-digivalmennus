@@ -709,6 +709,10 @@
         <li>Alusta on käytössäsi <strong style="color: var(--earth);">70 päivää</strong> ostosta – sen jälkeen pääsy sulkeutuu</li>
         <li>Tee muistiinpanoja itsellesi – materiaalit eivät jää käyttöön 70 päivän jälkeen</li>
       </ul>
+      <div style="margin-top: 1rem; background: #FEF3E2; border-left: 3px solid var(--accent); border-radius: var(--radius-sm); padding: 0.9rem 1.1rem;">
+        <p style="font-size: 13px; font-weight: 500; color: var(--earth); margin-bottom: 0.3rem;">⚠️ Tärkeää: käytä aina samaa selainta samalla laitteella</p>
+        <p style="font-size: 13px; color: var(--text-muted); font-weight: 300; line-height: 1.6;">Edistymistietosi (mitkä viikot olet tehnyt, viestikiintiöt) tallentuvat käyttämäsi selaimen muistiin. Jos vaihdat selainta tai laitetta, edistymistieto ei siirry mukana. Suosittelen käyttämään valmennusta aina samalla laitteella ja samalla selaimella. Jos tieto katoaa, ota yhteyttä – palautan tilanteen manuaalisesti.</p>
+      </div>
     </div>
 
     <!-- CTA -->
@@ -1097,7 +1101,10 @@ const weeksData = [
   },
 ];
 
-const STORAGE_KEY = 'vakauttava_viikot_v1';
+// Luetaan WordPress-käyttäjätunniste jos saatavilla (injektoitu functions.php:stä)
+const WP_USER_ID = (typeof vakaaWpUser !== 'undefined' && vakaaWpUser) ? vakaaWpUser : 'guest';
+const STORAGE_KEY = 'vakauttava_viikot_v1_' + WP_USER_ID;
+const MSG_PREFIX = 'coach_msgs_v';
 
 // Ladataan tallennettu edistyminen
 const completedWeeks = new Set(
@@ -1271,7 +1278,7 @@ async function lahetaCoachViesti(e, weekNum) {
   const viesti = ta ? ta.value.trim() : '';
   if (!viesti) { ta.focus(); return; }
 
-  const msgKey = 'coach_msgs_v' + weekNum;
+  const msgKey = 'coach_msgs_v' + WP_USER_ID + '_' + weekNum;
   const sent = JSON.parse(localStorage.getItem(msgKey) || '[]');
   if (sent.length >= 3) return;
 
