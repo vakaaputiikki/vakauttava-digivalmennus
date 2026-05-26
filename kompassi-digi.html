@@ -911,12 +911,20 @@ textarea:focus{border-color:#bbb;background:#fff}
 
     <!-- Aikajanapolku -->
     <div class="card" style="padding:1.25rem 1rem">
-      <div class="slabel" style="margin-bottom:1rem">Omapolku</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
+        <div class="slabel" style="margin-bottom:0">Omapolku</div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <button id="polku-edellinen-btn" onclick="vaihdaPolkuViikko(-1)" style="padding:4px 10px;border:1px solid #eee;border-radius:20px;background:#fff;color:#888;font-size:11px;cursor:pointer;font-family:DM Sans,sans-serif">← Edellinen</button>
+          <span id="polku-viikko-label" style="font-size:11px;color:#aaa;white-space:nowrap"></span>
+          <button id="polku-seuraava-btn" onclick="vaihdaPolkuViikko(1)" style="padding:4px 10px;border:1px solid #eee;border-radius:20px;background:#fff;color:#888;font-size:11px;cursor:pointer;font-family:DM Sans,sans-serif">Seuraava →</button>
+        </div>
+      </div>
       <div id="polku-tyhjä" style="display:none;text-align:center;padding:2rem 0">
         <div style="font-size:32px;margin-bottom:0.5rem">🌱</div>
         <div style="font-size:13px;color:#aaa;line-height:1.6">Polkusi alkaa ensimmäisestä merkinnästä.<br>Siirry Kirjaa-välilehdelle ja aloita.</div>
       </div>
       <div id="polku-aikajana"></div>
+      <div id="polku-tyhja-viikko" style="display:none;text-align:center;padding:1.5rem 0;font-size:13px;color:#aaa">Ei merkintöjä tällä viikolla.</div>
     </div>
 
     <!-- Avoin päiväkortti -->
@@ -1816,6 +1824,13 @@ function zoneTaustaVari(zid) {
   return { yli:'#FDE8EE', kohonnut:'#FDF3E3', ok:'#E8F5E9', las:'#E3EEF9', ali:'#EEEDFE' }[zid] || '#f5f5f5';
 }
 
+let polkuViikkoOffset = 0; // 0 = tämä viikko, -1 = edellinen, jne.
+
+function vaihdaPolkuViikko(suunta) {
+  polkuViikkoOffset += suunta;
+  renderPolkuAikajana();
+}
+
 function renderPolku() {
   try { harjoitukset = JSON.parse(localStorage.getItem('vk_harj') || '[]'); } catch(e) {}
   try { merkinnat = JSON.parse(localStorage.getItem('vk1') || '[]'); } catch(e) {}
@@ -1833,25 +1848,68 @@ function renderPolku() {
   // KEHITYSKAAVIO
   piirraKehityskaavio(merkinnat);
 
-  // Kerää kaikki teot, vanhimmasta uusimpaan
-  const teot = [];
-  merkinnat.forEach(m => teot.push({ tyyppi:'kirjaus', aika:m.aika, data:m }));
-  harjoitukset.forEach(h => teot.push({ tyyppi:'harjoite', aika:h.aika, data:h }));
-  aaniteHistoria.forEach(a => teot.push({ tyyppi:'aanite', aika:a.aika, data:a }));
-  teot.sort((a,b) => new Date(b.aika) - new Date(a.aika)); // uusin ensin
+  polkuViikkoOffset = 0; // Aina tämä viikko ensin
+  renderPolkuAikajana();
+}
+
+function renderPolkuAikajana() {
+  try { harjoitukset = JSON.parse(localStorage.getItem('vk_harj') || '[]'); } catch(e) {}
+  try { merkinnat = JSON.parse(localStorage.getItem('vk1') || '[]'); } catch(e) {}
+  let aaniteHistoria = [];
+  try { aaniteHistoria = JSON.parse(localStorage.getItem('vk_aanitteet') || '[]'); } catch(e) {}
+
+  // Laske viikon alku ja loppu offsetin mukaan
+  const nyt = new Date();
+  const viikonAlku = new Date(nyt);
+  viikonAlku.setDate(nyt.getDate() - nyt.getDay() + 1 + polkuViikkoOffset * 7); // ma
+  viikonAlku.setHours(0,0,0,0);
+  const viikonLoppu = new Date(viikonAlku);
+  viikonLoppu.setDate(viikonAlku.getDate() + 6);
+  viikonLoppu.setHours(23,59,59,999);
+
+  // Päivitä label ja napit
+  const label = document.getElementById('polku-viikko-label');
+  const edellinenBtn = document.getElementById('polku-edellinen-btn');
+  const seuraavaBtn = document.getElementById('polku-seuraava-btn');
+  if (label) {
+    if (polkuViikkoOffset === 0) label.textContent = 'Tämä viikko';
+    else if (polkuViikkoOffset === -1) label.textContent = 'Edellinen viikko';
+    else label.textContent = viikonAlku.toLocaleDateString('fi-FI', { day:'numeric', month:'numeric' }) + '–' + viikonLoppu.toLocaleDateString('fi-FI', { day:'numeric', month:'numeric' });
+  }
+  if (seuraavaBtn) seuraavaBtn.style.opacity = polkuViikkoOffset >= 0 ? '0.3' : '1';
+  if (seuraavaBtn) seuraavaBtn.style.pointerEvents = polkuViikkoOffset >= 0 ? 'none' : 'auto';
+
+  // Kerää kaikki teot ja suodata viikon mukaan
+  const kaikki = [];
+  merkinnat.forEach(m => kaikki.push({ tyyppi:'kirjaus', aika:m.aika, data:m }));
+  harjoitukset.forEach(h => kaikki.push({ tyyppi:'harjoite', aika:h.aika, data:h }));
+  aaniteHistoria.forEach(a => kaikki.push({ tyyppi:'aanite', aika:a.aika, data:a }));
+
+  const teot = kaikki
+    .filter(t => { const d = new Date(t.aika); return d >= viikonAlku && d <= viikonLoppu; })
+    .sort((a,b) => new Date(b.aika) - new Date(a.aika));
 
   const aikajana = document.getElementById('polku-aikajana');
   const tyhja = document.getElementById('polku-tyhjä');
+  const tyhjaViikko = document.getElementById('polku-tyhja-viikko');
 
-  if (teot.length === 0) {
+  if (kaikki.length === 0) {
     tyhja.style.display = 'block';
+    if (tyhjaViikko) tyhjaViikko.style.display = 'none';
     aikajana.innerHTML = '';
     return;
   }
   tyhja.style.display = 'none';
 
-  // Palkinto joka 10. harjoite (lasketaan vanhimmasta)
-  const harjJarj = teot.filter(t => t.tyyppi === 'harjoite').reverse();
+  if (teot.length === 0) {
+    if (tyhjaViikko) tyhjaViikko.style.display = 'block';
+    aikajana.innerHTML = '';
+    return;
+  }
+  if (tyhjaViikko) tyhjaViikko.style.display = 'none';
+
+  // Palkinto joka 10. harjoite (lasketaan kaikista vanhimmasta)
+  const harjJarj = kaikki.filter(t => t.tyyppi === 'harjoite').sort((a,b) => new Date(a.aika)-new Date(b.aika));
   const palkintoAjat = new Set(harjJarj.filter((_,i) => (i+1) % 10 === 0).map(t => t.aika));
 
   aikajana.innerHTML = teot.map((t, idx) => {
