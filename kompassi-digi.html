@@ -6,39 +6,7 @@
 <title>Vireyskompassi</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
-<style>
-#salasana-ruutu{position:fixed;inset:0;background:#fff;z-index:9999;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif}
-#salasana-kortti{width:90%;max-width:320px;text-align:center;padding:2rem}
-#salasana-kortti h1{font-size:18px;font-weight:500;color:#1a1a1a;margin-bottom:4px}
-#salasana-kortti p{font-size:12px;color:#888;margin-bottom:1.5rem}
-#salasana-kentta{width:100%;padding:10px 14px;border:1px solid #eee;border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;text-align:center;letter-spacing:0.1em;margin-bottom:8px}
-#salasana-kentta:focus{border-color:#bbb}
-#salasana-nappi{width:100%;padding:11px;background:#1a1a1a;color:#fff;border:none;border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;cursor:pointer;margin-bottom:8px}
-#salasana-virhe{font-size:12px;color:#E24B4A;min-height:18px}
-</style>
-</head>
-<div id="salasana-ruutu">
-  <div id="salasana-kortti">
-    <h1>Vireyskompassi</h1>
-    <p>Syötä salasana jatkaaksesi</p>
-    <input id="salasana-kentta" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')tarkistaSalasana()">
-    <button id="salasana-nappi" onclick="tarkistaSalasana()">Jatka →</button>
-    <div id="salasana-virhe"></div>
-  </div>
-</div>
 
-<script>
-function tarkistaSalasana() {
-  const syote = document.getElementById('salasana-kentta').value;
-  if (syote === 'vakaa2025') {
-    document.getElementById('salasana-ruutu').style.display = 'none';
-  } else {
-    document.getElementById('salasana-virhe').textContent = 'Väärä salasana';
-    document.getElementById('salasana-kentta').value = '';
-    document.getElementById('salasana-kentta').focus();
-  }
-}
-</script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:#fff;color:#1a1a1a;-webkit-font-smoothing:antialiased}
