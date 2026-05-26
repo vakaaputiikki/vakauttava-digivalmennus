@@ -1054,6 +1054,17 @@ textarea:focus{border-color:#bbb;background:#fff}
     <button id="muistutus-nappi" class="btn primary" onclick="aktivoiMuistutus()" style="width:100%">Ota muistutukset käyttöön</button>
   </div>
 
+  <div class="card">
+    <div class="slabel" style="margin-bottom:0.5rem">Muistiinpanojen varmuuskopiointi</div>
+    <div style="font-size:12px;color:#777;line-height:1.6;margin-bottom:1rem">Tietosi tallentuvat vain tähän selaimeen. Vie muistiinpanot säännöllisesti talteen – esim. puhelimen vaihdon tai selaimen tyhjentymisen varalta.</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn primary" onclick="vieMustiinpanot()" style="flex:1;min-width:140px">📥 Vie muistiinpanot</button>
+      <button class="btn" onclick="document.getElementById('tuo-input').click()" style="flex:1;min-width:140px">📤 Tuo muistiinpanot</button>
+    </div>
+    <input type="file" id="tuo-input" accept=".json" style="display:none" onchange="tuoMustiinpanot(event)">
+    <div id="tuo-viesti" style="font-size:12px;margin-top:0.75rem;min-height:18px"></div>
+  </div>
+
 </div>
 <!-- END OHJE -->
 
@@ -2575,6 +2586,62 @@ if (localStorage.getItem('muistutus_lupa') === 'granted') {
 
 renderOireet();setJana(50);renderHarjoitteet();
 setTimeout(paivitaMuistutusTila, 100);
+
+// VIE / TUO MUISTIINPANOT
+function vieMustiinpanot() {
+  const avaimet = ['vk1', 'vk_harj', 'vk_aanitteet', 'sos_yhteystiedot'];
+  const data = {};
+  avaimet.forEach(k => {
+    const arvo = localStorage.getItem(k);
+    if (arvo !== null) data[k] = arvo;
+  });
+  if (Object.keys(data).length === 0) {
+    alert('Ei tallennettuja muistiinpanoja vietäväksi.');
+    return;
+  }
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const pvm = new Date().toISOString().slice(0,10);
+  a.href = url;
+  a.download = 'vireyskompassi-' + pvm + '.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function tuoMustiinpanot(event) {
+  const tiedosto = event.target.files[0];
+  const viesti = document.getElementById('tuo-viesti');
+  if (!tiedosto) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      const avaimet = ['vk1', 'vk_harj', 'vk_aanitteet', 'sos_yhteystiedot'];
+      let tuotu = 0;
+      avaimet.forEach(k => {
+        if (data[k] !== undefined) {
+          localStorage.setItem(k, data[k]);
+          tuotu++;
+        }
+      });
+      if (tuotu === 0) {
+        viesti.style.color = '#E24B4A';
+        viesti.textContent = '⚠️ Tiedostossa ei löytynyt tunnistettavia tietoja.';
+      } else {
+        viesti.style.color = '#3B6D11';
+        viesti.textContent = '✓ Muistiinpanot palautettu (' + tuotu + ' kokonaisuutta). Lataa sivu uudelleen nähdäksesi tiedot.';
+      }
+    } catch(err) {
+      viesti.style.color = '#E24B4A';
+      viesti.textContent = '⚠️ Tiedoston lukeminen epäonnistui. Varmista että valitsit oikean .json-tiedoston.';
+    }
+    event.target.value = '';
+  };
+  reader.readAsText(tiedosto);
+}
 </script>
 <div style="text-align:center;padding:2rem 0 1.5rem;font-size:11px;color:#ccc">© Vakauttamisvalmentaja – Katja Saarinen</div>
 </body>
