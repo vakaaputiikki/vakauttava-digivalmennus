@@ -420,25 +420,6 @@ textarea:focus{border-color:#bbb;background:#fff}
         <button class="btn primary" onclick="aloitaHarjoitusSeuranta()" style="width:100%">▶ Aloita harjoitus</button>
       </div>
 
-      <!-- Vaihe: animaatio käynnissä -->
-      <div id="hs-animaatio-vaihe" style="display:none;text-align:center;padding:1.5rem 0 1rem;">
-        <div style="font-size:13px;color:#888;margin-bottom:1rem">Harjoitus: <strong id="hs-kaynnissa-nimi-anim"></strong></div>
-        <div style="position:relative;width:80px;height:80px;margin:0 auto 1rem;">
-          <svg viewBox="0 0 80 80" style="width:80px;height:80px;">
-            <circle cx="40" cy="40" r="34" fill="none" stroke="#eee" stroke-width="5"/>
-            <circle id="hs-anim-ring" cx="40" cy="40" r="34" fill="none" stroke="#639922" stroke-width="5"
-              stroke-dasharray="213" stroke-dashoffset="213" stroke-linecap="round"
-              transform="rotate(-90 40 40)"
-              style="transition:stroke-dashoffset 0.3s linear"/>
-          </svg>
-          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:22px;" id="hs-anim-ikoni">🌿</div>
-        </div>
-        <div style="font-size:14px;font-weight:500;color:#1a1a1a;margin-bottom:0.4rem">Tee harjoitus rauhassa</div>
-        <div style="font-size:12px;color:#aaa;margin-bottom:1.5rem">Klikkaa kun olet valmis</div>
-        <button class="btn primary" onclick="harjoitusValmis()" style="width:100%">✓ Harjoitus tehty</button>
-        <button class="btn" onclick="peruutaHarjoitusSeuranta()" style="width:100%;margin-top:8px">Peruuta</button>
-      </div>
-
       <!-- Vaihe: harjoitus käynnissä -->
       <div id="hs-jalkeen-vaihe" style="display:none">
         <div style="font-size:13px;color:#888;margin-bottom:0.75rem">Harjoitus: <strong id="hs-kaynnissa-nimi"></strong></div>
@@ -1830,40 +1811,15 @@ setupHsJana('hs-jtrack-jalkeen', 'hs-jh-jalkeen', 'hs-jalkeen-label', v => { hsJ
 
 let hs_ennenTallennettu = 50;
 
-let hsAnimId = null;
-
 function aloitaHarjoitusSeuranta() {
   const nimi = document.getElementById('hs-harj-nimi').value.trim();
   if (!nimi) { document.getElementById('hs-harj-nimi').focus(); return; }
   hs_ennenTallennettu = hsEnnenArvo;
   document.getElementById('hs-kaynnissa-nimi').textContent = nimi;
-  document.getElementById('hs-kaynnissa-nimi-anim').textContent = nimi;
   document.getElementById('hs-ennen-vaihe').style.display = 'none';
-  document.getElementById('hs-animaatio-vaihe').style.display = 'block';
-  document.getElementById('hs-jalkeen-vaihe').style.display = 'none';
-  document.getElementById('hs-valmis-vaihe').style.display = 'none';
-  document.getElementById('harj-seuranta-tila').textContent = 'Tee harjoitus rauhassa.';
-  const ring = document.getElementById('hs-anim-ring');
-  const ikonit = ['\uD83C\uDF3F','\uD83C\uDF43','\uD83C\uDF31','\uD83C\uDF40','\uD83C\uDF3F'];
-  const ikoniEl = document.getElementById('hs-anim-ikoni');
-  let askel = 0;
-  const maxAskeleet = 120;
-  const kehys = 213;
-  if (hsAnimId) clearInterval(hsAnimId);
-  hsAnimId = setInterval(function() {
-    askel++;
-    const offset = kehys - (kehys * askel / maxAskeleet);
-    ring.style.strokeDashoffset = Math.max(0, offset);
-    if (askel % 24 === 0) ikoniEl.textContent = ikonit[Math.floor(askel/24) % ikonit.length];
-    if (askel >= maxAskeleet) clearInterval(hsAnimId);
-  }, 500);
-}
-
-function harjoitusValmis() {
-  if (hsAnimId) clearInterval(hsAnimId);
-  document.getElementById('hs-animaatio-vaihe').style.display = 'none';
   document.getElementById('hs-jalkeen-vaihe').style.display = 'block';
-  document.getElementById('harj-seuranta-tila').textContent = 'Merkitse vireystila harjoituksen jälkeen.';
+  document.getElementById('hs-valmis-vaihe').style.display = 'none';
+  document.getElementById('harj-seuranta-tila').textContent = 'Tee harjoitus, sitten merkitse vireystila jälkeen.';
 }
 
 function tallennaHarjoitusSeuranta() {
@@ -1902,14 +1858,12 @@ function tallennaHarjoitusSeuranta() {
 }
 
 function peruutaHarjoitusSeuranta() {
-  if (hsAnimId) clearInterval(hsAnimId);
   uusiHarjoitusSeuranta();
 }
 
 function uusiHarjoitusSeuranta() {
   document.getElementById('hs-harj-nimi').value = '';
   document.getElementById('hs-ennen-vaihe').style.display = 'block';
-  document.getElementById('hs-animaatio-vaihe').style.display = 'none';
   document.getElementById('hs-jalkeen-vaihe').style.display = 'none';
   document.getElementById('hs-valmis-vaihe').style.display = 'none';
   document.getElementById('harj-seuranta-tila').textContent = 'Valitse harjoitus yllä ja aloita seuranta.';
