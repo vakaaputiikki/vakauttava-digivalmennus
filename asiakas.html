@@ -1636,7 +1636,7 @@ function buildWeeks() {
       </div>` : '';
 
     // Kysy valmentajalta
-    const msgKey = 'coach_msgs_v' + w.num;
+    const msgKey = 'coach_msgs_v' + WP_USER_ID + '_' + w.num;
     const sent = JSON.parse(localStorage.getItem(msgKey) || '[]');
     const remaining = Math.max(0, 3 - sent.length);
     const coachHtml = `
