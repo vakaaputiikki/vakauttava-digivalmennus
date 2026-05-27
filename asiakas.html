@@ -1568,7 +1568,7 @@ function buildWeeks() {
     const card = document.createElement('div');
     card.id = 'week-' + w.num;
     const isDone = completedWeeks.has(w.num);
-    card.className = 'week-card week-rosette-wrap' + (isDone ? ' done-card' : '');
+    card.className = 'week-card week-rosette-wrap';
     const statusLabel = isDone ? 'Tehty ✓' : (w.status === 'available' ? 'Auki' : '🔒 Lukittu');
     const statusClass = isDone ? 'done' : w.status;
 
@@ -1678,6 +1678,11 @@ function buildWeeks() {
       }
     }
     container.appendChild(cardWrap);
+    if (isDone) {
+      requestAnimationFrame(() => {
+        card.classList.add('done-card');
+      });
+    }
   });
   updateProgressBar();
 }
