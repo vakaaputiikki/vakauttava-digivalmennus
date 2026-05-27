@@ -684,7 +684,7 @@
     <div style="padding:1.75rem 2.5rem 2rem;">
       <p style="font-size:15px;color:#5C4A32;font-weight:300;line-height:1.7;margin:0 0 1.25rem;">Tämä valmennus on rakennettu juuri sinulle — ei kiireellä, ei suorittaen. Voit edetä omaan tahtiin ja palata aina takaisin.</p>
       <div style="background:#F5F0E8;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1.5rem;">
-        <p style="font-size:13px;color:#8B7355;font-weight:300;line-height:1.6;margin:0;">✦ 4 viikkoa · kehollisia harjoitteita · vireystilan säätelyä · sinun tahdissasi</p>
+        <p style="font-size:13px;color:#8B7355;font-weight:300;line-height:1.6;margin:0;">✦ 8 viikkoa · kehollisia harjoitteita · vireystilan säätelyä · sinun tahdissasi</p>
       </div>
       <button onclick="suljePopup()" style="width:100%;padding:13px;background:#5C4A32;color:#FAF8F4;border:none;border-radius:50px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;cursor:pointer;letter-spacing:0.01em;">Aloitan valmennuksen →</button>
       <button onclick="suljePopup()" style="display:block;margin:0.75rem auto 0;background:none;border:none;font-size:13px;color:#A89880;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:300;">Palaan myöhemmin</button>
@@ -1644,6 +1644,8 @@ function buildWeeks() {
         <div class="coach-label">✉️ Kysy valmentajalta</div>
         <div class="coach-quota">Viestejä jäljellä tällä viikolla: <span>${remaining} / 3</span></div>
         ${remaining > 0 ? `
+          <input type="text" class="coach-textarea" id="coach-nimi-${w.num}" placeholder="Nimesi" style="min-height:unset;height:40px;resize:none;margin-bottom:6px;" />
+          <input type="email" class="coach-textarea" id="coach-email-${w.num}" placeholder="Sähköpostiosoitteesi" style="min-height:unset;height:40px;resize:none;margin-bottom:6px;" />
           <textarea class="coach-textarea" id="coach-ta-${w.num}" placeholder="Kirjoita kysymyksesi tai ajatuksesi tähän viikosta ${w.num}…"></textarea>
           <button class="coach-send-btn" onclick="lahetaCoachViesti(event, ${w.num})">Lähetä viesti</button>
         ` : `
@@ -1779,7 +1781,12 @@ function markDone(e, num) {
 async function lahetaCoachViesti(e, weekNum) {
   e.stopPropagation();
   const ta = document.getElementById('coach-ta-' + weekNum);
+  const nimiEl = document.getElementById('coach-nimi-' + weekNum);
+  const emailEl = document.getElementById('coach-email-' + weekNum);
   const viesti = ta ? ta.value.trim() : '';
+  const nimi = nimiEl ? nimiEl.value.trim() : '';
+  const email = emailEl ? emailEl.value.trim() : '';
+  if (!nimi) { if (nimiEl) nimiEl.focus(); alert('Kirjoita nimesi ennen lähetystä.'); return; }
   if (!viesti) { ta.focus(); return; }
 
   const msgKey = 'coach_msgs_v' + WP_USER_ID + '_' + weekNum;
@@ -1795,6 +1802,8 @@ async function lahetaCoachViesti(e, weekNum) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({
+        nimi: nimi,
+        email: email || 'Ei annettu',
         viikko: weekNum,
         viikon_aihe: week ? week.title : '',
         viesti: viesti
