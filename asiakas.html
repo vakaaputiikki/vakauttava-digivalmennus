@@ -1105,7 +1105,6 @@
   <!-- VIREYSKOMPASSI LINKKI LOPPUU -->
   </div>
 </div>
-</div>
 
 <!-- VIESTINTÄ -->
 <div id="view-viestinta" class="vk-view">
@@ -1461,7 +1460,7 @@ function showView(name, btn) {
   document.querySelectorAll('.vk-view').forEach(v => v.classList.remove('vk-active'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
   document.getElementById('view-' + name).classList.add('vk-active');
-  if (btn) btn.classList.add('vk-active');
+  if (btn) btn.classList.add('active');
   if (name === 'kompassi') {
     const iframe = document.getElementById('kompassi-iframe');
     if (iframe && !iframe.src) { iframe.src = iframe.dataset.src; }
