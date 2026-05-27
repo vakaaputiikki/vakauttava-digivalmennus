@@ -132,8 +132,7 @@
   .week-card {
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    overflow: hidden;
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
     background: var(--warm-white);
   }
   .week-header {
@@ -613,6 +612,29 @@
 
     /* Login */
     .login-card { padding: 2.5rem 1.75rem; }
+
+    /* 4H-polku mobiilissa */
+    #polku-cards { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+    #polku-cards [data-step] { padding: .75rem .8rem; }
+  }
+
+  /* Viikkokortti ruusuke */
+  .week-rosette-wrap { position: relative; }
+  .week-rosette {
+    display: none;
+    position: absolute;
+    top: -16px;
+    right: 12px;
+    width: 54px;
+    height: 54px;
+    pointer-events: none;
+    z-index: 10;
+    animation: rosettePop 0.55s cubic-bezier(0.34,1.56,0.64,1) both;
+  }
+  .week-card.done-card .week-rosette { display: block; }
+  @keyframes rosettePop {
+    from { transform: scale(0) rotate(-20deg); opacity: 0; }
+    to   { transform: scale(1) rotate(0deg); opacity: 1; }
   }
 </style>
 </head>
@@ -871,6 +893,9 @@
 
   <div style="max-width:760px; margin:0 auto; padding:2.5rem 1.5rem 3rem;">
 
+    <div style="margin-bottom:1.5rem; padding:.1rem 0 .25rem;">
+      <p style="font-size:15px; color:var(--text-muted); font-weight:300; line-height:1.75;">Uudet kokemukset tarvitsevat tilaa. Tämä polku on harjoiteltu askel kerrallaan — niin mieli ehtii käsitellä mitä kehossa tapahtuu, eikä kaikkea tarvitse ottaa kerralla. Aloita vaikka ensimmäisestä askeleesta.</p>
+    </div>
     <div style="width:100%; margin-bottom:1.75rem;">
       <svg id="polku-scene" width="100%" viewBox="0 0 680 210" xmlns="http://www.w3.org/2000/svg">
         <rect x="0" y="0" width="680" height="140" fill="#EEF4E8"/>
@@ -959,17 +984,12 @@
       </div>
       <div onclick="polkuSelectStep(3)" data-step="3" style="background:var(--warm-white); border:1px solid var(--border); border-radius:var(--radius); padding:.85rem .9rem; cursor:pointer; transition:background .15s, border-color .15s;">
         <div style="font-size:22px; font-weight:500; color:#4A7C59; line-height:1; margin-bottom:.3rem;">H</div>
-        <div style="font-size:13px; font-weight:500; color:var(--deep); margin-bottom:.2rem;">Harkitse</div>
+        <div style="font-size:13px; font-weight:500; color:var(--deep); margin-bottom:.2rem;">Harkitse ja toimi</div>
         <div style="font-size:11px; color:var(--text-muted); line-height:1.35;">Seuraava liike valitaan</div>
       </div>
     </div>
 
     <div id="polku-detail" style="background:var(--sand); border:1px solid var(--border); border-radius:var(--radius); padding:1.25rem 1.5rem; min-height:110px;"></div>
-
-    <div style="margin-top:1rem; background:var(--moss-light); border:1px solid rgba(107,123,94,0.25); border-radius:var(--radius); padding:1rem 1.25rem;">
-      <p style="font-size:12px; font-weight:500; color:var(--moss); letter-spacing:.08em; text-transform:uppercase; margin-bottom:.35rem;">Milloin käyttää</p>
-      <p style="font-size:13px; color:var(--text-muted); font-weight:300; line-height:1.65;">Tämä työkalu ei ole viikon tehtävä — se on arjen käytäntö. Palaa siihen aina kun huomaat tarvitsevasi hetken pysähtymistä. Mitä useammin harjoittelet, sitä helpommin polku kulkee silloin kun se oikeasti tarvitaan.</p>
-    </div>
 
     <div style="margin-top:1.25rem; text-align:center;">
       <button onclick="polkuAloitaOhjattu()" style="padding:12px 32px; background:var(--earth); color:var(--warm-white); border:none; border-radius:50px; font-family:'DM Sans',sans-serif; font-size:15px; font-weight:500; cursor:pointer; letter-spacing:0.01em;">Harjoittele ohjattuna →</button>
@@ -1546,9 +1566,9 @@ function buildWeeks() {
   container.innerHTML = '';
   weeksData.forEach(w => {
     const card = document.createElement('div');
-    card.className = 'week-card';
     card.id = 'week-' + w.num;
     const isDone = completedWeeks.has(w.num);
+    card.className = 'week-card week-rosette-wrap' + (isDone ? ' done-card' : '');
     const statusLabel = isDone ? 'Tehty ✓' : (w.status === 'available' ? 'Auki' : '🔒 Lukittu');
     const statusClass = isDone ? 'done' : w.status;
 
@@ -1578,6 +1598,26 @@ function buildWeeks() {
       </div>`;
 
     card.innerHTML = `
+      <svg class="week-rosette" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
+        <g transform="translate(27,27)">
+          <circle r="18" fill="#C17F4A" opacity=".12"/>
+          <ellipse cx="13" cy="0" rx="7" ry="4.5" fill="#C17F4A" opacity=".5" transform="rotate(0 13 0)"/>
+          <ellipse cx="11" cy="6" rx="7" ry="4.5" fill="#C17F4A" opacity=".5" transform="rotate(30 11 6)"/>
+          <ellipse cx="6" cy="11" rx="7" ry="4.5" fill="#C17F4A" opacity=".5" transform="rotate(60 6 11)"/>
+          <ellipse cx="0" cy="13" rx="7" ry="4.5" fill="#C17F4A" opacity=".5" transform="rotate(90 0 13)"/>
+          <ellipse cx="-6" cy="11" rx="7" ry="4.5" fill="#C17F4A" opacity=".5" transform="rotate(120 -6 11)"/>
+          <ellipse cx="-11" cy="6" rx="7" ry="4.5" fill="#C17F4A" opacity=".5" transform="rotate(150 -11 6)"/>
+          <ellipse cx="-13" cy="0" rx="7" ry="4.5" fill="#C17F4A" opacity=".5" transform="rotate(180 -13 0)"/>
+          <ellipse cx="-11" cy="-6" rx="7" ry="4.5" fill="#C17F4A" opacity=".5" transform="rotate(210 -11 -6)"/>
+          <ellipse cx="-6" cy="-11" rx="7" ry="4.5" fill="#C17F4A" opacity=".5" transform="rotate(240 -6 -11)"/>
+          <ellipse cx="0" cy="-13" rx="7" ry="4.5" fill="#C17F4A" opacity=".5" transform="rotate(270 0 -13)"/>
+          <ellipse cx="6" cy="-11" rx="7" ry="4.5" fill="#C17F4A" opacity=".5" transform="rotate(300 6 -11)"/>
+          <ellipse cx="11" cy="-6" rx="7" ry="4.5" fill="#C17F4A" opacity=".5" transform="rotate(330 11 -6)"/>
+          <circle r="12" fill="#C17F4A"/>
+          <circle r="9" fill="#F5E8D8"/>
+          <text x="0" y="4" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5" font-weight="500" fill="#8B5E32">kuljettu</text>
+        </g>
+      </svg>
       <div class="week-header" onclick="toggleWeek(${w.num}, '${w.status}', ${isDone})">
         <div class="week-num">${w.num}</div>
         <div class="week-info">
@@ -1621,12 +1661,23 @@ function buildWeeks() {
           }).join('')}
           ${coachHtml}
           <button class="week-complete-btn ${isDone ? 'done' : ''}" onclick="markDone(event, ${w.num})" style="margin-top:1.4rem">
-            ${isDone ? '✓ Merkitty tehdyksi' : 'Merkitse tehdyksi'}
+            ${isDone ? '✓ Kuljettu tällä viikolla' : 'Olen kulkenut tämän viikon'}
           </button>
         </div>
       </div>
     `;
-    container.appendChild(card);
+    const cardWrap = document.createElement('div');
+    cardWrap.style.cssText = 'position:relative; margin-bottom:1.25rem;';
+    card.style.marginBottom = '0';
+    cardWrap.appendChild(card);
+    if (isDone) {
+      const rosetteClone = card.querySelector('.week-rosette');
+      if (rosetteClone) {
+        cardWrap.appendChild(rosetteClone);
+        rosetteClone.style.cssText = 'display:block; position:absolute; top:-16px; right:12px; width:54px; height:54px; pointer-events:none; z-index:10; animation:rosettePop 0.55s cubic-bezier(0.34,1.56,0.64,1) both;';
+      }
+    }
+    container.appendChild(cardWrap);
   });
   updateProgressBar();
 }
@@ -1651,8 +1702,16 @@ function markDone(e, num) {
   if (nextWeek) nextWeek.status = 'available';
   saveProgress();
   buildWeeks();
-  document.getElementById('week-' + num).classList.add('open');
-  // Vieritä seuraavaan viikkoon
+  const doneCard = document.getElementById('week-' + num);
+  if (doneCard) {
+    doneCard.classList.add('open');
+    const rosette = doneCard.querySelector('.week-rosette');
+    if (rosette) {
+      rosette.style.animation = 'none';
+      rosette.offsetHeight;
+      rosette.style.animation = '';
+    }
+  }
   const next = document.getElementById('week-' + (num + 1));
   if (next) setTimeout(() => next.scrollIntoView({ behavior: 'smooth', block: 'center' }), 300);
 }
@@ -1774,10 +1833,49 @@ async function lahetaViesti() {
 
 // ── 4H-Polku ──
 const polkuSteps = [
-  { name:'Hidasta', body:'Ennen kuin mitään muuta — anna tempon laskea. Hengitä sisään normaalisti ja ulos hieman hitaammin kuin äsken. Tee se kolme kertaa. Hidasta liikettä, puhetta, tekemistä. Keho tarvitsee luvan olla hitaampi ennen kuin se voi tuntea.', tags:['Kolme hidasta uloshengitystä','Pysähdy ennen vastausta','Laske askel puoleen'] },
-  { name:'Huomioi', body:'Katso rauhassa — sisälle ja ulos. Mitä kehossa tapahtuu nyt? Mitä ympärillä? Et tulkitse, et arvioi, et ratkaise. Vain katsot, kuten metsässä katsotaan puita.', tags:['Jännitys hartioissa?','Äänet ympärillä','Tunne vatsassa tai rintakehässä'] },
-  { name:'Hempeästi hyväksy', body:'Se mitä huomasit — se saa olla. Et yritä muuttaa sitä, et pois sysätä. Hempeä hyväksyntä ei tarkoita että pidät siitä. Se tarkoittaa, että et taistele sitä vastaan. Kun et taistele, huomio vapautuu.', tags:['"Tämä on nyt tässä"','"Se saa olla"','Käsi rintakehälle hetkeksi'] },
-  { name:'Harkitse', body:'Nyt, kun olet hidastunut, huomannut ja hyväksynyt — voit harkita. Mikä on seuraava liike? Ei paras ratkaisu, ei oikea vastaus. Vain seuraava askel, jonka voit ottaa tietoisesti.', tags:['Mitä tarvitsen nyt?','Pienin mahdollinen seuraava teko','Tarvitsenko hetken lisää vai toimintaa?'] }
+  {
+    name:'Hidasta',
+    body:'Ensimmäinen askel suorittamisen kierteen katkaisemiseen. Tässä moduulissa opit hidastamaan kehon ja mielen tempoa juuri sen verran, että et enää toimi automaattisesti. Kyse ei ole rauhoittumisesta, pysähtymisestä tai täydellisestä zen-tilasta. Kyse on pienestä tempomuutoksesta — noin 20 % hitaammasta rytmistä. Tämä riittää siihen, että saat itsellesi pienen välin hengittää ja valita toisin.',
+    extra: [
+      { heading:'Miksi hidastetaan?', intro:'Kun suorittaminen käynnistyy, sekä keho että mieli kiihtyvät. Hidastaminen on keino:', list:['katkaista automaattinen vauhti','vähentää ärtymystä','selkeyttää ajatuksia','vähentää kehon jännitystä','mahdollistaa kaksi seuraavaa vaihetta: Huomioi ja Harkitse'], note:'Ilman pientä hidastusta nämä kaksi seuraavaa askelta eivät onnistu.' },
+      { heading:'Mitä tässä vaiheessa hidastetaan?', intro:'Hidastamme kolmea asiaa:', list:['Keho – pieni kiristys hellittää, hengitys tasoittuu.','Mieli – sisäinen kiire laskee.','Toiminta – tekeminen ei ryntää eteenpäin.'], note:'Hidastus on hyvin pieni. Vain sen verran, että saat tilanteesta otteen.' },
+      { heading:'Milloin tämä toimii parhaiten?', intro:'Hidastaminen toimii erityisesti silloin, kun huomaat:', list:['tekevänsä asioita liian nopeasti','sisäinen kiire nousee','alat reagoida ennen kuin ajattelet','keho on kireä (hartiat, purenta, hengitys)','olet ryntäämässä tehtävästä toiseen ilman taukoa'], note:'' },
+      { heading:'Miltä muutos tuntuu heti?', intro:'Hidastaminen ei muuta koko päivää — mutta se muuttaa hetken:', list:['kiire pienenee','ärtymys laskee','keho ei kiristy yhtä paljon','ajatukset selkiytyvät','saat pienen hetken tehdä päätöksiä'], note:'' }
+    ],
+    tags:['Laske hartiat, hengitä hitaammin','Sano mielessä "hetki" — hitaasti','Nosta ja laske käsi rauhassa']
+  },
+  {
+    name:'Huomioi',
+    body:'Toinen askel suorittamisen kierteen katkaisemiseen. Tässä opit palaamaan tähän hetkeen ja näkemään, mitä sinussa ja ympärilläsi tapahtuu — ilman analysointia. Huomiointi ei ole tehtävä, tarkkailu eikä itsensä vahtiminen. Se on hetken toteamista: "Tältä minussa tuntuu nyt. Ja tällaista ympärillä on."',
+    extra: [
+      { heading:'Miksi huomioidaan?', intro:'Kun suorittaminen käynnistyy, vauhti vie helposti mukanaan. Huomiointi antaa sinulle:', list:['hetken erottautua automaatiosta','selkeämmän tilanteenkuvan','mahdollisuuden valita toisen tavan toimia','pienemmän sisäisen paineen','paremman kontrollin ennen kuin kierros nousee'], note:'Huomiointi = palaaminen tähän hetkeen.' },
+      { heading:'Mitä huomioidaan?', intro:'Huomioit kolme asiaa — yksinkertaisesti ja ilman analyysia:', list:['Keho — miltä minussa tuntuu nyt? Missä on jännitystä, kiristystä tai levottomuutta?','Mieli — onko vauhti nopea vai tasainen? Onko päällä "mun pitää" -ääni?','Ympäristö — millaisia ääniä, liikettä tai hälyä on ympärillä?'], note:'Näitä ei tarvitse muuttaa. Ne vain huomataan — sellaisina kuin ne ovat.' },
+      { heading:'Milloin huomiointi toimii parhaiten?', intro:'Huomiointi auttaa erityisesti silloin, kun:', list:['et tiedä miksi olo kiristyy','ympärillä on hälyä ja on vaikea hahmottaa tilannetta','ajatukset ovat nopeita ja sekavia','tunnet olevasi hetken ollut autopilotilla'], note:'' },
+      { heading:'Miltä muutos tuntuu heti?', intro:'Huomiointi tuntuu yleensä tältä:', list:['kiireen tunne pienenee','ärtymys ei nouse yhtä nopeasti','keho ei kiristy enemmän','saat pienen hetken valita seuraavan askeleesi'], note:'' }
+    ],
+    tags:['Tunnustele keho: hartiat, niska, purenta','Kysy: mitä mielessä tapahtuu nyt?','Nimeä kolme asiaa ympäriltä']
+  },
+  {
+    name:'Hempeästi hyväksy',
+    body:'Kun lakkaat taistelemasta itseäsi vastaan, hermosto pehmenee ja kierros laskee. Hempeä hyväksyminen ei ole henkistä kukkahattuilua — se on hermoston fysiologiaa. Et hyväksy kaikkea mitä elämässä tapahtuu. Hyväksyt vain sen, miltä sinusta tuntuu juuri nyt.',
+    extra:[
+      { heading:'Miksi hempeä hyväksyminen katkaisee kierteen?', intro:'Suorittaja taistelee itseään vastaan lähes koko ajan. Kun sisällä tuntuu pahalta, tulee automaattisesti:', list:['"ei pitäisi tuntea näin"','"nyt en saa hermostua"','"miksi en pärjää?"','"tää on mun vika"'], note:'Tämä ei rauhoita — tämä kiihdyttää. Keho menee puolustustilaan omia tunteitaan vastaan. Hempeä hyväksyminen ottaa hyökkäyksen pois: ärsytys pehmenee, kierros laskee, hengitys vapautuu ja harkitseminen tulee mahdolliseksi.' },
+      { heading:'Mitä tässä hetkessä hyväksytään?', intro:'Hyväksyt vain:', list:['kehon reaktion','hermoston hälytyksen','sen, että kierros ehti nousta','sen, että tunne on epämukava'], note:'Ei analysointia. Ei selittelyä. Ei itsensä piiskaamista. Vain tieto: "Tää on se tunne tässä hetkessä." Se riittää.' },
+      { heading:'Milloin hempeä hyväksyminen toimii parhaiten?', intro:'Tämä toimii tilanteissa, joissa vauhti tai tunne on jo lähtenyt vyörymään:', list:['Ärsyyntymisen ensi sekunnissa — ennen räjähdystä','Riidan keskellä — hetki ennen kuin sanot jotain turhaa','Aamun kaoottisissa hetkissä — kun kaikki tuntuu kiireeltä','Illalla kun et saa rauhoittumaan','Hetkissä, joissa haukut itseäsi — kun syyllisyys tai häpeä nousee'], note:'Hempeä hyväksyminen pehmentää hermoston vastustusta. Se ei poista tunnetta, mutta poistaa siltä terän.' }
+    ],
+    tags:['Sano mielessä: "OK."','Rentouta leukaa 2 %','Hengitä ulos pidempään kuin sisään']
+  },
+  {
+    name:'Harkitse ja toimi',
+    body:'Kun olet hidastanut ja huomioinut, sinulla on pieni väli — hetki, jossa et ole automaation vietävänä. Tässä käytät tuon välin hyväksi: teet tietoisesti yhden pienen valinnan toisin. Tämä ei ole päätöspuu eikä analyysia. Harkinta = yksi pieni siirto eri suuntaan.',
+    extra:[
+      { heading:'Miksi harkitaan?', intro:'Ilman harkintaa jatkat liian kovalla tempolla, teet asioita jotka eivät oikeasti ole tärkeitä ja kierros kiihtyy kohti ylikuormaa. Harkinta antaa sinulle:', list:['mahdollisuuden valita toisin','kevyemmän tavan jatkaa','pienemmän tavoitteen','maltillisemman tempon','suunnan, joka ei vie suorittamiseen'], note:'Harkinta on hetki, jossa sanot: "En jatka näin. Teen tämän vähän toisin."' },
+      { heading:'Mitä harkitaan?', intro:'Harkitset kolmea asiaa — yksinkertaisesti ja nopeasti:', list:['Tempo — onko tämän pakko edetä näin nopeasti?','Tavoite — onko tämä oikeasti tärkein asia nyt? Voinko pienentää sen?','Suunta — kannattaako jatkaa näin, vai vaihtaa toimintatapaa?'], note:'Pieni muutos näissä kolmessa riittää.' },
+      { heading:'Milloin harkinta toimii parhaiten?', intro:'Harkinta auttaa erityisesti silloin, kun:', list:['olet jo vähän kireä mutta et vielä ylivireä','huomaat tekeväsi asioita "koska on pakko", vaikka ei ole','olet sanomassa kyllä automaattisesti','tehtävä tuntuu liian isolta palalta','tempo on liian nopea ja huomaat sen'], note:'Näissä hetkissä harkinta katkaisee suorittamisen tehokkaammin kuin mikään muu.' },
+      { heading:'Miltä muutos tuntuu heti?', intro:'Harkinta tuntuu tältä:', list:['tilanne ei enää vie sinua','ajatus ja toiminta selkeytyvät','stressi ei kasva niin nopeasti','keho ei kiristy lisää','sinulla on ohjakset hetken ajan käsissä'], note:'Yksi harkittu valinta riittää muuttamaan koko tilanteen kulkua.' }
+    ],
+    tags:['Jatka 20 % hitaammin','Pienennä tavoite yhteen osaan','Vaihda asento tai järjestys']
+  }
 ];
 const polkuStoneX = [130,263,413,558];
 const polkuStoneY = [125,118,118,118];
@@ -1786,7 +1884,37 @@ let pbx=80, pby=90, ptx=polkuStoneX[0], pty=polkuStoneY[0], pwingPhase=0, pAnimI
 function polkuRenderDetail(i){
   const s=polkuSteps[i];
   const tagsHtml=s.tags.map(t=>`<span style="font-size:12px;padding:3px 10px;border-radius:50px;border:1px solid var(--border);color:var(--text-muted);background:var(--warm-white);display:inline-block;margin:2px 3px 2px 0;">${t}</span>`).join('');
-  document.getElementById('polku-detail').innerHTML=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:.6rem;"><span style="font-size:20px;font-weight:500;color:#4A7C59;">H</span><span style="font-size:15px;font-weight:500;color:var(--deep);">${s.name}</span></div><p style="font-size:14px;color:var(--text-muted);line-height:1.65;margin-bottom:.65rem;">${s.body}</p><div>${tagsHtml}</div>`;
+  let extraHtml='';
+  if(s.extra){
+    extraHtml=`<div id="polku-extra" style="display:none;margin-top:1rem;border-top:0.5px solid var(--border);padding-top:1rem;">`;
+    s.extra.forEach(sec=>{
+      const listItems=sec.list.map(li=>`<li style="font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:.25rem;">${li}</li>`).join('');
+      extraHtml+=`<p style="font-size:12px;font-weight:500;color:var(--bark);letter-spacing:.07em;text-transform:uppercase;margin:.9rem 0 .3rem;">${sec.heading}</p>`;
+      if(sec.intro) extraHtml+=`<p style="font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:.35rem;">${sec.intro}</p>`;
+      extraHtml+=`<ul style="margin:.25rem 0 .25rem 1.1rem;">${listItems}</ul>`;
+      if(sec.note) extraHtml+=`<p style="font-size:13px;color:var(--text-muted);font-style:italic;margin-top:.35rem;">${sec.note}</p>`;
+    });
+    extraHtml+='</div>';
+    extraHtml+=`<button onclick="polkuToggleExtra()" id="polku-lue-btn" style="margin-top:.75rem;background:none;border:none;padding:0;font-size:13px;color:var(--bark);cursor:pointer;font-family:inherit;text-decoration:underline;">Lue lisää</button>`;
+  }
+  document.getElementById('polku-detail').innerHTML=`
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:.6rem;">
+      <span style="font-size:20px;font-weight:500;color:#4A7C59;">H</span>
+      <span style="font-size:15px;font-weight:500;color:var(--deep);">${s.name}</span>
+    </div>
+    <p style="font-size:14px;color:var(--text-muted);line-height:1.65;margin-bottom:.65rem;">${s.body}</p>
+    <div>${tagsHtml}</div>
+    ${extraHtml}
+  `;
+}
+
+function polkuToggleExtra(){
+  const el=document.getElementById('polku-extra');
+  const btn=document.getElementById('polku-lue-btn');
+  if(!el||!btn)return;
+  const open=el.style.display==='block';
+  el.style.display=open?'none':'block';
+  btn.textContent=open?'Lue lisää':'Sulje';
 }
 
 function polkuUpdateGlows(i){
@@ -1836,23 +1964,23 @@ let polkuStarted = false;
 const ohVaiheet = [
   {
     askel: 'Askel 1 / 4 — Hidasta',
-    teksti: 'Pysähdy juuri tähän hetkeen.\n\nEnnen kuin jatkamme, anna itsellesi lupa hidastaa. Et tarvitse mitään erityistä — vain luvan olla hetki hitaampi kuin äsken.\n\nHengitä sisään rauhallisesti. Sitten ulos — hieman pidempään kuin sisään. Tee se kolme kertaa.\n\nEi kiirettä. Olen täällä kun olet valmis.',
-    vihje: 'Laske uloshengitys mielessäsi: sisään 4, ulos 6. Tai vain huomaa, missä hengitys tuntuu — nenässä, rinnassa, vatsassa.'
+    teksti: 'Tämä on ensimmäinen askel suorittamisen kierteen katkaisemiseen.\n\nKyse ei ole rauhoittumisesta tai pysähtymisestä — vaan pienestä tempomuutoksesta. Noin 20 % hitaammasta rytmistä. Se riittää.\n\nTee nämä kolme:\n\n1. Laske hartiat hieman. Hengitä sisään ja ulos hitaammin kuin normaalisti.\n\n2. Sano mielessäsi sana "hetki" — hitaasti.\n\n3. Nosta käsi ylös hitaasti. Laske se hitaasti. Toista toisella kädellä.\n\nEi kiirettä. Jatka kun olet valmis.',
+    vihje: 'Tavoite ei ole rauhoittua — vaan hidastaa tempoa sen verran, että saat tilanteesta otteen.'
   },
   {
     askel: 'Askel 2 / 4 — Huomioi',
-    teksti: 'Hyvä.\n\nNyt katso rauhassa — sisälle ja ulos. Mitä kehossa tuntuu juuri nyt? Jännitystä, rentoutta, lämpöä, kylmyyttä? Ei tarvitse nimetä oikein.\n\nSitten ympäristö: mitä kuulet? Mitä näet? Mitä pinnat tuntuvat sormenpäissä tai istuinalustassa?\n\nEt tulkitse. Et arvioi. Vain katsot — kuten metsässä katsotaan puita.',
-    vihje: 'Kolme asiaa kehossa, kolme asiaa ympärillä. Ihan pienetkin huomiot kelpaavat.'
+    teksti: 'Hyvä. Olet hidastunut.\n\nNyt huomioi — kolme asiaa, yksinkertaisesti:\n\n1. Keho — sulje silmät tai pehmennä katsetta. Tunnustele hartiat, niska, rintakehä, purenta. Vain huomaa miltä tuntuu.\n\n2. Mieli — kysy itseltäsi: mitä mielessä tapahtuu nyt? Onko tempo nopea? Tuleeko "mun pitää" -ääni? Huomaa se, älä seuraa sitä.\n\n3. Ympäristö — nimeä kolme asiaa ympäriltäsi: ääni, väri, liike. Pelkkä toteaminen riittää.\n\nNäitä ei tarvitse muuttaa. Vain huomata.',
+    vihje: 'Huomiointi ei lisää kuormaa — se keventää sitä. Koska näet todellisemman tilanteen.'
   },
   {
     askel: 'Askel 3 / 4 — Hempeästi hyväksy',
-    teksti: 'Se mitä huomasit — se saa olla siellä.\n\nEi tarvitse muuttaa sitä. Ei tarvitse tehdä sille mitään. Hempeä hyväksyntä ei tarkoita, että pidät siitä tai haluaisit sen jäävän. Se tarkoittaa vain, että et taistele sitä vastaan juuri nyt.\n\nVoit sanoa itsellesi hiljaa: "Tämä on nyt tässä. Se saa olla."\n\nJos tuntuu vaikealta, se on täysin normaalia. Sekin saa olla.',
-    vihje: 'Voit laittaa käden kevyesti rintakehälle tai vatsalle — kosketus muistuttaa kehoa, että olet läsnä.'
+    teksti: 'Olet hidastunut ja huomannut. Nyt lakkaa taistelemasta.\n\nTee nämä neljä asiaa:\n\n1. Sano mielessä: "OK." — ei muuta. Se on signaali keholle: en hyökkää.\n\n2. Rentouta leukaa 2 %. Keho tekee tämän automaattisesti silloin, kun uhka väistyy.\n\n3. Hengitä ulos hieman pidempään kuin sisään. Ei suorittamista — vain pieni pidempi uloshengitys.\n\n4. Sano toinen lause: "Tältä minusta nyt tuntuu." Ei puolustelua, ei järkeilyä, ei itsesyytöstä.\n\nTämä yksi hetki pehmentää hermoston toimintaa niin paljon, että seuraava askel on mahdollinen.',
+    vihje: 'Et hyväksy kaikkea — hyväksyt vain sen, miltä sinusta tuntuu juuri nyt. Se riittää.'
   },
   {
-    askel: 'Askel 4 / 4 — Harkitse',
-    teksti: 'Olet hidastunut. Olet huomannut. Olet sallinut.\n\nNyt voit harkita — rauhassa, ei kiireessä. Mikä on seuraava liike? Ei paras mahdollinen ratkaisu, ei oikea vastaus. Vain yksi pieni askel, jonka voit ottaa tietoisesti.\n\nSe voi olla: jatkaa sitä mitä teit. Tai pitää tauko. Tai tehdä jotain aivan muuta. Mikä tuntuu oikealta juuri nyt?\n\nOlet kulkenut polun. Hyvin tehty.',
-    vihje: 'Kysy itseltäsi: "Mitä tarvitsen nyt?" — ja kuuntele ensimmäistä vastausta, ennen kuin mieli alkaa neuvotella.'
+    askel: 'Askel 4 / 4 — Harkitse ja toimi',
+    teksti: 'Olet hidastunut, huomioinut ja hyväksynyt. Nyt sinulla on pieni väli — käytä se.\n\nTee kolme nopeaa asiaa:\n\n1. Tempo — katso yhtä asiaa, jota olet tekemässä. Pysäytä liike sekunniksi. Jatka 20 % hitaammin.\n\n2. Tavoite — kysy: "Tarvitseeko tämä oikeasti tulla valmiiksi nyt?" Valitse yksi pienempi osa. Tee vain se.\n\n3. Suunta — vaihda asento tai siirry puoli metriä sivuun. Sano itsellesi: "Teen tämän toisin."\n\nOlet kulkenut koko polun. Yksi harkittu valinta riittää muuttamaan tilanteen kulkua.',
+    vihje: 'Harkinta ei ole täydellinen ratkaisu — se on pieni liikahdus oikeaan suuntaan.'
   }
 ];
 
