@@ -331,6 +331,11 @@ textarea:focus{border-color:#bbb;background:#fff}
       <div class="slabel">Käyttäytyminen</div>
       <div class="oire-grid" id="og-kayt"></div>
     </div>
+    <div class="card" style="background:#f0f7e6;border:1px solid #C0DD97;border-radius:12px;padding:1rem;margin-bottom:1rem">
+      <div style="font-size:13px;color:#3B6D11;line-height:1.6">
+        💚 <strong>Muistutus:</strong> Vireystilojen säätely ei ole suorite. Kaikki vireystilat ovat tietoa — ei arvio sinusta. Vireystilojen kuuluu vaihdella. Se on täysin normaalia.
+      </div>
+    </div>
     <div class="card">
       <div class="step-row"><span class="step-num">2</span><span class="step-title">Merkitse vireystila janalle</span></div>
       <div id="ehdotus-wrap" style="min-height:28px;margin-bottom:4px"></div>
@@ -382,7 +387,7 @@ textarea:focus{border-color:#bbb;background:#fff}
           </div>
         </div>
         <div class="sil-info">
-          <div class="zone-title" id="zt" style="color:#3B6D11">Optimaalinen toimintavyöhyke</div>
+          <div class="zone-title" id="zt" style="color:#3B6D11">Tasapainoinen vireystila</div>
           <div class="zone-sub" id="zs">Hermosto on tasapainossa. Keho ja mieli toimivat yhteistyössä.</div>
           <div class="kehopisteet" id="kehopisteet"></div>
         </div>
@@ -397,7 +402,7 @@ textarea:focus{border-color:#bbb;background:#fff}
         <div class="jlabels">
           <div class="jlbl" style="width:20%">Ylivirittynyt</div>
           <div class="jlbl" style="width:15%">Kohonnut</div>
-          <div class="jlbl" style="width:30%;color:#3B6D11;font-weight:500">Optimaalinen toimintavyöhyke</div>
+          <div class="jlbl" style="width:30%;color:#3B6D11;font-weight:500">Tasapainoinen vireystila</div>
           <div class="jlbl" style="width:15%">Laskenut</div>
           <div class="jlbl" style="width:20%">Alivireystila</div>
         </div>
@@ -438,7 +443,7 @@ textarea:focus{border-color:#bbb;background:#fff}
           <div class="jborder"></div>
           <div class="jhandle" id="hs-jh-ennen" style="left:50%"></div>
         </div>
-        <div style="font-size:11px;color:#aaa;margin-bottom:0.75rem" id="hs-ennen-label">Optimaalinen toimintavyöhyke</div>
+        <div style="font-size:11px;color:#aaa;margin-bottom:0.75rem" id="hs-ennen-label">Tasapainoinen vireystila</div>
         <button class="btn primary" onclick="aloitaHarjoitusSeuranta()" style="width:100%">▶ Aloita harjoitus</button>
       </div>
 
@@ -452,7 +457,7 @@ textarea:focus{border-color:#bbb;background:#fff}
           <div class="jborder"></div>
           <div class="jhandle" id="hs-jh-jalkeen" style="left:50%"></div>
         </div>
-        <div style="font-size:11px;color:#aaa;margin-bottom:0.75rem" id="hs-jalkeen-label">Optimaalinen toimintavyöhyke</div>
+        <div style="font-size:11px;color:#aaa;margin-bottom:0.75rem" id="hs-jalkeen-label">Tasapainoinen vireystila</div>
         <button class="btn primary" onclick="tallennaHarjoitusSeuranta()" style="width:100%;margin-bottom:8px">✓ Tallenna vaikutus</button>
         <button class="btn" onclick="peruutaHarjoitusSeuranta()" style="width:100%">Peruuta</button>
       </div>
@@ -472,7 +477,7 @@ textarea:focus{border-color:#bbb;background:#fff}
     <div class="aanite-tabs">
       <button class="aanite-tab aanite-tab-yli active" onclick="setAaniteTab('yli',this)">&#128308; Ylivirittynyt</button>
       <button class="aanite-tab aanite-tab-koh" onclick="setAaniteTab('koh',this)">🟠 Kohonnut</button>
-      <button class="aanite-tab aanite-tab-ok" onclick="setAaniteTab('ok',this)">&#128994; Optimaalinen</button>
+      <button class="aanite-tab aanite-tab-ok" onclick="setAaniteTab('ok',this)">&#128994; Tasapainoinen</button>
       <button class="aanite-tab aanite-tab-las" onclick="setAaniteTab('las',this)">🔵 Laskenut</button>
       <button class="aanite-tab aanite-tab-ali" onclick="setAaniteTab('ali',this)">&#128309; Alivireystila</button>
     </div>
@@ -584,7 +589,7 @@ textarea:focus{border-color:#bbb;background:#fff}
     </div>
 
     <div id="aanite-panel-ok" style="display:none">
-      <p class="aanite-zone-title">Läsnäolo- ja ylläpitoharjoitukset optimaaliselle vyöhykkeelle</p>
+      <p class="aanite-zone-title">Läsnäolo- ja ylläpitoharjoitukset tasapainoiselle vireystilalle</p>
       <div class="aanite-card">
         <div class="aanite-name" id="an-ok-1-nimi">Äänite 1 — Luonnollisen hengityksen tarkkailu</div>
         <div class="aanite-desc" id="an-ok-1-kuvaus">Tämä harjoitus on matalan kynnyksen hengitysharjoitus. Suosittelen!</div>
@@ -759,7 +764,7 @@ textarea:focus{border-color:#bbb;background:#fff}
     <div class="aanite-tabs">
       <button class="aanite-tab aanite-tab-yli active" onclick="setVideoTab('yli',this)">&#128308; Ylivirittynyt</button>
       <button class="aanite-tab aanite-tab-koh" onclick="setVideoTab('koh',this)">🟠 Kohonnut</button>
-      <button class="aanite-tab aanite-tab-ok" onclick="setVideoTab('ok',this)">&#128994; Optimaalinen</button>
+      <button class="aanite-tab aanite-tab-ok" onclick="setVideoTab('ok',this)">&#128994; Tasapainoinen</button>
       <button class="aanite-tab aanite-tab-las" onclick="setVideoTab('las',this)">🔵 Laskenut</button>
       <button class="aanite-tab aanite-tab-ali" onclick="setVideoTab('ali',this)">&#128309; Alivireystila</button>
     </div>
@@ -833,10 +838,10 @@ textarea:focus{border-color:#bbb;background:#fff}
     </div>
 
     <div id="video-panel-ok" style="display:none">
-      <p class="aanite-zone-title">Videoharjoitukset optimaaliselle vyöhykkeelle</p>
+      <p class="aanite-zone-title">Videoharjoitukset tasapainoiselle vireystilalle</p>
       <div class="aanite-card">
         <div class="aanite-name">Video 1 — Kehollinen harjoite</div>
-        <div class="aanite-desc">Vakauttava kehollinen harjoite optimaaliseen vireystilaan</div>
+        <div class="aanite-desc">Vakauttava kehollinen harjoite tasapainoiseen vireystilaan</div>
         <a class="video-thumb-wrap" href="https://www.youtube.com/watch?v=xcRh_EJ5k8s" target="_blank" rel="noopener">
           <img src="https://img.youtube.com/vi/xcRh_EJ5k8s/hqdefault.jpg" alt="Kehollinen harjoite" loading="lazy">
           <div class="video-play-overlay">
@@ -927,6 +932,12 @@ textarea:focus{border-color:#bbb;background:#fff}
 
   <!-- POLKU -->
   <div id="screen-polku" class="screen">
+
+      <div class="card" style="background:#f0f7e6;border:1px solid #C0DD97;border-radius:12px;padding:1rem;margin-bottom:1rem">
+        <div style="font-size:13px;color:#3B6D11;line-height:1.6">
+          💚 <strong>Muistutus:</strong> Vireystilojen säätely ei ole suorite. Kaikki vireystilat ovat tietoa — ei arvio sinusta. Vireystilojen kuuluu vaihdella. Se on täysin normaalia.
+        </div>
+      </div>
 
     <!-- Kehityskaavio -->
     <div id="polku-kaavio-kortti" class="card" style="display:none;margin-bottom:1rem">
@@ -1079,7 +1090,7 @@ textarea:focus{border-color:#bbb;background:#fff}
       <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border-radius:8px;background:#EAF3DE">
         <div style="width:10px;height:10px;border-radius:50%;background:#639922;flex-shrink:0;margin-top:3px"></div>
         <div>
-          <div style="font-size:12px;font-weight:500;color:#27500A">Optimaalinen toimintavyöhyke</div>
+          <div style="font-size:12px;font-weight:500;color:#27500A">Tasapainoinen vireystila</div>
           <div style="font-size:11px;color:#3B6D11;line-height:1.5">Sosiaalisen liittymisen tila. Vagushermo aktivoitunut. Läsnäolo helppoa, mieli selkeä, keho rento mutta valmis.</div>
         </div>
       </div>
@@ -1455,7 +1466,7 @@ const ZD={
   kohonnut:{id:'kohonnut',title:'Kohonnut vireystila',sub:'Hermosto valppaana. Ei vielä kriisi, mutta suunta on ylöspäin.',handle:'#854F0B',bc:'b-koh',zclass:'zone-kohonnut',
     oireet:[{dot:'#EF9F27',txt:'Sydän hieman nopeutunut'},{dot:'#EF9F27',txt:'Hengitys tihenee kevyesti'},{dot:'#D85A30',txt:'Lihasjännitys kasvaa huomaamatta'},{dot:'#7F77DD',txt:'Mieli aktiivinen, ajatuksia paljon'},{dot:'#EF9F27',txt:'Levoton olo — vaikea istua paikallaan'}],
     pts:{sydan:{op:0.6},hengitys:{op:0.5},niska:{op:0.5},vatsa:{op:0.3},kadet:{op:0.2},paa:{op:0.5},rento:{op:0},jalat:{op:0}},hkey:'kohonnut'},
-  ok:{id:'ok',title:'Optimaalinen toimintavyöhyke',sub:'Sosiaalisen liittymisen tila. Vagushermon vatsan puoleinen haara aktivoitunut.',handle:'#3B6D11',bc:'b-ok',zclass:'zone-ok',
+  ok:{id:'ok',title:'Tasapainoinen vireystila',sub:'Sosiaalisen liittymisen tila. Vagushermon vatsan puoleinen haara aktivoitunut.',handle:'#3B6D11',bc:'b-ok',zclass:'zone-ok',
     oireet:[{dot:'#639922',txt:'Sydän lyö rauhallisesti'},{dot:'#639922',txt:'Hengitys syvää ja tasaista'},{dot:'#639922',txt:'Lihakset rentoina mutta valmiina'},{dot:'#639922',txt:'Mieli selkeä — flow-tila mahdollinen'},{dot:'#639922',txt:'Läsnäolo tuntuu helpolta'}],
     pts:{sydan:{op:0},hengitys:{op:0},niska:{op:0},vatsa:{op:0},kadet:{op:0},paa:{op:0},rento:{op:1},jalat:{op:0}},hkey:'ok'},
   las:{id:'las',title:'Laskenut vireystila',sub:'Hermosto alkaa hidastua. Keho pyytää lepoa tai aktivointia.',handle:'#185FA5',bc:'b-las',zclass:'zone-las',
@@ -1914,14 +1925,14 @@ function tallennaHarjoitusSeuranta() {
     setTimeout(() => naytaPalkinto(harjoitukset.length), 800);
   }
 
-  // Laske suunta kohti optimaalista (35-65 = ok-vyöhyke)
+  // Laske suunta kohti tasapainoista vireystilaa (35-65 = ok-vyöhyke)
   const ennenEtaisyys = Math.abs(ennen - 50);
   const jalkeenEtaisyys = Math.abs(jalkeen - 50);
   let palaute = '';
   if (jalkeenEtaisyys < ennenEtaisyys - 3) {
-    palaute = '✓ Harjoitus auttoi — liikuit kohti optimaalista vyöhykettä.';
+    palaute = '✓ Harjoitus auttoi — liikuit kohti tasapainoista vireystilaa.';
   } else if (jalkeenEtaisyys > ennenEtaisyys + 3) {
-    palaute = 'Vireystila siirtyi kauemmas optimaalisesta. Voi olla normaalia — seuraa pidemmällä aikavälillä.';
+    palaute = 'Vireystila siirtyi kauemmas tasapainoisesta vireystilasta. Voi olla normaalia — seuraa pidemmällä aikavälillä.';
   } else {
     palaute = 'Vireystila pysyi samankaltaisena. Vaikutus voi näkyä myöhemmin tai tarvitset eri harjoitusta.';
   }
@@ -2045,7 +2056,7 @@ function renderPolkuAikajana() {
       const zid = t.data.zone || getZone(t.data.janaArvo || 50);
       const vari = zoneVari(zid);
       const tausta = zoneTaustaVari(zid);
-      const zdNimi = { yli:'Ylivirittynyt', kohonnut:'Kohonnut', ok:'Optimaalinen', las:'Laskenut', ali:'Alivireystila' }[zid] || zid;
+      const zdNimi = { yli:'Ylivirittynyt', kohonnut:'Kohonnut', ok:'Tasapainoinen', las:'Laskenut', ali:'Alivireystila' }[zid] || zid;
       const oireet = t.data.oireet || [];
       const nota = t.data.nota || '';
       const avausId = 'teko-' + idx;
@@ -2069,8 +2080,8 @@ function renderPolkuAikajana() {
       </div>`;
 
     } else if (t.tyyppi === 'harjoite') {
-      const ennenNimi = { yli:'Ylivirittynyt', kohonnut:'Kohonnut', ok:'Optimaalinen', las:'Laskenut', ali:'Alivireystila' }[getZone(t.data.ennen||50)] || '';
-      const jalkeenNimi = { yli:'Ylivirittynyt', kohonnut:'Kohonnut', ok:'Optimaalinen', las:'Laskenut', ali:'Alivireystila' }[getZone(t.data.jalkeen||50)] || '';
+      const ennenNimi = { yli:'Ylivirittynyt', kohonnut:'Kohonnut', ok:'Tasapainoinen', las:'Laskenut', ali:'Alivireystila' }[getZone(t.data.ennen||50)] || '';
+      const jalkeenNimi = { yli:'Ylivirittynyt', kohonnut:'Kohonnut', ok:'Tasapainoinen', las:'Laskenut', ali:'Alivireystila' }[getZone(t.data.jalkeen||50)] || '';
       const ennenEt = Math.abs((t.data.ennen||50)-50);
       const jalkeenEt = Math.abs((t.data.jalkeen||50)-50);
       const diff = ennenEt - jalkeenEt;
@@ -2189,7 +2200,7 @@ function laskeReflektio(merkinnat, harjoitukset, aanitteet) {
   const zdLaskuri = { yli:0, kohonnut:0, ok:0, las:0, ali:0 };
   tVk.forEach(m => { const z = m.zone || getZone(m.janaArvo||50); zdLaskuri[z] = (zdLaskuri[z]||0) + 1; });
   const yleisinZone = Object.entries(zdLaskuri).sort((a,b)=>b[1]-a[1])[0][0];
-  const zdNimet = { yli:'Ylivirittynyt', kohonnut:'Kohonnut', ok:'Optimaalinen', las:'Laskenut', ali:'Alivireystila' };
+  const zdNimet = { yli:'Ylivirittynyt', kohonnut:'Kohonnut', ok:'Tasapainoinen', las:'Laskenut', ali:'Alivireystila' };
   const zdVarit = { yli:'#E24B4A', kohonnut:'#EF9F27', ok:'#639922', las:'#378ADD', ali:'#7F77DD' };
   const zdTaustat = { yli:'#FDE8EE', kohonnut:'#FDF3E3', ok:'#EAF3DE', las:'#E3EEF9', ali:'#EEEDFE' };
 
@@ -2238,7 +2249,7 @@ function laskeReflektio(merkinnat, harjoitukset, aanitteet) {
     <div style="padding:10px 12px;background:#EAF3DE;border-radius:10px;margin-bottom:0.75rem">
       <div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">Paras harjoite tällä viikolla</div>
       <div style="font-size:13px;font-weight:500;color:#3B6D11">${parasHarjoite.nimi}</div>
-      <div style="font-size:11px;color:#639922;margin-top:2px">Auttoi siirtymään lähemmäs optimaalista</div>
+      <div style="font-size:11px;color:#639922;margin-top:2px">Auttoi siirtymään lähemmäs tasapainoista vireystilaa</div>
     </div>` : ''}
     <div style="font-size:11px;color:#aaa;line-height:1.5">Heijastus perustuu viimeisten 7 päivän merkintöihin.</div>
   `;
@@ -2377,7 +2388,7 @@ function piirraKehityskaavio(merkinnat) {
   const ensinEtaisyys = Math.abs(ensinArvo - 3);
   const lopussaEtaisyys = Math.abs(lopussaArvo - 3);
   const trendi = ensinEtaisyys - lopussaEtaisyys;
-  const trendiTeksti = trendi > 0.3 ? '↑ Trendi kohti optimaalista' : trendi < -0.3 ? '↓ Trendi poispäin optimaalista' : '→ Tasainen vireystila';
+  const trendiTeksti = trendi > 0.3 ? '↑ Trendi kohti tasapainoista vireystilaa' : trendi < -0.3 ? '↓ Trendi poispäin tasapainoisesta vireystilasta' : '→ Tasainen vireystila';
   const trendiVari = trendi > 0.3 ? '#3B6D11' : trendi < -0.3 ? '#E24B4A' : '#888';
 
   svg += `</svg>`;
